@@ -111,7 +111,7 @@ const Sidebar: React.FC = () => {
   return (
     <div 
       ref={sidebarRef}
-      className="h-screen w-20 bg-gray-900 flex flex-col justify-between py-4 relative"
+      className="h-screen w-20 bg-gray-900 flex flex-col justify-between py-4 relative mt-20"
     >
       {/* Top Section */}
       <div>
@@ -313,7 +313,7 @@ const Sidebar: React.FC = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="flex flex-col items-center gap-6">
+      <div className="flex flex-col items-center gap-6 mb-20">
         <div
           className={`flex flex-col items-center cursor-pointer ${
             activeIcon === "sun" ? "text-blue-500" : "text-gray-500"
