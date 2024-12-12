@@ -13,7 +13,7 @@ import MyComponent from "./dates/reactdateselect";
 
 const HomePage = () => {
   return (
-    <div className="flex-1 ml-20 p-6 overflow-y-auto"> {/* Added left margin for the sidebar */}
+    <div className="flex-1 ml-24 p-6 overflow-y-auto"> {/* Added left margin for the sidebar */}
     <MyComponent/>
     <MapComponent />
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

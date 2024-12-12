@@ -16,6 +16,7 @@ const initialData: Person[] = [
     name: 'Low PF Alert',
     priority: 'high',
     type: 'user',
+    
     userList: { mailCount: 3, messageCount: 5 },
   },
   {

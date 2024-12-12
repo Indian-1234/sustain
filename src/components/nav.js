@@ -1,21 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaArrowRightToBracket } from "react-icons/fa6";
+import icon from "../assets/suslogo.png"; // Replace with the actual image path in your React setup
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false); // Manage dropdown toggle state
+
+  const handleLogout = () => {
+    // Clear user-related data from localStorage
+    localStorage.removeItem("auth");
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("empId");
+
+    // Optionally, remove cookies if you're using them
+    // Cookies.remove("auth");
+    // Cookies.remove("token");
+    // Cookies.remove("role");
+    // Cookies.remove("empId");
+
+    // Redirect to login page
+    window.location.href = "/login";
+  };
+
   return (
     <nav className="bg-gradient-to-r from-green-700 via-teal-600 to-blue-800 h-14 flex items-center justify-between px-4 shadow-gray-400 fixed top-0 left-0 w-full z-50">
       {/* Logo Section */}
       <div className="flex items-center space-x-3">
         <div className="bg-white rounded-full h-9 w-9 flex items-center justify-center">
           <img
-            src="https://via.placeholder.com/36"
+            src={icon}
             alt="Sustaiabyte Logo"
             className="h-7 w-7 object-contain"
           />
         </div>
         <div>
-          <span className="text-white font-semibold text-lg">Sustaiabyte</span>
+          <span className="text-white font-semibold text-lg">OPTIBYTE</span>
           <span className="text-gray-200 text-sm block leading-none">
-            Resource Management
+            Energy Management
           </span>
         </div>
       </div>
@@ -41,27 +62,25 @@ const Navbar = () => {
         </div>
 
         {/* Dropdown Section */}
-        <div className="text-white text-sm">
-          <select
+        <div className="relative text-white text-sm">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
             className="bg-transparent text-white outline-none cursor-pointer"
-            defaultValue="Dashboard"
           >
-            <option className="bg-green-700 text-white" value="Dashboard">
-              Dashboard
-            </option>
-            <option className="bg-green-700 text-white" value="Reports">
-              Reports
-            </option>
-            <option className="bg-green-700 text-white" value="Settings">
-              Settings
-            </option>
-          </select>
-        </div>
+            My Profile
+          </button>
 
-        {/* Profile Section */}
-        <div className="flex items-center space-x-2">
-          <div className="bg-gray-300 rounded-full h-8 w-8"></div>
-          <span className="text-white text-sm">My Profile</span>
+          {/* Dropdown Menu */}
+          {isOpen && (
+            <div className="absolute right-0 mt-2 bg-white text-black rounded-md shadow-lg w-40">
+              <button
+                onClick={handleLogout}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-200 text-sm"
+              >
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>
