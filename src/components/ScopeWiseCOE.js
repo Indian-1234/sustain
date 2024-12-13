@@ -1,9 +1,9 @@
 import React from "react";
 
-function ScopeWiseCOE() {
+function ScopeWiseCOE({co2}) {
   return (
     <div className="bg-gray-800 rounded-lg shadow-md p-4">
-      <h3 className="text-lg font-semibold mb-4">Scope Wise CO2:E</h3>
+      <h3 className="text-lg font-semibold mb-4">{co2}</h3>
       <table className="w-full text-sm text-left text-gray-400">
         <thead className="text-xs text-gray-300 uppercase bg-gray-700">
           <tr>

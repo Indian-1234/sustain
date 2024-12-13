@@ -7,6 +7,7 @@ import '../App.css';
 import DataTableLogs from './reportdatagridtableLogs.js';
 import DataTableList from './reportdatagridtableList.js';
 import Login from './login.js';
+import PlantDashboard from './plant/plantconponents.js';
 
 // PrivateRoute component to protect routes
 const PrivateRoute = ({ children }) => {
@@ -20,7 +21,7 @@ function App() {
       <Routes>
         {/* Public route */}
         <Route path="/login" element={<Login />} />
-        
+
         {/* Protected routes with Layout */}
         <Route
           path="/"
@@ -58,6 +59,16 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <DataTableLogs />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+            <Route
+          path="/plant/:plantName"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <PlantDashboard />
               </Layout>
             </PrivateRoute>
           }

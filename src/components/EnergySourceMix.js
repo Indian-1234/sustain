@@ -11,7 +11,7 @@ import {
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-function EnergySourceMix() {
+function EnergySourceMix({data1}) {
   const data = {
     labels: ['DG', 'EB', 'Solar'],
     datasets: [
@@ -45,7 +45,7 @@ function EnergySourceMix() {
   return (
     <div className="bg-gray-800 shadow-md rounded-lg p-6">
       {/* Component Title */}
-      <h3 className="text-white text-center mb-4">Energy Source Mix</h3>
+      <h3 className="text-white text-center mb-4">{data1}</h3>
 
       {/* Chart with controlled size */}
       <div className="h-40">

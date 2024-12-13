@@ -11,7 +11,7 @@ import {
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-function EnergyContribution() {
+function EnergyContribution({data1}) {
   const data = {
     labels: ["Bangalore", "London", "Mumbai"],
     datasets: [
@@ -44,7 +44,7 @@ function EnergyContribution() {
   return (
     <div className="bg-gray-800 rounded-lg shadow-md p-4 h-64">
       {/* Title */}
-      <h3 className="text-white text-center mb-4">Energy Consumption Contribution</h3>
+      <h3 className="text-white text-center mb-4">{data1}</h3>
 
       {/* Chart Container */}
       <div className="h-40">

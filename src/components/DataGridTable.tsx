@@ -1,6 +1,7 @@
-import { MaterialReactTable } from 'material-react-table';
 import React, { useState, useMemo } from 'react';
-import { FaEnvelope, FaRegCommentDots, FaCheckCircle, FaTimesCircle, FaPause, FaTrashAlt } from 'react-icons/fa';
+import { FaCheckCircle, FaTimesCircle, FaPause, FaTrashAlt } from 'react-icons/fa';
+import { MaterialReactTable } from 'material-react-table';
+import { FaEnvelope, FaRegCommentDots } from 'react-icons/fa6';
 
 type Person = {
   id: number;
@@ -16,7 +17,6 @@ const initialData: Person[] = [
     name: 'Low PF Alert',
     priority: 'high',
     type: 'user',
-    
     userList: { mailCount: 3, messageCount: 5 },
   },
   {
@@ -93,11 +93,11 @@ const DataTable = () => {
       accessorKey: 'actions',
       header: 'Actions',
       Cell: ({ row }) => (
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <FaCheckCircle onClick={() => handleEnable(row.original)} style={{ cursor: 'pointer', color: '#4CAF50' }} />
-          <FaTimesCircle onClick={() => handleDisable(row.original)} style={{ cursor: 'pointer', color: '#F44336' }} />
-          <FaPause onClick={() => handlePause(row.original)} style={{ cursor: 'pointer', color: '#FFEB3B' }} />
-          <FaTrashAlt onClick={() => handleDelete(row.original)} style={{ cursor: 'pointer', color: '#9E9E9E' }} />
+        <div className="flex gap-3 text-white">
+          <FaCheckCircle onClick={() => handleEnable(row.original)} className="cursor-pointer text-green-500 hover:text-green-400" />
+          <FaTimesCircle onClick={() => handleDisable(row.original)} className="cursor-pointer text-red-500 hover:text-red-400" />
+          <FaPause onClick={() => handlePause(row.original)} className="cursor-pointer text-yellow-500 hover:text-yellow-400" />
+          <FaTrashAlt onClick={() => handleDelete(row.original)} className="cursor-pointer text-gray-500 hover:text-gray-400" />
         </div>
       ),
       size: 200,
@@ -105,14 +105,25 @@ const DataTable = () => {
   ], [data]);
 
   return (
-    <div className="flex-1 ml-20 p-6 overflow-y-auto">      {/* Title Section */}
-      <h1 style={{ textAlign: 'center', marginBottom: '20px',fontSize:"30px" }}>Report List</h1>
-      
-      {/* MaterialReactTable */}
+    <div className="flex-1 ml-20 p-6 overflow-y-auto">
+      <h1 className="text-2xl font-bold mb-4 text-center">Report List</h1>
       <MaterialReactTable
         columns={columns}
         data={data}
         enableRowSelection
+        muiTableBodyCellProps={{
+          style: {
+            backgroundColor: '#1a1a2e',
+            color: '#fff',
+          },
+        }}
+        muiTableHeadCellProps={{
+          style: {
+            backgroundColor: '#162447',
+            color: '#fff',
+            fontWeight: 'bold',
+          },
+        }}
       />
     </div>
   );

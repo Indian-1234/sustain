@@ -8,8 +8,12 @@ import {
   FaSun,
   FaHandPointer,
   FaLeaf,
+  FaEllipsisV,
+  FaTimes,
 } from "react-icons/fa";
+import { FaPlus, FaSort } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 type PopupName = "alerts" | "design" | "users" | null;
 type IconName = "cog" | "leaf" | "file" | "palette" | "user" | "sun" | "hand" | null;
@@ -22,6 +26,9 @@ const Sidebar: React.FC = () => {
   const [assetsTemplateOpen, setAssetsTemplateOpen] = useState(false);
   const [networkTemplatesOpen, setNetworkTemplatesOpen] = useState(false);
   const [clientSpecificTemplatesOpen, setClientSpecificTemplatesOpen] = useState(false);
+  const [isSidebarVisible, setSidebarVisible] = useState(false); // Track visibility of the sidebar
+  const location = useLocation(); // Get current route path
+  const [selectedPlant, setSelectedPlant] = useState<string | null>(null); // Track the selected plant
 
   // Reset all template states
   const resetTemplateStates = () => {
@@ -35,7 +42,7 @@ const Sidebar: React.FC = () => {
   const togglePopup = (popupName: PopupName) => {
     setActivePopup((prev) => (prev === popupName ? null : popupName));
     setActiveIcon(null);
-
+    setSidebarVisible(false)
     // Reset template states when closing design popup
     if (popupName !== "design") {
       resetTemplateStates();
@@ -46,13 +53,20 @@ const Sidebar: React.FC = () => {
   const handleIconClick = (iconName: IconName) => {
     setActivePopup(null);
     setActiveIcon((prev) => (prev === iconName ? null : iconName));
-
+    setSidebarVisible(false)
     // Close template popups when a new icon is clicked
     if (iconName !== "palette") {
       resetTemplateStates();
     }
-  };
+    if ((location.pathname === "/"||location.pathname.startsWith("plant/")) &&iconName === "cog") {
+      setSidebarVisible((prev) => !prev);
+    }
 
+  };
+  const handlePlantSelect = (plant: string) => {
+    setSelectedPlant(plant);
+    console.log(`Selected Plant: ${plant}`); // Log the selected plant to the console
+  };
   // Handle template toggle logic
   const handleTemplateToggle = (templateName: string) => {
     switch (templateName) {
@@ -107,7 +121,11 @@ const Sidebar: React.FC = () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
-
+  const handleSidebarToggle = () => {
+    setSidebarVisible((prev) => !prev);
+  };
+  const isNonNavigable =
+    location.pathname === "/" || location.pathname.startsWith("/plant/");
   return (
     <div
       ref={sidebarRef}
@@ -122,12 +140,62 @@ const Sidebar: React.FC = () => {
               } cursor-pointer`}
             onClick={() => handleIconClick("cog")}
           >
-            <Link to="/" className="block">
+            <Link to="/" className="block"  
+            > 
               <FaCog className="text-xl" />
             </Link>
             <p className="text-xs text-gray-400 mt-1">Operational</p>
+          </div> 
+          {isSidebarVisible && (
+        <div className="bg-[#081B33] text-white w-64 h-screen p-4 fixed top-0 right-0">
+          {/* Title Section */}
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-lg font-semibold">Dashboard</h1>
+            <FaSort className="text-gray-400 cursor-pointer mr-10" />
           </div>
 
+          {/* Cancel Icon - Red color */}
+          <div
+            className="absolute top-4 right-4 text-red-500 cursor-pointer"
+            onClick={handleSidebarToggle}
+          >
+            <FaTimes className="text-2xl" />
+          </div>
+
+          {/* Dashboard List */}
+          <div className="space-y-4">
+            {["Portfolio Summary", "Mumbai Plant", "Banglore Plant", "London Plant", "Asset Insights"].map(
+              (item, index) => (
+                <Link
+                to={`/plant/${item}`} // Specify the path
+                state={{ name: item }} // Pass the state separately
+                key={index}
+              >
+                <div
+                  className={`flex items-center justify-between px-4 py-2 rounded-md mt-4 ${
+                    item === selectedPlant ? "bg-green-700" : "bg-blue-900"
+                  } cursor-pointer hover:bg-green-400`}
+                  onClick={() => handlePlantSelect(item)} // Handle item click
+                >
+                  <span className="text-sm">{item}</span>
+                  {item === "Mumbai Plant" && <FaEllipsisV className="text-gray-400" />}
+                </div>
+              </Link>
+              
+              )
+            )}
+          </div>
+
+          {/* Add Dashboard Section */}
+          <div className="mt-6">
+            <button className="flex items-center justify-center gap-2 bg-blue-900 px-4 py-2 rounded-md hover:bg-blue-700 w-full">
+              <FaPlus />
+              <span className="text-sm">Add Dashboard</span>
+            </button>
+            <p className="text-xs text-center text-gray-400 mt-2">1 of 1</p>
+          </div>
+        </div>
+      )}
           <div
             className={`flex flex-col items-center mb-4 ${activeIcon === "leaf" ? "text-green-500" : "text-gray-500"
               } cursor-pointer`}
@@ -199,12 +267,12 @@ const Sidebar: React.FC = () => {
               <hr className="mb-2" />
               <ul className="space-y-2">
                 <li>
-                  <Link to="report-list" className="hover:text-green-400 cursor-pointer">
+                  <Link to="/report-list" className="hover:text-green-400 cursor-pointer">
                     Report List
                   </Link>
                 </li>
                 <li>
-                  <Link to="report-logs" className="hover:text-green-400 cursor-pointer">
+                  <Link to="/report-logs" className="hover:text-green-400 cursor-pointer">
                     Report Logs
                   </Link>
                 </li>

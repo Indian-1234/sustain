@@ -11,10 +11,10 @@ const data = [
   { date: 'Dec 07', 'Energy - kWh': 8.4, 'Water - kWh': 3.0, 'Steam - kg': 1.9, 'Gas - kWh': 0.7 },
 ];
 
-const UtilityConsumptionChart = () => {
+const UtilityConsumptionChart = ({data1}) => {
   return (
     <div className="bg-gray-800 rounded-lg shadow-lg p-6 mt-4">
-      <h2 className="text-lg font-bold text-white mb-6">Utility Consumption (Daily)</h2>
+      <h2 className="text-lg font-bold text-white mb-6">{data1}</h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <XAxis dataKey="date" stroke="#ffffff" />
