@@ -20,12 +20,12 @@ const HomePage = () => {
       <div className="col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
         <EnergyLoadCard />
         <EnergyConsumptionCostCard />
-        <EnergySourceMix data={"Energy Source Mix"}/>
+        <EnergySourceMix data1={"Energy Source Mix"}/>
       </div>
 
       <div className="col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <EnergyContribution data={"Energy Consumption Contribution"}/>
-        <ScopeWiseCOE co2={"Scope Wise CO₂e"} />
+        <EnergyContribution data1={"Energy Consumption Contribution"}/>
+          <ScopeWiseCOE co2={"Scope Wise CO₂e"} />
         <MonthlyConsumption data={"Portfolio Monthly Consumption"}/>
       </div>
     </div>

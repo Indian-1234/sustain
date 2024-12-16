@@ -44,7 +44,7 @@ function EnergyContribution({data1}) {
   return (
     <div className="bg-gray-800 rounded-lg shadow-md p-4 h-64">
       {/* Title */}
-      <h3 className="text-white text-center mb-4">{data1}</h3>
+      <h3 className="text-lg font-semibold mb-4">{data1}</h3>
 
       {/* Chart Container */}
       <div className="h-40">

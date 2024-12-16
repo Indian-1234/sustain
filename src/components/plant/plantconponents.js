@@ -2,10 +2,14 @@ import React from "react";
 import MonthlyConsumption from "../MonthlyConsumption";
 import EnergyLoadCard from "../EnergyLoadCard";
 import EnergyContribution from "../EnergyContribution";
-import fullimage from "../../assets/fullimage.png";
+import fullimage from "../../assets/energy.webp";
 import { useLocation, useParams } from "react-router-dom";
 import UtilityConsumptionChart from "../chartanalysys";
 import EnergyConsumptionHeatmap from "../heatmap";
+import { AgCharts } from "ag-charts-react";
+import AnomalyDetectionChart from "../anomallychart";
+import ScopeWiseCOE from "../ScopeWiseCOE";
+import ProductionTrendChart from "./production";
 
 const PlantDashboard = () => {
   const { item } = useParams();
@@ -72,7 +76,29 @@ const PlantDashboard = () => {
 
       {/* Utility Consumption Chart */}
       <UtilityConsumptionChart data1={"Utility Consumption Trend"} />
+      <div className="mt-4 rounded-lg">
       <EnergyConsumptionHeatmap/>
+      </div>
+      <div className="mt-4 rounded-lg">
+      <AnomalyDetectionChart/>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        {/* ScopeWiseCOE component */}
+        <div className="w-full h-auto bg-[#1F2937] rounded-lg p-4">
+          <ScopeWiseCOE co2={"HT & LT Overview"} />
+        </div>
+
+        {/* AnomalyDetectionChart component */}
+        <div className="w-full h-auto bg-[#1F2937] rounded-lg p-4">
+        <ProductionTrendChart data1={"Energy Consumption Contribution"} />
+        </div>
+
+        {/* EnergyContribution component */}
+        <div className="w-full h-auto bg-[#1F2937] rounded-lg p-4">
+          <EnergyContribution data1={"Scope Wise CO₂e%"} />
+        </div>
+      </div>
+
     </div>
   );
 };

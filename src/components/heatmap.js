@@ -1,62 +1,103 @@
 import React, { useState } from "react";
-import { AgCharts } from "ag-charts-react";  // Correct import
-import "ag-charts-enterprise"; // Required for heatmap and other enterprise chart features
-import getData from "./data"; // Ensure you have your data in a file called 'data.js'
+import { AgCharts } from "ag-charts-react";
+import "ag-charts-enterprise";
 
-const EnergyConsumptionHeatmap = () => {
-  // Chart options
-  const [options, setOptions] = useState({
-    data: getData(),
+const getData = () => {
+  const data = [];
+  const endDate = new Date(); // Current date
+  const startDate = new Date();
+  startDate.setDate(endDate.getDate() - 30); // Go back 30 days
+
+  for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+    for (let hour = 0; hour < 24; hour++) {
+      data.push({
+        date: d.toISOString().split("T")[0],
+        displayDate: `${d.getDate()} ${d.toLocaleString("default", { month: "short" })}`,
+        dayNumber: d.getDate(),
+        time: `${hour.toString().padStart(2, "0")}:00`,
+        consumption: Math.floor(Math.random() * (1200 - 800 + 1) + 800),
+      });
+    }
+  }
+  return data;
+};
+
+const filterDatesByGap = (data, gap) => {
+  const seenDates = new Set();
+  return data.filter((item) => {
+    const date = new Date(item.date);
+    const dayOffset = date.getDate();
+    if (dayOffset % gap === 1 && !seenDates.has(item.date)) {
+      seenDates.add(item.date);
+      return true;
+    }
+    return false;
+  });
+};
+
+const ChartExample = () => {
+  const rawData = getData();
+  const filteredDates = filterDatesByGap(rawData, 4);
+
+  const [options] = useState({
     title: {
-      text: "UK Monthly Mean Temperature (°C)",
+      text: "Energy Consumption View (Every 4th Day)",
+      color: "#ffffff", // Title text color set to white
     },
+    background: {
+      fill: "#1F2937", // Set background color to dark gray
+    },
+    data: rawData,
+    series: [
+      {
+        type: "heatmap",
+        xKey: "time",
+        xName: "Time",
+        yKey: "date",
+        yName: "Date",
+        colorKey: "consumption",
+        colorName: "Energy Consumption (kWh)",
+        label: {
+          enabled: false,
+        },
+      },
+    ],
     axes: [
       {
         type: "category",
         position: "bottom",
-        title: { text: "Month" },
+        title: { text: "Time", color: "#ffffff" }, // X-axis title text color set to white
+        label: {
+          color: "#ffffff", // X-axis label color set to white
+          rotation: 0,
+        },
       },
       {
         type: "category",
         position: "left",
-        title: { text: "Year" },
-      },
-    ],
-    series: [
-      {
-        type: "heatmap",
-        xKey: "month",
-        xName: "Month",
-        yKey: "year",
-        yName: "Year",
-        colorKey: "temperature",
-        colorName: "Temperature",
+        title: { text: "Date", color: "#ffffff" }, // Y-axis title text color set to white
         label: {
-          enabled: true,
-          formatter: ({ datum, colorKey = "" }) => {
-            const value = datum[colorKey];
-            return `${value.toFixed(0)}°C`;
+          color: "#ffffff", // Y-axis label color set to white
+          formatter: ({ value }) => {
+            const match = filteredDates.find((d) => d.date === value);
+            return match ? `${match.dayNumber} ${match.displayDate.split(" ")[1]}` : "";
           },
         },
-        colorScale: {
-          stops: [
-            { value: 4, color: "#313695" },
-            { value: 10, color: "#74add1" },
-            { value: 15, color: "#fee090" },
-            { value: 20, color: "#f46d43" },
-          ],
-        },
       },
     ],
+    color: {
+      scheme: "interpolateCool",
+      key: "consumption",
+      range: ["#ffffff", "#ff0066"], // Gradient colors
+    },
+    height: 600,
   });
 
   return (
-    <div className="bg-gray-800 rounded-lg shadow-lg p-6 mt-4" style={{ height: '100%', width: '100%' }}>
-      <div style={{ height: '100%', width: '100%' }}>
-        <AgCharts options={options} /> {/* Correct usage of AgCharts */}
-      </div>
+    <div style={{ borderRadius: '10px', overflow: 'hidden' }}>
+      <AgCharts options={options} />
     </div>
   );
 };
 
-export default EnergyConsumptionHeatmap;
+export default ChartExample;
