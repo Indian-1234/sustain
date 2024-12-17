@@ -13,25 +13,88 @@ type Person = {
 
 const initialData: Person[] = [
   {
-    id: 11158681,
+    id: 1,
     name: 'Low PF Alert',
     priority: 'high',
     type: 'user',
     userList: { mailCount: 3, messageCount: 5 },
   },
   {
-    id: 11158680,
+    id: 2,
     name: 'High Load Alert',
     priority: 'high',
     type: 'user',
     userList: { mailCount: 8, messageCount: 2 },
   },
   {
-    id: 11158679,
+    id: 3,
     name: 'Network Latency Alert',
     priority: 'medium',
     type: 'system',
     userList: { mailCount: 2, messageCount: 3 },
+  },
+  {
+    id: 4,
+    name: 'Memory Usage Alert',
+    priority: 'low',
+    type: 'system',
+    userList: { mailCount: 5, messageCount: 1 },
+  },
+  {
+    id: 5,
+    name: 'Disk Space Alert',
+    priority: 'medium',
+    type: 'user',
+    userList: { mailCount: 7, messageCount: 4 },
+  },
+  {
+    id: 6,
+    name: 'Server Down Alert',
+    priority: 'high',
+    type: 'system',
+    userList: { mailCount: 12, messageCount: 6 },
+  },
+  {
+    id: 7,
+    name: 'API Response Time Alert',
+    priority: 'high',
+    type: 'user',
+    userList: { mailCount: 4, messageCount: 8 },
+  },
+  {
+    id: 8,
+    name: 'Service Unavailable Alert',
+    priority: 'high',
+    type: 'system',
+    userList: { mailCount: 6, messageCount: 2 },
+  },
+  {
+    id: 9,
+    name: 'Security Breach Alert',
+    priority: 'high',
+    type: 'user',
+    userList: { mailCount: 10, messageCount: 5 },
+  },
+  {
+    id: 10,
+    name: 'High Memory Usage Alert',
+    priority: 'medium',
+    type: 'user',
+    userList: { mailCount: 3, messageCount: 7 },
+  },
+  {
+    id: 9,
+    name: 'Security Breach Alert',
+    priority: 'high',
+    type: 'user',
+    userList: { mailCount: 10, messageCount: 5 },
+  },
+  {
+    id: 10,
+    name: 'High Memory Usage Alert',
+    priority: 'medium',
+    type: 'user',
+    userList: { mailCount: 3, messageCount: 7 },
   },
 ];
 
@@ -123,6 +186,28 @@ const DataTable = () => {
             color: '#fff',
             fontWeight: 'bold',
           },
+        }}
+        pagination
+        paginationDisplayMode="pages"
+        positionToolbarAlertBanner="bottom"
+        muiSearchTextFieldProps={{
+          size: 'small',
+          variant: 'outlined',
+        }}
+        muiPaginationProps={{
+          color: 'secondary',
+          rowsPerPageOptions: [5,10,20],
+          shape: 'rounded',
+          variant: 'outlined',
+        }}
+        // initialState={{
+        //   pagination: {
+        //     pageSize: 5,
+        //   },
+        // }}
+        initialState= {{
+          pagination: { pageSize: 5, pageIndex: 0 },
+          showGlobalFilter: true,
         }}
       />
     </div>

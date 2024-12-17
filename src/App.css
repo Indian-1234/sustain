@@ -5,6 +5,26 @@ body {
   /* font-style: normal; */
 }
 /* src/index.css or src/App.css */
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 12px; /* Adjust to your desired width */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* Dark gray */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2d3748; /* Darker background */
+}
+
+/* Smooth Scrolling */
+.scrollable {
+  overflow: auto;
+  scroll-behavior: smooth; /* Enable smooth scrolling */
+}
+
 
 body {
   background-color: #111827; /* Set the background color of the body */

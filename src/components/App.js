@@ -8,6 +8,8 @@ import DataTableLogs from './reportdatagridtableLogs.js';
 import DataTableList from './reportdatagridtableList.js';
 import Login from './login.js';
 import PlantDashboard from './plant/plantconponents.js';
+import Dashboardassets from './plant/assetsInsights.js';
+import AssetDashboard from './assetsdetails.js';
 
 // PrivateRoute component to protect routes
 const PrivateRoute = ({ children }) => {
@@ -69,6 +71,26 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <PlantDashboard />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+         <Route
+          path="/plant/assets"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <Dashboardassets />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+          <Route
+          path="/plant/assets/:name"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <AssetDashboard />
               </Layout>
             </PrivateRoute>
           }

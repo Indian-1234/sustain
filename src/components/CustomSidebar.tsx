@@ -175,7 +175,7 @@ const Sidebar: React.FC = () => {
                   <Link
                     to={
                       item === "Portfolio Summary"
-                        ? "/" // Redirect to specific path for Portfolio Summary
+                        ? "/": item === "Asset Insights"?"/plant/assets" // Redirect to specific path for Portfolio Summary
                         : `/plant/${item}` // Default path for other items
                     }
                     state={{ name: item }} // Pass the state separately

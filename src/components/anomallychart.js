@@ -48,7 +48,7 @@ const AnomalyDetectionChart = () => {
       },
     },
     data,
-    title: { text: "Anomaly Detection", color: "white" },
+    title: { text: "Anomaly Detection", color: "#FFFFFF" },
     series: [
       { type: "bar", xKey: "date", yKey: "forecast", yName: "Forecast", stacked: true },
       { type: "bar", xKey: "date", yKey: "actual", yName: "Actual", stacked: true },
@@ -56,11 +56,11 @@ const AnomalyDetectionChart = () => {
       { type: "bar", xKey: "date", yKey: "negativeAnomaly", yName: "-ve Anomaly", stacked: true },
     ],
     axes: [
-      { type: "category", position: "bottom", title: { text: "Date", color: "white" } },
-      { type: "number", position: "left", title: { text: "kWh", color: "white" } },
+      { type: "category", position: "bottom", title: { text: "Date", color: "#FFFFFF" } },
+      { type: "number", position: "left", title: { text: "kWh", color: "#FFFFFF" } },
     ],
     background: { fill: "#1F2937" },
-    legend: { position: "bottom" },
+    legend: { position: "bottom", label: { color: "#FFFFFF" } },
     height: 370,
     tooltip: { enabled: true }, // Enables tooltips on hover
   };
