@@ -15,6 +15,7 @@ import Login from './login.js';
 import PlantDashboard from './plant/plantconponents.js';
 import Dashboardassets from './plant/assetsInsights.js';
 import AssetDashboard from './assetsdetails.js';
+import AddUserForm from './user/adduser.js'
 
 // PrivateRoute component to protect routes
 const PrivateRoute = ({ children }) => {
@@ -96,6 +97,16 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <AssetDashboard />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+         <Route
+          path="/adduser"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <AddUserForm/>
               </Layout>
             </PrivateRoute>
           }

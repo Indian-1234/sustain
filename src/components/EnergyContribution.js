@@ -36,7 +36,7 @@ function EnergyContribution({ data1 }) {
   };
 
   return (
-    <div className="bg-gray-800 rounded-lg shadow-md p-4 h-64">
+    <div className="bg-gray-800 rounded-lg shadow-md p-4 h-64 border border-gray-500">
       {/* Title */}
       <h3 className="text-lg font-semibold mb-4">{data1}</h3>
 

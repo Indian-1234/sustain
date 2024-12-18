@@ -7,30 +7,17 @@ const Dashboardassets = () => {
   const navigate = useNavigate();
 
   const assetItems = [
-    'Demo CF Boiler',
-    'Demo S. Boiler',
-    'Demo Gas Boiler',
-    'Demo Oil Boiler',
-    'Demo CT',
-    'Demo Steam Boiler',
-    'Demo Water Heater',
-    'Demo Air Compressor',
-    'Demo Generator',
-    'Demo Pump',
-    'Demo Fan',
-    'Demo AC',
-    'Demo Chiller',
-    'Demo Heater',
-    'Demo Light',
-    'Demo Valve',
-    'Demo Filter',
-    'Demo Tank',
-    'Demo Compressor',
-    'Demo Heat Exchanger',
+    'Compressed Air System',
+    'Boiler System',
+    'Cooling Tower System',
+    'Chiller Plant System',
+    'Chiller System',
+    'Conveyor System',
   ];
 
   const generateRandomData = () => {
-    return assetItems.map((item, index) => {
+    // Always select first 5 items from the asset list
+    return assetItems.slice(0, 5).map((item, index) => {
       const statuses = ['Healthy', 'Warning', 'Critical'];
       const status = statuses[Math.floor(Math.random() * statuses.length)];
 
@@ -84,17 +71,6 @@ const Dashboardassets = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [logs, setLogs] = useState(generateLogs(data));
-  const [selectedLogAsset, setSelectedLogAsset] = useState('');
-
-  const handleLogAssetChange = (e) => {
-    const selected = e.target.value;
-    setSelectedLogAsset(selected);
-    // Filter logs based on selected asset
-    const filteredLogs = generateLogs(data).filter(
-      (log) => selected === '' || log.event.includes(selected)
-    );
-    setLogs(filteredLogs);
-  };
 
   const handleAssetClick = (asset) => {
     const newData = generateRandomData().map((item) =>
@@ -175,9 +151,10 @@ const Dashboardassets = () => {
     [selectedAsset]
   );
 
+  // Ensure only 5 data points are used
   const paginatedData = useMemo(
-    () => data.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize),
-    [data, pageIndex, pageSize]
+    () => data.slice(0, 5),
+    [data]
   );
 
   return (
@@ -229,9 +206,9 @@ const Dashboardassets = () => {
               }}
             >
               <option>Select Asset</option>
-              {assetItems.map((item, index) => (
-                <option key={index} value={item}>
-                  {item}
+              {data.map((item, index) => (
+                <option key={index} value={item.name}>
+                  {item.name}
                 </option>
               ))}
             </select>
@@ -260,8 +237,6 @@ const Dashboardassets = () => {
                 muiTableBodyRowProps={({ row }) => ({
                   onClick: () => {
                     const rowData = row.original || {};
-                    console.log(rowData, 'Row Data');
-                    // Use the navigate function to redirect
                     navigate(`/plant/assets/${rowData.name}`);
                   },
                   sx: {
@@ -273,23 +248,6 @@ const Dashboardassets = () => {
                       selectedAsset?.name === row.original.name ? 'purple' : '',
                   },
                 })}
-                pagination
-                paginationDisplayMode="pages"
-                positionToolbarAlertBanner="bottom"
-                muiSearchTextFieldProps={{
-                  size: 'small',
-                  variant: 'outlined',
-                }}
-                muiPaginationProps={{
-                  color: 'secondary',
-                  rowsPerPageOptions: [5, 10, 20],
-                  shape: 'rounded',
-                  variant: 'outlined',
-                }}
-                initialState={{
-                  pagination: { pageSize: 5, pageIndex: 0 },
-                  showGlobalFilter: true,
-                }}
               />
             </div>
           </div>
@@ -310,9 +268,9 @@ const Dashboardassets = () => {
             }}
           >
             <option value="">Select Asset</option>
-            {assetItems.map((item, index) => (
-              <option key={index} value={item}>
-                {item}
+            {data.map((item, index) => (
+              <option key={index} value={item.name}>
+                {item.name}
               </option>
             ))}
           </select>

@@ -96,7 +96,7 @@ const ChartExample = () => {
   });
 
   return (
-    <div style={{ borderRadius: '10px', overflow: 'hidden' }}>
+    <div style={{ borderRadius: '10px', overflow: 'hidden' }} className='border border-gray-500'>
       <AgCharts options={options} />
     </div>
   );

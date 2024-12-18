@@ -2,7 +2,7 @@ import React from 'react';
 
 function EnergyLoadCard() {
   return (
-    <div className="bg-gray-800 shadow-md rounded-lg p-6">
+    <div className="bg-gray-800 shadow-md rounded-lg p-6 border border-gray-500">
       {/* Card Header */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-white">

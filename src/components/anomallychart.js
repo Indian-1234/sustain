@@ -100,7 +100,7 @@ const AnomalyDetectionChart = () => {
   const totalActual = data.reduce((sum, d) => sum + d.actual, 0).toFixed(2); // Calculate total Actual Value dynamically
 
   return (
-    <div className="w-full h-[500px] bg-[#1F2937] rounded-lg text-white p-4">
+    <div className="w-full h-[500px] bg-[#1F2937] rounded-lg text-white p-4 border border-gray-500">
       {/* Dropdowns for Filters */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
         <div className="flex items-center">

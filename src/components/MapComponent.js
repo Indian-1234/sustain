@@ -25,7 +25,7 @@ const MapComponent = ({ borderRadius = '10px', marginBottom = '1rem' }) => {
 
   return (
     <div
-      className="z-10 overflow-hidden bg-white shadow-lg relative" // Tailwind base classes
+      className="z-10 overflow-hidden bg-white shadow-lg relative  border border-gray-100" // Tailwind base classes
       style={{
         borderRadius: borderRadius, // Dynamic border radius
         marginBottom: marginBottom, // Dynamic margin-bottom

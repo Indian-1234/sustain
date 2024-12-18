@@ -2,7 +2,7 @@ import React from 'react';
 
 function MonthlyConsumption({ data }) {
   return (
-    <div className="bg-gray-800 rounded-lg shadow-md p-4">
+    <div className="bg-gray-800 rounded-lg shadow-md p-4 border border-gray-500">
       <h3 className="text-lg font-semibold mb-4">{data}</h3>
       <table className="w-full text-sm text-left text-gray-400">
         <thead className="text-xs text-gray-300 uppercase bg-gray-700">

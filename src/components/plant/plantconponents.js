@@ -26,7 +26,7 @@ const PlantDashboard = () => {
       <div className="overflow-x-auto overflow-y-auto h-full">
         <div className="grid grid-cols-1 sm:grid-cols-3 sm:grid-rows-2 gap-6 h-[calc(100%-50px)]">
           {/* Image Section - Full Height, First Column */}
-          <div className="row-span-2 bg-[#1F2937] rounded-lg p-4 flex flex-col shadow-lg">
+          <div className="row-span-2 bg-[#1F2937] rounded-lg p-4 flex flex-col shadow-lg border border-gray-500">
             <div className="text-lg font-semibold text-white mb-4">
               Facility Overview
             </div>
@@ -91,7 +91,7 @@ const PlantDashboard = () => {
         </div>
 
         {/* AnomalyDetectionChart component */}
-        <div className="w-full h-auto bg-[#1F2937] rounded-lg p-4">
+        <div className="w-full h-auto bg-[#1F2937] rounded-lg p-4 border border-gray-500">
           <ProductionTrendChart data1={'Energy Consumption Contribution'} />
         </div>
 
