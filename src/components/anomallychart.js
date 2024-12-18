@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { AgCharts } from "ag-charts-react";
-import "ag-charts-enterprise";
+import React, { useState, useEffect } from 'react';
+import { AgCharts } from 'ag-charts-react';
+import 'ag-charts-enterprise';
 
 const AnomalyDetectionChart = () => {
-  const [grain, setGrain] = useState("1 Day");
+  const [grain, setGrain] = useState('1 Day');
   const [threshold, setThreshold] = useState(5);
-  const [fs, setFS] = useState("FS_33");
-  const [kwh, setKWH] = useState("kWh");
-  const [gain, setGain] = useState("1 Day");
+  const [fs, setFS] = useState('FS_33');
+  const [kwh, setKWH] = useState('kWh');
+  const [gain, setGain] = useState('1 Day');
   const [data, setData] = useState([]);
 
   // Function to generate data for the last 30 days
@@ -18,9 +18,9 @@ const AnomalyDetectionChart = () => {
     for (let i = 30; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(today.getDate() - i);
-      const formattedDate = date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
+      const formattedDate = date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: '2-digit',
       });
 
       newData.push({
@@ -43,24 +43,56 @@ const AnomalyDetectionChart = () => {
   const chartOptions = {
     theme: {
       palette: {
-        fills: ["#FFCA28", "#6F8FAF", "#FF4D4D", "#00FF7F"],
-        strokes: ["#FFCA28", "#6F8FAF", "#FF4D4D", "#00FF7F"],
+        fills: ['#FFCA28', '#6F8FAF', '#FF4D4D', '#00FF7F'],
+        strokes: ['#FFCA28', '#6F8FAF', '#FF4D4D', '#00FF7F'],
       },
     },
     data,
-    title: { text: "Anomaly Detection", color: "#FFFFFF" },
+    title: { text: 'Anomaly Detection', color: '#FFFFFF' },
     series: [
-      { type: "bar", xKey: "date", yKey: "forecast", yName: "Forecast", stacked: true },
-      { type: "bar", xKey: "date", yKey: "actual", yName: "Actual", stacked: true },
-      { type: "bar", xKey: "date", yKey: "anomaly", yName: "Anomaly", stacked: true },
-      { type: "bar", xKey: "date", yKey: "negativeAnomaly", yName: "-ve Anomaly", stacked: true },
+      {
+        type: 'bar',
+        xKey: 'date',
+        yKey: 'forecast',
+        yName: 'Forecast',
+        stacked: true,
+      },
+      {
+        type: 'bar',
+        xKey: 'date',
+        yKey: 'actual',
+        yName: 'Actual',
+        stacked: true,
+      },
+      {
+        type: 'bar',
+        xKey: 'date',
+        yKey: 'anomaly',
+        yName: 'Anomaly',
+        stacked: true,
+      },
+      {
+        type: 'bar',
+        xKey: 'date',
+        yKey: 'negativeAnomaly',
+        yName: '-ve Anomaly',
+        stacked: true,
+      },
     ],
     axes: [
-      { type: "category", position: "bottom", title: { text: "Date", color: "#FFFFFF" } },
-      { type: "number", position: "left", title: { text: "kWh", color: "#FFFFFF" } },
+      {
+        type: 'category',
+        position: 'bottom',
+        title: { text: 'Date', color: '#FFFFFF' },
+      },
+      {
+        type: 'number',
+        position: 'left',
+        title: { text: 'kWh', color: '#FFFFFF' },
+      },
     ],
-    background: { fill: "#1F2937" },
-    legend: { position: "bottom", label: { color: "#FFFFFF" } },
+    background: { fill: '#1F2937' },
+    legend: { position: 'bottom', label: { color: '#FFFFFF' } },
     height: 370,
     tooltip: { enabled: true }, // Enables tooltips on hover
   };

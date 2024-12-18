@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { FaArrowRightToBracket } from "react-icons/fa6";
-import icon from "../assets/suslogo.png"; // Replace with the actual image path in your React setup
+import React, { useState } from 'react';
+import { FaArrowRightToBracket } from 'react-icons/fa6';
+import icon from '../assets/suslogo.png'; // Replace with the actual image path in your React setup
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); // Manage dropdown toggle state
 
   const handleLogout = () => {
     // Clear user-related data from localStorage
-    localStorage.removeItem("auth");
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("empId");
+    localStorage.removeItem('auth');
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('empId');
 
     // Optionally, remove cookies if you're using them
     // Cookies.remove("auth");
@@ -19,7 +19,7 @@ const Navbar = () => {
     // Cookies.remove("empId");
 
     // Redirect to login page
-    window.location.href = "/login";
+    window.location.href = '/login';
   };
 
   return (

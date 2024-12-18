@@ -54,7 +54,7 @@ const MyComponent = () => {
 
   const handleTimeChange = (e, type) => {
     const updatedTime = e.target.value;
-    
+
     if (type === 'start') {
       setStartTime(updatedTime);
     } else {
@@ -201,4 +201,3 @@ const MyComponent = () => {
 };
 
 export default MyComponent;
-

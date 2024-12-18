@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import HomePage from './homepage';
 import Layout from './layout';
 import DataTable from './DataGridTable.tsx';
@@ -65,7 +70,7 @@ function App() {
             </PrivateRoute>
           }
         />
-            <Route
+        <Route
           path="/plant/:plantName"
           element={
             <PrivateRoute>
@@ -75,7 +80,7 @@ function App() {
             </PrivateRoute>
           }
         />
-         <Route
+        <Route
           path="/plant/assets"
           element={
             <PrivateRoute>
@@ -85,7 +90,7 @@ function App() {
             </PrivateRoute>
           }
         />
-          <Route
+        <Route
           path="/plant/assets/:name"
           element={
             <PrivateRoute>

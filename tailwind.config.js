@@ -1,12 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       boxShadow: {
-        white: "0 4px 6px rgba(255, 255, 255, 0.5)", // Add a soft white shadow
+        white: '0 4px 6px rgba(255, 255, 255, 0.5)', // Add a soft white shadow
       },
     },
   },

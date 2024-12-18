@@ -1,23 +1,17 @@
-import React from "react";
-import { Pie } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  Title,
-} from "chart.js";
+import React from 'react';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-function EnergyContribution({data1}) {
+function EnergyContribution({ data1 }) {
   const data = {
-    labels: ["Bangalore", "London", "Mumbai"],
+    labels: ['Bangalore', 'London', 'Mumbai'],
     datasets: [
       {
         data: [37, 53, 10],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
         hoverOffset: 4,
       },
     ],
@@ -28,16 +22,16 @@ function EnergyContribution({data1}) {
     maintainAspectRatio: false, // Allows custom height
     plugins: {
       legend: {
-        position: "top",
+        position: 'top',
         labels: {
-          color: "#FFFFFF", // Ensures text is visible
+          color: '#FFFFFF', // Ensures text is visible
         },
       },
-    //   title: {
-    //     display: true,
-    //     text: "Energy Consumption Contribution",
-    //     color: "#FFFFFF",
-    //   },
+      //   title: {
+      //     display: true,
+      //     text: "Energy Consumption Contribution",
+      //     color: "#FFFFFF",
+      //   },
     },
   };
 

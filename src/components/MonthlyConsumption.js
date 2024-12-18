@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-function MonthlyConsumption({data}) {
+function MonthlyConsumption({ data }) {
   return (
     <div className="bg-gray-800 rounded-lg shadow-md p-4">
       <h3 className="text-lg font-semibold mb-4">{data}</h3>

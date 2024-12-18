@@ -94,7 +94,9 @@ const DataTableLogs = () => {
   );
 
   return (
-    <div className="flex-1 ml-20 p-6 overflow-y-auto">      {/* Title Section */}
+    <div className="flex-1 ml-20 p-6 overflow-y-auto">
+      {' '}
+      {/* Title Section */}
       {/* Title Section */}
       <h1 className="text-2xl font-bold mb-4 text-center">Report Logs</h1>
       <input

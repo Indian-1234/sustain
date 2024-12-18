@@ -1,5 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { FaCheckCircle, FaTimesCircle, FaPause, FaTrashAlt } from 'react-icons/fa';
+import {
+  FaCheckCircle,
+  FaTimesCircle,
+  FaPause,
+  FaTrashAlt,
+} from 'react-icons/fa';
 import { MaterialReactTable } from 'material-react-table';
 import { FaEnvelope, FaRegCommentDots } from 'react-icons/fa6';
 
@@ -8,7 +13,7 @@ type Person = {
   name: string;
   priority: string;
   type: string;
-  userList: { mailCount: number, messageCount: number };
+  userList: { mailCount: number; messageCount: number };
 };
 
 const initialData: Person[] = [
@@ -118,54 +123,75 @@ const DataTable = () => {
     setData(data.filter((item) => item.id !== row.id));
   };
 
-  const columns = useMemo(() => [
-    {
-      accessorKey: 'id',
-      header: 'ID',
-      size: 100,
-    },
-    {
-      accessorKey: 'name',
-      header: 'Name',
-      size: 200,
-    },
-    {
-      accessorKey: 'priority',
-      header: 'Priority',
-      size: 100,
-    },
-    {
-      accessorKey: 'type',
-      header: 'Type',
-      size: 100,
-    },
-    {
-      accessorKey: 'userList',
-      header: 'User List',
-      size: 150,
-      Cell: ({ row }) => (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <FaEnvelope style={{ marginRight: '8px', color: '#007BFF' }} />
-          <span>{row.original.userList.mailCount}</span>
-          <FaRegCommentDots style={{ marginLeft: '16px', marginRight: '8px', color: '#28A745' }} />
-          <span>{row.original.userList.messageCount}</span>
-        </div>
-      ),
-    },
-    {
-      accessorKey: 'actions',
-      header: 'Actions',
-      Cell: ({ row }) => (
-        <div className="flex gap-3 text-white">
-          <FaCheckCircle onClick={() => handleEnable(row.original)} className="cursor-pointer text-green-500 hover:text-green-400" />
-          <FaTimesCircle onClick={() => handleDisable(row.original)} className="cursor-pointer text-red-500 hover:text-red-400" />
-          <FaPause onClick={() => handlePause(row.original)} className="cursor-pointer text-yellow-500 hover:text-yellow-400" />
-          <FaTrashAlt onClick={() => handleDelete(row.original)} className="cursor-pointer text-gray-500 hover:text-gray-400" />
-        </div>
-      ),
-      size: 200,
-    },
-  ], [data]);
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 100,
+      },
+      {
+        accessorKey: 'name',
+        header: 'Name',
+        size: 200,
+      },
+      {
+        accessorKey: 'priority',
+        header: 'Priority',
+        size: 100,
+      },
+      {
+        accessorKey: 'type',
+        header: 'Type',
+        size: 100,
+      },
+      {
+        accessorKey: 'userList',
+        header: 'User List',
+        size: 150,
+        Cell: ({ row }) => (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <FaEnvelope style={{ marginRight: '8px', color: '#007BFF' }} />
+            <span>{row.original.userList.mailCount}</span>
+            <FaRegCommentDots
+              style={{
+                marginLeft: '16px',
+                marginRight: '8px',
+                color: '#28A745',
+              }}
+            />
+            <span>{row.original.userList.messageCount}</span>
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'actions',
+        header: 'Actions',
+        Cell: ({ row }) => (
+          <div className="flex gap-3 text-white">
+            <FaCheckCircle
+              onClick={() => handleEnable(row.original)}
+              className="cursor-pointer text-green-500 hover:text-green-400"
+            />
+            <FaTimesCircle
+              onClick={() => handleDisable(row.original)}
+              className="cursor-pointer text-red-500 hover:text-red-400"
+            />
+            <FaPause
+              onClick={() => handlePause(row.original)}
+              className="cursor-pointer text-yellow-500 hover:text-yellow-400"
+            />
+            <FaTrashAlt
+              onClick={() => handleDelete(row.original)}
+              className="cursor-pointer text-gray-500 hover:text-gray-400"
+            />
+          </div>
+        ),
+        size: 200,
+      },
+    ],
+    [data]
+  );
 
   return (
     <div className="flex-1 ml-20 p-6 overflow-y-auto">
@@ -196,7 +222,7 @@ const DataTable = () => {
         }}
         muiPaginationProps={{
           color: 'secondary',
-          rowsPerPageOptions: [5,10,20],
+          rowsPerPageOptions: [5, 10, 20],
           shape: 'rounded',
           variant: 'outlined',
         }}
@@ -205,7 +231,7 @@ const DataTable = () => {
         //     pageSize: 5,
         //   },
         // }}
-        initialState= {{
+        initialState={{
           pagination: { pageSize: 5, pageIndex: 0 },
           showGlobalFilter: true,
         }}

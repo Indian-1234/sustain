@@ -1,0 +1,25 @@
+{
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:jsx-a11y/recommended",
+      "plugin:prettier/recommended",
+      "prettier" 
+    ],
+    "plugins": ["react", "jsx-a11y", "import", "prettier"],
+    "rules": {
+      "prettier/prettier": ["error", { "endOfLine": "auto" }],
+      "no-unused-vars": "warn",
+      "react/prop-types": "off",
+      "comma-dangle": ["error", "always-multiline"], 
+      "object-curly-spacing": ["error", "always"],
+      "array-bracket-spacing": ["error", "never"],
+      "space-in-parens": ["error", "never"]
+    }
+  }
+  

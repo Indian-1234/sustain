@@ -1,17 +1,11 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  Title,
-} from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-function EnergySourceMix({data1}) {
+function EnergySourceMix({ data1 }) {
   const data = {
     labels: ['DG', 'EB', 'Solar'],
     datasets: [

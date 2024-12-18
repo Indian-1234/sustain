@@ -1,29 +1,27 @@
-import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+import React from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
-const MapComponent = ({ borderRadius = "10px", marginBottom = "1rem" }) => {
+const MapComponent = ({ borderRadius = '10px', marginBottom = '1rem' }) => {
   // Custom marker icons
   const indiaMarkerIcon = new L.Icon({
-    iconUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require('leaflet/dist/images/marker-icon-2x.png'),
     iconSize: [32, 32],
     iconAnchor: [16, 32],
     popupAnchor: [0, -32],
   });
 
   const londonMarkerIcon = new L.Icon({
-    iconUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require('leaflet/dist/images/marker-icon-2x.png'),
     iconSize: [32, 32],
     iconAnchor: [16, 32],
     popupAnchor: [0, -32],
   });
 
   // Light map layer URL
-  const lightModeTileUrl =
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-    // "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png";
-
+  const lightModeTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  // "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png";
 
   return (
     <div

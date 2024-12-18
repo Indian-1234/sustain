@@ -1,5 +1,14 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 
 const ProductionTrendChart = () => {
   const data = [
@@ -14,10 +23,10 @@ const ProductionTrendChart = () => {
   ];
 
   return (
-    <div className="w-full h-[250px]"> {/* Adjusted height */}
-          <h3 className="text-lg font-semibold mb-4">Production Trend
-          </h3>
-
+    <div className="w-full h-[250px]">
+      {' '}
+      {/* Adjusted height */}
+      <h3 className="text-lg font-semibold mb-4">Production Trend</h3>
       <ResponsiveContainer>
         <LineChart data={data}>
           <XAxis dataKey="date" tick={{ fill: 'white' }} />

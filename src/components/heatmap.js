@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { AgCharts } from "ag-charts-react";
-import "ag-charts-enterprise";
+import React, { useState } from 'react';
+import { AgCharts } from 'ag-charts-react';
+import 'ag-charts-enterprise';
 
 const getData = () => {
   const data = [];
@@ -11,10 +11,10 @@ const getData = () => {
   for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
     for (let hour = 0; hour < 24; hour++) {
       data.push({
-        date: d.toISOString().split("T")[0],
-        displayDate: `${d.getDate()} ${d.toLocaleString("default", { month: "short" })}`,
+        date: d.toISOString().split('T')[0],
+        displayDate: `${d.getDate()} ${d.toLocaleString('default', { month: 'short' })}`,
         dayNumber: d.getDate(),
-        time: `${hour.toString().padStart(2, "0")}:00`,
+        time: `${hour.toString().padStart(2, '0')}:00`,
         consumption: Math.floor(Math.random() * (1200 - 800 + 1) + 800),
       });
     }
@@ -41,22 +41,22 @@ const ChartExample = () => {
 
   const [options] = useState({
     title: {
-      text: "Energy Consumption View (Every 4th Day)",
-      color: "#ffffff", // Title text color set to white
+      text: 'Energy Consumption View (Every 4th Day)',
+      color: '#ffffff', // Title text color set to white
     },
     background: {
-      fill: "#1F2937", // Set background color to dark gray
+      fill: '#1F2937', // Set background color to dark gray
     },
     data: rawData,
     series: [
       {
-        type: "heatmap",
-        xKey: "time",
-        xName: "Time",
-        yKey: "date",
-        yName: "Date",
-        colorKey: "consumption",
-        colorName: "Energy Consumption (kWh)",
+        type: 'heatmap',
+        xKey: 'time',
+        xName: 'Time',
+        yKey: 'date',
+        yName: 'Date',
+        colorKey: 'consumption',
+        colorName: 'Energy Consumption (kWh)',
         label: {
           enabled: false,
         },
@@ -64,31 +64,33 @@ const ChartExample = () => {
     ],
     axes: [
       {
-        type: "category",
-        position: "bottom",
-        title: { text: "Time", color: "#ffffff" }, // X-axis title text color set to white
+        type: 'category',
+        position: 'bottom',
+        title: { text: 'Time', color: '#ffffff' }, // X-axis title text color set to white
         label: {
-          color: "#ffffff", // X-axis label color set to white
+          color: '#ffffff', // X-axis label color set to white
           rotation: 0,
         },
       },
       {
-        type: "category",
-        position: "left",
-        title: { text: "Date", color: "#ffffff" }, // Y-axis title text color set to white
+        type: 'category',
+        position: 'left',
+        title: { text: 'Date', color: '#ffffff' }, // Y-axis title text color set to white
         label: {
-          color: "#ffffff", // Y-axis label color set to white
+          color: '#ffffff', // Y-axis label color set to white
           formatter: ({ value }) => {
             const match = filteredDates.find((d) => d.date === value);
-            return match ? `${match.dayNumber} ${match.displayDate.split(" ")[1]}` : "";
+            return match
+              ? `${match.dayNumber} ${match.displayDate.split(' ')[1]}`
+              : '';
           },
         },
       },
     ],
     color: {
-      scheme: "interpolateCool",
-      key: "consumption",
-      range: ["#ffffff", "#ff0066"], // Gradient colors
+      scheme: 'interpolateCool',
+      key: 'consumption',
+      range: ['#ffffff', '#ff0066'], // Gradient colors
     },
     height: 600,
   });

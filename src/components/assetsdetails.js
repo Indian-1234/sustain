@@ -1,9 +1,10 @@
-import React from "react";
+import React from 'react';
 
 const AssetDashboard = () => {
   return (
-    <div className="flex-1 ml-24 p-6 overflow-y-auto  text-white"> {/* Dashboard background */}
-
+    <div className="flex-1 ml-24 p-6 overflow-y-auto  text-white">
+      {' '}
+      {/* Dashboard background */}
       <div className="grid grid-cols-12 gap-4 p-6">
         {/* Left Panel - Asset Details */}
         <div className="col-span-4 bg-gray-700 p-4 rounded-lg shadow-md flex flex-col max-h-[500px]">
