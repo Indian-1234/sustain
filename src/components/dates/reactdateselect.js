@@ -4,6 +4,7 @@ import { startOfMonth, endOfMonth, setHours, setMinutes } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import { CiCalendarDate } from "react-icons/ci";
 
 const MyComponent = () => {
   const startDate = startOfMonth(new Date());
@@ -128,12 +129,17 @@ const MyComponent = () => {
   return (
     <div className="relative">
       <div className="flex justify-between items-center">
-        <div className="text-black ml-auto mr-4 p-2">
+        <div className=" ml-auto mr-4 p-2">
           <p
             onClick={() => setIsCalendarVisible(true)}
-            className="cursor-pointer text-blue-500 hover:text-blue-700"
+            className="cursor-pointer"
           >
-            {selectedRange}
+           <div className="flex items-center space-x-2">
+      {/* Icon */}
+      <CiCalendarDate className="text-lg " color='white'/>
+      {/* Text */}
+      <span className="text-sm text-white">{selectedRange}</span>
+    </div>
           </p>
         </div>
       </div>

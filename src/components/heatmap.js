@@ -92,7 +92,7 @@ const ChartExample = () => {
       key: 'consumption',
       range: ['#ffffff', '#ff0066'], // Gradient colors
     },
-    height: 600,
+    height: 400,
   });
 
   return (

@@ -1,3 +1,4 @@
+// Navbar.js
 import React, { useState } from 'react';
 import { FaArrowRightToBracket } from 'react-icons/fa6';
 import icon from '../assets/suslogo.png'; // Replace with the actual image path in your React setup
@@ -23,18 +24,18 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-green-700 via-teal-600 to-blue-800 h-14 flex items-center justify-between px-4 shadow-gray-400 fixed top-0 left-0 w-full z-50">
+    <nav className="bg-gradient-to-r from-[#111827] via-[#1f2937] to-[#374151] h-20 py-4 flex items-center justify-between px-6 shadow-lg fixed top-0 left-0 w-full z-50 border-b border-gray-500">
       {/* Logo Section */}
-      <div className="flex items-center space-x-3">
-        <div className="bg-white rounded-full h-9 w-9 flex items-center justify-center">
+      <div className="flex items-center space-x-4">
+        <div className="bg-white rounded-full h-12 w-12 flex items-center justify-center">
           <img
             src={icon}
             alt="Sustaiabyte Logo"
-            className="h-7 w-7 object-contain"
+            className="h-10 w-10 object-contain"
           />
         </div>
         <div>
-          <span className="text-white font-semibold text-lg">OPTIBYTE</span>
+          <span className="text-white font-semibold text-xl">OPTIBYTE</span>
           <span className="text-gray-200 text-sm block leading-none">
             Energy Management
           </span>

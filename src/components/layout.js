@@ -1,19 +1,25 @@
-// Layout.js
 import React from 'react';
 import Sidebar from './CustomSidebar.tsx';
 import Navbar from './nav.js';
 
 const Layout = ({ children }) => {
   return (
-    <div className="">
+    <div className="h-screen overflow-hidden"> {/* Prevent overall page overflow */}
+      {/* Navbar Section */}
       <div className="mb-10 shadow-gray-400">
         <Navbar />
       </div>
-      <div className=" text-white">
-        <div className=" w-16 fixed top-0 left-0 z-50">
+
+      <div className="flex h-full"> {/* Use flex layout for sidebar and content */}
+        {/* Sidebar */}
+        <div className="w-16 fixed  z-50"> {/* Adjusted margin-top to account for navbar */}
           <Sidebar />
         </div>
-        <div>{children}</div>
+
+        {/* Main Content Area */}
+        <div className="mt-10 mb-10  w-full  overflow-auto"> {/* Adjust margin-left to create space for the sidebar */}
+          {children}
+        </div>
       </div>
     </div>
   );

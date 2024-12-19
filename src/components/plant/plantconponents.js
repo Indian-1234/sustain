@@ -2,7 +2,7 @@ import React from 'react';
 import MonthlyConsumption from '../MonthlyConsumption';
 import EnergyLoadCard from '../EnergyLoadCard';
 import EnergyContribution from '../EnergyContribution';
-import fullimage from '../../assets/energy.webp';
+import fullimage from '../../assets/enrgyimage.jpg';
 import { useLocation, useParams } from 'react-router-dom';
 import UtilityConsumptionChart from '../chartanalysys';
 import EnergyConsumptionHeatmap from '../heatmap';
@@ -20,7 +20,7 @@ const PlantDashboard = () => {
   return (
     <div className="flex-1 ml-24 p-6  bg-grey-700">
       {/* Header */}
-      <div className="text-xl font-bold mb-4">{plantName}</div>
+      <div className="text-xl font-bold mb-4 text-white">{plantName}</div>
 
       {/* Scrollable Grid Layout */}
       <div className="overflow-x-auto overflow-y-auto h-full">

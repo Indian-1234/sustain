@@ -1,5 +1,6 @@
 import React from 'react';
 import boiler from '../assets/boiler.png'
+
 import { FaBalanceScale, FaTachometerAlt, FaWeight } from 'react-icons/fa';
 
 const AssetDashboard = () => {

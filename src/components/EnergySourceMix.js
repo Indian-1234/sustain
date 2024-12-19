@@ -39,7 +39,7 @@ function EnergySourceMix({ data1 }) {
   return (
     <div className="bg-gray-800 shadow-md rounded-lg p-6 border border-gray-500">
       {/* Component Title */}
-      <h3 className="text-lg font-semibold mb-4">{data1}</h3>
+      <h3 className="text-lg font-semibold mb-4 text-white">{data1}</h3>
 
       {/* Chart with controlled size */}
       <div className="h-40">

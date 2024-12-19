@@ -66,7 +66,8 @@ const UtilityConsumptionChart = ({ data1 }) => {
   return (
     <div className="bg-gray-800 rounded-lg shadow-lg p-6 mt-4 border border-gray-500">
       <h2 className="text-lg font-bold text-white mb-6">{data1}</h2>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={200}>
+        {/* Adjusted height to 200 */}
         <BarChart data={data}>
           <XAxis dataKey="date" stroke="#ffffff" />
           <YAxis type="number" domain={[0, 'dataMax']} stroke="#ffffff" />

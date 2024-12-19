@@ -130,7 +130,7 @@ const Sidebar: React.FC = () => {
   return (
     <div
       ref={sidebarRef}
-      className="h-screen w-24 bg-gray-900 flex flex-col justify-between py-4 relative mt-20"
+      className="h-screen w-24 bg-gray-900 flex flex-col justify-between py-4 relative mt-10 border-t border-r border-gray-500 rounded-tr-3xl p-4"
     >
       {/* Top Section */}
       <div>
@@ -186,7 +186,7 @@ const Sidebar: React.FC = () => {
                         } cursor-pointer hover:bg-green-400`}
                       onClick={() => handlePlantSelect(item)} // Handle item click
                     >
-                      <span className="text-sm">{item}</span>
+                      <span className="text-sm text-white">{item}</span>
                       {item === "Mumbai Plant" && <FaEllipsisV className="text-gray-400" />}
                     </div>
                   </Link>

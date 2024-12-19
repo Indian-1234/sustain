@@ -13,47 +13,48 @@ import {
 const data = [
   {
     date: 'Dec 01',
-    'Mumbai - kWh': 14.7,
-    'Banglore - kWh': 7.1,
-    'London - kg': 2.5,
+    'Mumbai - kWh': 14.5,
+    'Banglore - kWh': 7.3,
+    'London - kg': 2.6,
   },
   {
     date: 'Dec 02',
-    'Mumbai - kWh': 15.3,
-    'Banglore - kWh': 7.6,
-    'London - kg': 2.8,
+    'Mumbai - kWh': 15.8,
+    'Banglore - kWh': 7.9,
+    'London - kg': 2.3,
   },
   {
     date: 'Dec 03',
-    'Mumbai - kWh': 15.8,
-    'Banglore - kWh': 7.9,
-    'London - kg': 2.1,
+    'Mumbai - kWh': 16.4,
+    'Banglore - kWh': 8.2,
+    'London - kg': 2.7,
   },
   {
     date: 'Dec 04',
-    'Mumbai - kWh': 16.4,
-    'Banglore - kWh': 8.1,
-    'London - kg': 1.8,
-  },
-  {
-    date: 'Dec 05',
     'Mumbai - kWh': 15.2,
-    'Banglore - kWh': 8.5,
+    'Banglore - kWh': 8.0,
     'London - kg': 2.0,
   },
   {
+    date: 'Dec 05',
+    'Mumbai - kWh': 16.9,
+    'Banglore - kWh': 8.7,
+    'London - kg': 1.8,
+  },
+  {
     date: 'Dec 06',
-    'Mumbai - kWh': 16.0,
-    'Banglore - kWh': 8.3,
-    'London - kg': 1.7,
+    'Mumbai - kWh': 14.9,
+    'Banglore - kWh': 7.8,
+    'London - kg': 2.2,
   },
   {
     date: 'Dec 07',
-    'Mumbai - kWh': 16.7,
-    'Banglore - kWh': 8.6,
+    'Mumbai - kWh': 16.1,
+    'Banglore - kWh': 8.5,
     'London - kg': 1.9,
   },
 ];
+
 
 const PlantWiseConsumptionChart = () => {
   return (
@@ -61,7 +62,7 @@ const PlantWiseConsumptionChart = () => {
       <h2 className="text-lg font-bold text-white mb-6">
         Plant Wise Consumption Trend
       </h2>
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data}>
           <XAxis dataKey="date" stroke="#ffffff" />
           <YAxis type="number" domain={[0, 'dataMax']} stroke="#ffffff" />

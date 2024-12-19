@@ -4,6 +4,14 @@ body {
   /* font-weight: 100; */
   /* font-style: normal; */
 }
+/* Override default NProgress styles */
+/* Customize the NProgress bar height and color */
+#nprogress .bar {
+  background: #4caf50 !important; /* Green color */
+  height: 3px !important; /* Adjust height (e.g., 6px) */
+}
+
+
 /* src/index.css or src/App.css */
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -18,7 +26,9 @@ body {
 ::-webkit-scrollbar-track {
   background: #2d3748; /* Darker background */
 }
-
+h2,h3,h1{
+  color: white;
+}
 /* Smooth Scrolling */
 .scrollable {
   overflow: auto;

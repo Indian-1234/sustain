@@ -104,13 +104,21 @@ const AddUserForm = () => {
 
         {/* Footer Buttons */}
         <div className="flex justify-end mt-6 gap-4">
-          <button className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none">
-            Cancel
-          </button>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none">
-            Save
-          </button>
-        </div>
+  {/* Cancel Button */}
+  <button
+    onClick={() => window.history.back()} // Navigate back to the previous page
+    className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none"
+  >
+    Cancel
+  </button>
+
+  <button
+    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none"
+  >
+    Save
+  </button>
+</div>
+
       </div>
     </div>
     

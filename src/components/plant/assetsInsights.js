@@ -165,10 +165,10 @@ const Dashboardassets = () => {
         </h1>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="col-span-2 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-slate-800 rounded-lg p-6 flex flex-col items-center justify-center h-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
+        <div className="col-span-2 space-y-4 ">
+          <div className="grid grid-cols-2 gap-4 ">
+            <div className="bg-slate-800 rounded-lg p-6 flex flex-col items-center justify-center h-full border border-gray-500">
               <h2 className="text-lg font-semibold mb-2">Asset Health</h2>
               <div className="flex items-center text-4xl font-bold">
                 <span className="text-red-500 mr-2">
@@ -179,7 +179,7 @@ const Dashboardassets = () => {
               <p className="text-gray-400 mt-2">Assets are unhealthy</p>
             </div>
 
-            <div className="bg-slate-800 rounded-lg p-6 flex flex-col items-center justify-center h-full">
+            <div className="bg-slate-800 rounded-lg p-6 flex flex-col items-center justify-center h-full border border-gray-500">
               <h2 className="text-lg font-semibold mb-2">Asset Insights</h2>
               <div className="text-4xl font-bold text-blue-400">
                 {data.reduce((sum, item) => sum + item.critical, 0)}
@@ -191,7 +191,7 @@ const Dashboardassets = () => {
             </div>
           </div>
 
-          <div className="bg-slate-800 rounded-lg p-6">
+          <div className="bg-slate-800 rounded-lg p-6 border border-gray-500">
             <h2 className="text-lg font-semibold mb-4">Asset Details</h2>
             <select
               className="w-full p-2 bg-slate-700 text-white rounded-md focus:outline-none mb-4"
@@ -253,7 +253,7 @@ const Dashboardassets = () => {
           </div>
         </div>
 
-        <div className="bg-slate-800 rounded-lg p-6 h-[690px] flex flex-col">
+        <div className="bg-slate-800 rounded-lg p-6 h-[690px] flex flex-col border border-gray-500">
           <h2 className="text-lg font-semibold mb-4">Asset Event Log</h2>
           <select
             className="w-full p-2 bg-slate-700 text-white rounded-md focus:outline-none mb-4"
