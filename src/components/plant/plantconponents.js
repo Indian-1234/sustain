@@ -44,7 +44,7 @@ const PlantDashboard = () => {
 
           {/* First Row, Second Column */}
           <div className="bg-[#1F2937] rounded-lg shadow-lg p-4">
-            <MonthlyConsumption data={"Today's Plant Consumption"} />
+            <MonthlyConsumption data={"Today's Site Consumption"} />
             <div className="text-xs text-gray-400 mt-2 text-right">
               Dec 13, 2024 00:00 - Dec 13, 2024 23:59
             </div>
@@ -52,7 +52,7 @@ const PlantDashboard = () => {
 
           {/* First Row, Third Column */}
           <div className="bg-[#1F2937] rounded-lg shadow-lg p-4">
-            <MonthlyConsumption data={'Monthly Plant Consumption'} />
+            <MonthlyConsumption data={'Monthly Site Consumption'} />
             <div className="text-xs text-gray-400 mt-2 text-right">
               Nov 13, 2024 00:00 - Dec 13, 2024 23:59
             </div>

@@ -154,7 +154,6 @@ const Sidebar: React.FC = () => {
                 <h1 className="text-lg font-semibold">Dashboard</h1>
                 <FaSort className="text-gray-400 cursor-pointer mr-10" />
               </div>
-
               {/* Cancel Icon - Red color */}
               <div
                 className="absolute top-4 right-4 text-red-500 cursor-pointer"
@@ -162,7 +161,6 @@ const Sidebar: React.FC = () => {
               >
                 <FaTimes className="text-2xl" />
               </div>
-
               {/* Dashboard List */}
               <div className="space-y-4">
                 {[
@@ -285,7 +283,6 @@ const Sidebar: React.FC = () => {
                   </Link>
                 </li>
               </ul>
-
               <button className="mt-4 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
                 + Add New Alert
               </button>

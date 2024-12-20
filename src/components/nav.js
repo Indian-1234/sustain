@@ -1,7 +1,7 @@
 // Navbar.js
 import React, { useState } from 'react';
 import { FaArrowRightToBracket } from 'react-icons/fa6';
-import icon from '../assets/suslogo.png'; // Replace with the actual image path in your React setup
+import icon from '../assets/submark.webp'; // Replace with the actual image path in your React setup
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); // Manage dropdown toggle state
@@ -27,7 +27,7 @@ const Navbar = () => {
     <nav className="bg-gradient-to-r from-[#111827] via-[#1f2937] to-[#374151] h-20 py-4 flex items-center justify-between px-6 shadow-lg fixed top-0 left-0 w-full z-50 border-b border-gray-500">
       {/* Logo Section */}
       <div className="flex items-center space-x-4">
-        <div className="bg-white rounded-full h-12 w-12 flex items-center justify-center">
+        <div className=" rounded-full h-12 w-12 flex items-center justify-center">
           <img
             src={icon}
             alt="Sustaiabyte Logo"
