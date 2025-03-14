@@ -10,7 +10,7 @@ import { AgCharts } from 'ag-charts-react';
 import AnomalyDetectionChart from '../anomallychart';
 import ScopeWiseCOE from '../ScopeWiseCOE';
 import ProductionTrendChart from './production';
-
+ 
 const PlantDashboard = () => {
   const { item } = useParams();
   const location = useLocation(); // Access location object
