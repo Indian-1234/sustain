@@ -2,7 +2,7 @@ import React from 'react';
 import MonthlyConsumption from '../MonthlyConsumption';
 import EnergyLoadCard from '../EnergyLoadCard';
 import EnergyContribution from '../EnergyContribution';
-import fullimage from '../../assets/industry.jpg';
+import fullimage from '../../assets/industrialPic.jpg';
 import { useLocation, useParams } from 'react-router-dom';
 import UtilityConsumptionChart from '../chartanalysys';
 import EnergyConsumptionHeatmap from '../heatmap';
