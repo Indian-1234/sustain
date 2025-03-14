@@ -10,7 +10,7 @@ const Dashboardassets = () => {
     'Compressed Air System',
     'Boiler System',
     'Cooling Tower System',
-    'Chiller Plant System',
+    'Chiller Location System',
     'Chiller System',
     'Conveyor System',
   ];

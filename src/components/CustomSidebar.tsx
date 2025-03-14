@@ -165,9 +165,9 @@ const Sidebar: React.FC = () => {
               <div className="space-y-4">
                 {[
                   "Portfolio Summary",
-                  "Mumbai Plant",
-                  "Banglore Plant",
-                  "London Plant",
+                  "Mumbai Location",
+                  "Banglore Location",
+                  "London Location",
                   "Asset Insights",
                 ].map((item, index) => (
                   <Link
@@ -185,7 +185,7 @@ const Sidebar: React.FC = () => {
                       onClick={() => handlePlantSelect(item)} // Handle item click
                     >
                       <span className="text-sm text-white">{item}</span>
-                      {item === "Mumbai Plant" && <FaEllipsisV className="text-gray-400" />}
+                      {item === "Mumbai Location" && <FaEllipsisV className="text-gray-400" />}
                     </div>
                   </Link>
                 ))}
