@@ -279,7 +279,7 @@ const WTPFirePumpMonitoringDashboard = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Header */}
-      {/* <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 shadow-md">
+      <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 shadow-md">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <div className="flex items-center">
@@ -299,7 +299,7 @@ const WTPFirePumpMonitoringDashboard = () => {
             </button>
           </div>
         </div>
-      </header> */}
+      </header>
 
       <div className="container mx-auto px-4 py-6">
       <center className='mb-6 text-blue'><b className='mb-6'>Water Treatment Plant DashBoard</b></center>

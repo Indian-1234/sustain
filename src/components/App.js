@@ -21,6 +21,9 @@ import AssetDashboard from './assetsdetails.js';
 import AddUserForm from './user/adduser.js';
 import STPMonitoringDashboard from './stp/stp.jsx';
 import WTPFirePumpMonitoringDashboard from './stp/wtp.jsx';
+import LiftMonitoringSystem from './stp/lift.jsx';
+import DgUpsMonitoringDashboard from './stp/dgups.jsx';
+import TransformerMonitoringDashboard from './stp/transforer.jsx';
 
 // PrivateRoute component to protect routes
 const PrivateRoute = ({ children }) => {
@@ -106,6 +109,36 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <DataTableList />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/lift"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <LiftMonitoringSystem />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dgups"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <DgUpsMonitoringDashboard />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/transformer"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <TransformerMonitoringDashboard />
               </Layout>
             </PrivateRoute>
           }

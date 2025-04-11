@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
         </div>
 
         {/* Main Content Area */}
-        <div className="mt-10 mb-10  w-full  overflow-auto"> {/* Adjust margin-left to create space for the sidebar */}
+        <div className="mt-10 mb-10  w-full  overflow-auto ml-24"> {/* Adjust margin-left to create space for the sidebar */}
           {children}
         </div>
       </div>

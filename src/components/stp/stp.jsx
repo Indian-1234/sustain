@@ -134,7 +134,7 @@ const STPMonitoringDashboard = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Header */}
-      {/* <header className="bg-blue-600 text-white p-4 shadow-md">
+      <header className="bg-blue-600 text-white p-4 shadow-md">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">STP Monitoring System</h1>
           <div className="flex items-center space-x-6">
@@ -148,7 +148,7 @@ const STPMonitoringDashboard = () => {
             </button>
           </div>
         </div>
-      </header> */}
+      </header>
 
       <div className="container mx-auto px-4 py-6">
         <center className='mb-6 text-blue'><b className='mb-2 text-blue'>STP MONITORING DASHBOARD</b></center>
