@@ -14,11 +14,16 @@ import {
 import { FaPlus, FaSort } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import {  FaTint } from "react-icons/fa";
+import { GiWaterRecycling } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 
 type PopupName = "alerts" | "design" | "users" | null;
 type IconName = "cog" | "leaf" | "file" | "palette" | "user" | "sun" | "hand" | null;
 
 const Sidebar: React.FC = () => {
+  const navigate = useNavigate();
+
   const [activePopup, setActivePopup] = useState<PopupName>(null);
   const [activeIcon, setActiveIcon] = useState<IconName>(null);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
@@ -406,6 +411,23 @@ const Sidebar: React.FC = () => {
             </div>
           )}
 
+  {/* WTP Icon */}
+  <div
+    className={`flex flex-col items-center cursor-pointer "text-gray-500"}`}
+    onClick={() => navigate("/wtp")}
+    >
+    <FaTint className="text-xl text-gray-500" />
+    <p className="text-xs mt-1 text-gray-500">WTP</p>
+  </div>
+
+  {/* STP Icon */}
+  <div
+    className={`flex flex-col items-center cursor-pointer "text-gray-500"}`}
+    onClick={() => navigate("/stp")}
+    >
+    <GiWaterRecycling className="text-xl text-gray-500" />
+    <p className="text-xs mt-1 text-gray-500">STP</p>
+</div>
         </div>
       </div>
 
