@@ -19,6 +19,8 @@ import PlantDashboard from './plant/plantconponents.js';
 import Dashboardassets from './plant/assetsInsights.js';
 import AssetDashboard from './assetsdetails.js';
 import AddUserForm from './user/adduser.js';
+import STPMonitoringDashboard from './stp/stp.jsx';
+import WTPFirePumpMonitoringDashboard from './stp/wtp.jsx';
 
 // PrivateRoute component to protect routes
 const PrivateRoute = ({ children }) => {
@@ -74,6 +76,26 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <DataTable />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+         <Route
+          path="/stp"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <STPMonitoringDashboard />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+          <Route
+          path="/wtp"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <WTPFirePumpMonitoringDashboard />
               </Layout>
             </PrivateRoute>
           }
