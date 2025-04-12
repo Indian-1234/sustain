@@ -33,7 +33,7 @@ const qualityParameters = [
   { name: 'pH Level', value: 7.2, min: 6.5, max: 8.5, unit: 'pH' },
   { name: 'Chlorine', value: 1.8, min: 0.5, max: 2.0, unit: 'mg/L' },
   { name: 'Turbidity', value: 0.4, min: 0, max: 1.0, unit: 'NTU' },
-  { name: 'Dissolved Oxygen', value: 6.5, min: 5.0, max: 8.0, unit: 'mg/L' },
+  // { name: 'Dissolved Oxygen', value: 6.5, min: 5.0, max: 8.0, unit: 'mg/L' },
   { name: 'TDS', value: 175, min: 0, max: 500, unit: 'mg/L' }
 ];
 

@@ -16,7 +16,7 @@ const generateData = () => {
     data.push({
       time: time.toLocaleTimeString(),
       temperature: Math.floor(65 + Math.random() * 25),
-      voltage: Math.floor(220 + Math.random() * 20),
+      voltage: Math.floor(415 + Math.random() * 10),
       current: Math.floor(95 + Math.random() * 10),
       oilLevel: Math.floor(75 + Math.random() * 15),
       efficiency: Math.floor(90 + Math.random() * 8),
@@ -124,14 +124,14 @@ const TransformerMonitoringDashboard = () => {
               <p className="text-gray-500 ml-2 mb-1">nominal</p>
             </div>
             <div className="mt-2 flex items-center">
-              <span className="text-gray-500 text-sm">200V</span>
+              <span className="text-gray-500 text-sm">390V</span>
               <div className="flex-grow mx-2 bg-gray-200 rounded-full h-2">
                 <div 
                   className="bg-yellow-500 h-2 rounded-full" 
-                  style={{ width: `${((latest.voltage - 200) / 50) * 100}%` }}
-                />
+                  style={{ width: `${((latest.voltage - 415) / 9) * 100}%` }}
+                  />
               </div>
-              <span className="text-gray-500 text-sm">250V</span>
+              <span className="text-gray-500 text-sm">430V</span>
             </div>
           </div>
           

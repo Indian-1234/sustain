@@ -20,8 +20,13 @@ const STPMonitoringDashboard = () => {
     cod: 85,
     tss: 35,
     temperature: 24.5,
-    flow: 125.5, // m³/hr
+    flow: 125.5,
+    tds: 400, // Total Dissolved Solids
+    turbidity: 3.5, // NTU
+    inflow: 130.0, // m³/hr
+    outflow: 125.0, // m³/hr
   });
+  
   const [alerts, setAlerts] = useState([
     { id: 1, level: 'warning', message: 'DO level below threshold in Aeration Tank 2', time: '10:15 AM', resolved: false },
     { id: 2, level: 'critical', message: 'Pump P-102 abnormal vibration detected', time: '09:45 AM', resolved: false },
@@ -156,67 +161,38 @@ const STPMonitoringDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           {/* Real-time Parameters */}
           <div className="bg-white p-4 rounded-lg shadow">
-            <h2 className="text-lg font-semibold mb-4 text-black flex items-center text-black">
-              <Activity className="h-5 w-5 mr-2 text-blue-600" />
-              Real-time Parameters
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-blue-50 p-3 rounded flex justify-between items-center">
-                <div>
-                  <span className="text-sm text-gray-500">pH</span>
-                  <p className="text-xl font-bold">{realTimeParams.pH}</p>
-                </div>
-                <div className={`text-lg ${realTimeParams.pH >= 6.5 && realTimeParams.pH <= 8.5 ? 'text-green-500' : 'text-red-500'}`}>
-                  {realTimeParams.pH >= 6.5 && realTimeParams.pH <= 8.5 ? <Check /> : <AlertCircle />}
-                </div>
-              </div>
-              <div className="bg-blue-50 p-3 rounded flex justify-between items-center">
-                <div>
-                  <span className="text-sm text-gray-500">DO (mg/L)</span>
-                  <p className="text-xl font-bold">{realTimeParams.do}</p>
-                </div>
-                <div className={`text-lg ${realTimeParams.do >= 4 ? 'text-green-500' : 'text-red-500'}`}>
-                  {realTimeParams.do >= 4 ? <Check /> : <AlertCircle />}
-                </div>
-              </div>
-              <div className="bg-blue-50 p-3 rounded flex justify-between items-center">
-                <div>
-                  <span className="text-sm text-gray-500">BOD (mg/L)</span>
-                  <p className="text-xl font-bold">{realTimeParams.bod}</p>
-                </div>
-                <div className={`text-lg ${realTimeParams.bod <= 30 ? 'text-green-500' : 'text-red-500'}`}>
-                  {realTimeParams.bod <= 30 ? <Check /> : <AlertCircle />}
-                </div>
-              </div>
-              <div className="bg-blue-50 p-3 rounded flex justify-between items-center">
-                <div>
-                  <span className="text-sm text-gray-500">COD (mg/L)</span>
-                  <p className="text-xl font-bold">{realTimeParams.cod}</p>
-                </div>
-                <div className={`text-lg ${realTimeParams.cod <= 100 ? 'text-green-500' : 'text-red-500'}`}>
-                  {realTimeParams.cod <= 100 ? <Check /> : <AlertCircle />}
-                </div>
-              </div>
-              <div className="bg-blue-50 p-3 rounded flex justify-between items-center">
-                <div>
-                  <span className="text-sm text-gray-500">TSS (mg/L)</span>
-                  <p className="text-xl font-bold">{realTimeParams.tss}</p>
-                </div>
-                <div className={`text-lg ${realTimeParams.tss <= 50 ? 'text-green-500' : 'text-red-500'}`}>
-                  {realTimeParams.tss <= 50 ? <Check /> : <AlertCircle />}
-                </div>
-              </div>
-              <div className="bg-blue-50 p-3 rounded flex justify-between items-center">
-                <div>
-                  <span className="text-sm text-gray-500">Flow (m³/hr)</span>
-                  <p className="text-xl font-bold">{realTimeParams.flow}</p>
-                </div>
-                <div className="text-lg text-green-500">
-                  <Check />
-                </div>
-              </div>
-            </div>
-          </div>
+  <h2 className="text-lg font-semibold mb-4 text-black flex items-center">
+    <Activity className="h-5 w-5 mr-2 text-blue-600" />
+    Real-time Parameters
+  </h2>
+  <div className="grid grid-cols-2 gap-4">
+    {/* Existing params */}
+    {[
+      { label: 'pH', value: realTimeParams.pH, condition: realTimeParams.pH >= 6.5 && realTimeParams.pH <= 8.5 },
+      { label: 'DO (mg/L)', value: realTimeParams.do, condition: realTimeParams.do >= 4 },
+      { label: 'BOD (mg/L)', value: realTimeParams.bod, condition: realTimeParams.bod <= 30 },
+      { label: 'COD (mg/L)', value: realTimeParams.cod, condition: realTimeParams.cod <= 100 },
+      { label: 'TSS (mg/L)', value: realTimeParams.tss, condition: realTimeParams.tss <= 50 },
+      { label: 'Flow (m³/hr)', value: realTimeParams.flow, condition: true },
+      // New parameters
+      { label: 'TDS (mg/L)', value: realTimeParams.tds, condition: realTimeParams.tds <= 500 },
+      { label: 'Turbidity (NTU)', value: realTimeParams.turbidity, condition: realTimeParams.turbidity <= 5 },
+      { label: 'Inflow (m³/hr)', value: realTimeParams.inflow, condition: true },
+      { label: 'Outflow (m³/hr)', value: realTimeParams.outflow, condition: true },
+    ].map((param, idx) => (
+      <div key={idx} className="bg-blue-50 p-3 rounded flex justify-between items-center">
+        <div>
+          <span className="text-sm text-gray-500">{param.label}</span>
+          <p className="text-xl font-bold">{param.value}</p>
+        </div>
+        <div className={`text-lg ${param.condition ? 'text-green-500' : 'text-red-500'}`}>
+          {param.condition ? <Check /> : <AlertCircle />}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
 
           {/* Tank Levels */}
           <div className="bg-white p-4 rounded-lg shadow">

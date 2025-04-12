@@ -42,7 +42,8 @@ const DgMonitoringDashboard = () => {
       runtime: Math.floor(120 + Math.random() * 60),
       oilPressure: Math.floor(40 + Math.random() * 15),
       frequency: 49.8 + Math.random() * 0.4,
-      voltage: 220 + Math.random() * 10 - 5,
+      voltage: 415 + Math.random() * 10 - 5,
+      sec: (Math.random() * 1.5 + 2.5).toFixed(2), // Random SEC between 2.5 and 4.0
       fuelConsumptionRate: 10 + Math.random() * 5,
       efficiency: 85 + Math.random() * 10,
       currentPhases: {
@@ -361,7 +362,106 @@ const DgMonitoringDashboard = () => {
               </div>
             </div>
           </div>
+{/* KW Produced */}
+<div className="bg-white rounded-lg shadow p-4">
+  <div className="flex justify-between items-center mb-2">
+    <h3 className="text-gray-700 font-medium">KW Produced</h3>
+    <Zap size={20} className="text-yellow-500" />
+  </div>
+  <div className="flex items-end">
+    <div className="text-3xl font-bold text-blue-600">
+      {(dgData.loadPercentage * 5).toFixed(1)} kW
+    </div>
+  </div>
+  <div className="text-sm text-gray-500 mt-2">
+    {dgData.loadPercentage}% of capacity
+  </div>
+  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+    <div 
+      className="h-2.5 rounded-full bg-blue-500" 
+      style={{ width: `${dgData.loadPercentage}%` }}
+    ></div>
+  </div>
+</div>
 
+{/* KW Produced */}
+<div className="bg-white rounded-lg shadow p-4">
+  <div className="flex justify-between items-center mb-2">
+    <h3 className="text-gray-700 font-medium">KW Produced</h3>
+    <Zap size={20} className="text-yellow-500" />
+  </div>
+  <div className="flex items-end">
+    <div className="text-3xl font-bold text-blue-600">
+      {(dgData.loadPercentage * 5).toFixed(1)} kW
+    </div>
+  </div>
+  <div className="text-sm text-gray-500 mt-2">
+    {dgData.loadPercentage}% of capacity
+  </div>
+  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+    <div 
+      className="h-2.5 rounded-full bg-blue-500" 
+      style={{ width: `${dgData.loadPercentage}%` }}
+    ></div>
+  </div>
+</div>
+
+{/* Specific Energy Consumption */}
+<div className="bg-white rounded-lg shadow p-4">
+  <div className="flex justify-between items-center mb-2">
+    <h3 className="text-gray-700 font-medium">SEC</h3>
+    <Gauge size={20} className="text-green-500" />
+  </div>
+  <div className="flex items-end">
+    <div className="text-3xl font-bold" style={{ 
+      color: dgData.sec > 4 ? '#f44336' : 
+             dgData.sec > 3.5 ? '#ff9800' : '#4caf50' 
+    }}>
+      {dgData.sec || 3} kW/L
+    </div>
+  </div>
+  <div className="text-sm text-gray-500 mt-2">
+    Target: 3.5 kW/L
+  </div>
+  <div className="flex justify-between text-xs text-gray-500 mt-1">
+    <span>Poor</span>
+    <span>Good</span>
+  </div>
+  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+    <div 
+      className="h-2.5 rounded-full" 
+      style={{ 
+        width: `${(5 - (dgData.sec || 3)) / 2 * 100}%`, 
+        backgroundColor: dgData.sec > 4 ? '#f44336' : 
+                         dgData.sec > 3.5 ? '#ff9800' : '#4caf50'
+      }}
+    ></div>
+  </div>
+</div>
+
+{/* Flow Rate */}
+<div className="bg-white rounded-lg shadow p-4">
+  <div className="flex justify-between items-center mb-2">
+    <h3 className="text-gray-700 font-medium">Flow Rate</h3>
+    <Wind size={20} className="text-blue-500" />
+  </div>
+  <div className="flex items-end">
+    <div className="text-3xl font-bold text-blue-600">
+      {dgData.flowRate || 25} L/min
+    </div>
+  </div>
+  <div className="text-sm text-gray-500 mt-2">
+    Normal range: 20-30 L/min
+  </div>
+  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+    <div 
+      className="h-2.5 rounded-full bg-blue-500" 
+      style={{ 
+        width: `${((dgData.flowRate || 25) / 40) * 100}%`
+      }}
+    ></div>
+  </div>
+</div>
           {/* Oil Pressure */}
           <div className="bg-white rounded-lg shadow p-4">
             <div className="flex justify-between items-center mb-2">
@@ -374,11 +474,11 @@ const DgMonitoringDashboard = () => {
                   color: dgData.oilPressure < 30 ? '#f44336' : 
                          dgData.oilPressure < 35 ? '#ff9800' : '#4caf50' 
                 }}>
-                {dgData.oilPressure} PSI
+                {dgData.oilPressure} Kg/cm2
               </div>
             </div>
             <div className="text-sm text-gray-500 mt-2">
-              Recommended range: 35-55 PSI
+              Recommended range: 35-55 Kg/cm2
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
               <div 
@@ -533,7 +633,7 @@ const DgMonitoringDashboard = () => {
         </div>
 
         {/* Advanced Metrics */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="w-full gap-6 mb-6">
           {/* Efficiency Trends */}
           <div className="bg-white rounded-lg shadow p-4">
             <h3 className="text-gray-700 font-medium mb-4">Efficiency Trends</h3>
@@ -568,7 +668,7 @@ const DgMonitoringDashboard = () => {
           </div>
 
           {/* Load Distribution Chart */}
-          <div className="bg-white rounded-lg shadow p-4">
+          {/* <div className="bg-white rounded-lg shadow p-4">
             <h3 className="text-gray-700 font-medium mb-4">Load Distribution</h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -593,7 +693,7 @@ const DgMonitoringDashboard = () => {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Maintenance History */}

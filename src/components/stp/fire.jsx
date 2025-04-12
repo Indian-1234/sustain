@@ -12,7 +12,7 @@ const generateMockData = () => {
       time: time.toLocaleTimeString(),
       pressure: Math.floor(Math.random() * 30) + 70, // 70-100 PSI
       flowRate: Math.floor(Math.random() * 15) + 35, // 35-50 GPM
-      temperature: Math.floor(Math.random() * 10) + 75, // 75-85°F
+      temperature: parseFloat((((Math.floor(Math.random() * 10) + 75) - 32) * 5 / 9).toFixed(1)), // ~23.9°C to ~29.4°C
       batteryLevel: Math.floor(Math.random() * 20) + 80, // 80-100%
     });
   }
@@ -171,7 +171,7 @@ const FirePumpMonitoring = () => {
                   <div className="text-sm text-gray-500">Temperature</div>
                   <div className="text-xl font-bold flex items-center">
                     <Thermometer size={20} className="mr-1 text-red-500" />
-                    {pumpData[pumpData.length - 1].temperature}°F
+                    {pumpData[pumpData.length - 1].temperature}°C
                   </div>
                 </div>
                 <div className="bg-gray-100 p-3 rounded-md">
