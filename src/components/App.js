@@ -20,10 +20,17 @@ import Dashboardassets from './plant/assetsInsights.js';
 import AssetDashboard from './assetsdetails.js';
 import AddUserForm from './user/adduser.js';
 import STPMonitoringDashboard from './stp/stp.jsx';
-import WTPFirePumpMonitoringDashboard from './stp/wtp.jsx';
+import WTPFirePumpMonitoringDashboard from './stp/wtp1.jsx';
 import LiftMonitoringSystem from './stp/lift.jsx';
 import DgUpsMonitoringDashboard from './stp/dgups.jsx';
 import TransformerMonitoringDashboard from './stp/transforer.jsx';
+import BasementVentilationDashboard from './stp/air.tsx';
+import WTPMonitoringDashboard from './stp/wtp.jsx';
+import FirePumpMonitoring from './stp/fire.jsx';
+import AHUMonitoringDashboard from './stp/ahu.jsx';
+import UpsMonitoringDashboard from './stp/ups.jsx';
+import DgMonitoringDashboard from './stp/dg.jsx';
+import GridComponent from './stp/chiller.jsx';
 
 // PrivateRoute component to protect routes
 const PrivateRoute = ({ children }) => {
@@ -98,17 +105,37 @@ function App() {
           element={
             <PrivateRoute>
               <Layout>
-                <WTPFirePumpMonitoringDashboard />
+                <WTPMonitoringDashboard />
               </Layout>
             </PrivateRoute>
           }
         />
-        <Route
-          path="/report-list"
+         <Route
+          path="/fire"
           element={
             <PrivateRoute>
               <Layout>
-                <DataTableList />
+                <FirePumpMonitoring />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+         <Route
+          path="/ahu"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <AHUMonitoringDashboard />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+         <Route
+          path="/ups"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <UpsMonitoringDashboard />
               </Layout>
             </PrivateRoute>
           }
@@ -124,11 +151,11 @@ function App() {
           }
         />
         <Route
-          path="/dgups"
+          path="/dg"
           element={
             <PrivateRoute>
               <Layout>
-                <DgUpsMonitoringDashboard />
+                <DgMonitoringDashboard />
               </Layout>
             </PrivateRoute>
           }
@@ -143,6 +170,47 @@ function App() {
             </PrivateRoute>
           }
         />
+         <Route
+          path="/terraceventilation"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <BasementVentilationDashboard />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/chiller"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <GridComponent />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/baseventilation"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <BasementVentilationDashboard />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/report-list"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <DataTableList />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        
         <Route
           path="/report-logs"
           element={

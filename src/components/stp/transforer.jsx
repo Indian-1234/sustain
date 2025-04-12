@@ -8,6 +8,11 @@ const generateData = () => {
   const data = [];
   for (let i = 10; i >= 0; i--) {
     const time = new Date(now - i * 30000);
+    // Calculate power values
+    const powerInput = Math.floor(4800 + Math.random() * 400);
+    const losses = (Math.random() * 2 + 3).toFixed(1); // Losses between 3-5%
+    const powerOutput = Math.floor(powerInput * (1 - losses/100));
+
     data.push({
       time: time.toLocaleTimeString(),
       temperature: Math.floor(65 + Math.random() * 25),
@@ -15,6 +20,9 @@ const generateData = () => {
       current: Math.floor(95 + Math.random() * 10),
       oilLevel: Math.floor(75 + Math.random() * 15),
       efficiency: Math.floor(90 + Math.random() * 8),
+      powerInput: powerInput, // kVA
+      powerOutput: powerOutput, // kVA
+      losses: parseFloat(losses) // percentage
     });
   }
   return data;
@@ -26,6 +34,7 @@ const generateAlarms = () => {
     { id: 1, timestamp: '10:45:22', severity: 'High', message: 'Temperature exceeded threshold', resolved: false },
     { id: 2, timestamp: '09:32:15', severity: 'Medium', message: 'Oil level dropping', resolved: true },
     { id: 3, timestamp: '08:17:44', severity: 'Low', message: 'Efficiency decreased by 5%', resolved: false },
+    { id: 4, timestamp: '10:28:32', severity: 'Medium', message: 'Power losses above 4.5%', resolved: false },
   ];
 };
 
@@ -54,8 +63,8 @@ const TransformerMonitoringDashboard = () => {
   
   // Calculate health status
   const calculateHealth = () => {
-    if (latest.temperature > 85 || latest.oilLevel < 80) return 'Critical';
-    if (latest.temperature > 75 || latest.oilLevel < 85) return 'Warning';
+    if (latest.temperature > 85 || latest.oilLevel < 80 || latest.losses > 4.8) return 'Critical';
+    if (latest.temperature > 75 || latest.oilLevel < 85 || latest.losses > 4) return 'Warning';
     return 'Normal';
   };
   
@@ -84,13 +93,13 @@ const TransformerMonitoringDashboard = () => {
           </button>
         </div>
         
-        {/* Status Cards */}
+        {/* Status Cards - Top Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {/* Temperature Card */}
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex items-center mb-2">
               <Thermometer className="text-red-500 mr-2" size={24} />
-              <h2 className="text-lg font-semibold">Temperature</h2>
+              <h2 className="text-lg font-semibold text-black">Temperature</h2>
             </div>
             <div className="flex items-end">
               <p className="text-3xl font-bold">{latest.temperature}°C</p>
@@ -108,7 +117,7 @@ const TransformerMonitoringDashboard = () => {
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex items-center mb-2">
               <Zap className="text-yellow-500 mr-2" size={24} />
-              <h2 className="text-lg font-semibold">Voltage</h2>
+              <h2 className="text-lg font-semibold text-black">Voltage</h2>
             </div>
             <div className="flex items-end">
               <p className="text-3xl font-bold">{latest.voltage}V</p>
@@ -130,7 +139,7 @@ const TransformerMonitoringDashboard = () => {
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex items-center mb-2">
               <Droplet className="text-blue-500 mr-2" size={24} />
-              <h2 className="text-lg font-semibold">Oil Level</h2>
+              <h2 className="text-lg font-semibold text-black">Oil Level</h2>
             </div>
             <div className="flex items-end">
               <p className="text-3xl font-bold">{latest.oilLevel}%</p>
@@ -147,7 +156,7 @@ const TransformerMonitoringDashboard = () => {
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex items-center mb-2">
               <Activity className="text-blue-500 mr-2" size={24} />
-              <h2 className="text-lg font-semibold">Health Status</h2>
+              <h2 className="text-lg font-semibold text-black">Health Status</h2>
             </div>
             <div className="flex items-center justify-between">
               <p className={`text-3xl font-bold ${healthColor}`}>{health}</p>
@@ -168,12 +177,72 @@ const TransformerMonitoringDashboard = () => {
             </div>
           </div>
         </div>
+
+        {/* Status Cards - New Row for Power Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          {/* Power Input Card */}
+          <div className="bg-white p-4 rounded-lg shadow">
+            <div className="flex items-center mb-2">
+              <Power className="text-purple-500 mr-2" size={24} />
+              <h2 className="text-lg font-semibold text-black">Power Input</h2>
+            </div>
+            <div className="flex items-end">
+              <p className="text-3xl font-bold">{latest.powerInput}</p>
+              <p className="text-gray-500 ml-2 mb-1">kVA</p>
+            </div>
+            <div className="mt-2 bg-gray-200 rounded-full h-2">
+              <div 
+                className="bg-purple-500 h-2 rounded-full" 
+                style={{ width: `${(latest.powerInput / 5500) * 100}%` }}
+              />
+            </div>
+          </div>
+          
+          {/* Power Output Card */}
+          <div className="bg-white p-4 rounded-lg shadow">
+            <div className="flex items-center mb-2">
+              <Zap className="text-green-500 mr-2" size={24} />
+              <h2 className="text-lg font-semibold text-black">Power Output</h2>
+            </div>
+            <div className="flex items-end">
+              <p className="text-3xl font-bold">{latest.powerOutput}</p>
+              <p className="text-gray-500 ml-2 mb-1">kVA</p>
+            </div>
+            <div className="mt-2 bg-gray-200 rounded-full h-2">
+              <div 
+                className="bg-green-500 h-2 rounded-full" 
+                style={{ width: `${(latest.powerOutput / 5300) * 100}%` }}
+              />
+            </div>
+          </div>
+          
+          {/* Losses Card */}
+          <div className="bg-white p-4 rounded-lg shadow">
+            <div className="flex items-center mb-2">
+              <AlertTriangle className="text-orange-500 mr-2" size={24} />
+              <h2 className="text-lg font-semibold text-black">Transformer Losses</h2>
+            </div>
+            <div className="flex items-end">
+              <p className="text-3xl font-bold">{latest.losses}%</p>
+            </div>
+            <div className="mt-2 flex items-center">
+              <span className="text-green-500 text-sm">3%</span>
+              <div className="flex-grow mx-2 bg-gray-200 rounded-full h-2">
+                <div 
+                  className={`h-2 rounded-full ${latest.losses > 4.5 ? 'bg-red-500' : latest.losses > 4 ? 'bg-orange-500' : 'bg-green-500'}`}
+                  style={{ width: `${((latest.losses - 3) / 2) * 100}%` }}
+                />
+              </div>
+              <span className="text-red-500 text-sm">5%</span>
+            </div>
+          </div>
+        </div>
         
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Temperature Chart */}
           <div className="bg-white p-4 rounded-lg shadow">
-            <h2 className="text-lg font-semibold mb-4">Temperature Trend</h2>
+            <h2 className="text-lg font-semibold text-black mb-4">Temperature Trend</h2>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -194,7 +263,7 @@ const TransformerMonitoringDashboard = () => {
           
           {/* Voltage and Current Chart */}
           <div className="bg-white p-4 rounded-lg shadow">
-            <h2 className="text-lg font-semibold mb-4">Electrical Parameters</h2>
+            <h2 className="text-lg font-semibold text-black mb-4">Electrical Parameters</h2>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -222,10 +291,61 @@ const TransformerMonitoringDashboard = () => {
           </div>
         </div>
         
+        {/* Power Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          {/* Power Input/Output Chart */}
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h2 className="text-lg font-semibold text-black mb-4">Power Flow</h2>
+            <ResponsiveContainer width="100%" height={250}>
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="time" />
+                <YAxis domain={[4500, 5500]} />
+                <Tooltip />
+                <Legend />
+                <Line 
+                  type="monotone" 
+                  dataKey="powerInput" 
+                  stroke="#8b5cf6" 
+                  name="Power Input (kVA)"
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="powerOutput" 
+                  stroke="#10b981" 
+                  name="Power Output (kVA)"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          
+          {/* Losses Chart */}
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h2 className="text-lg font-semibold text-black mb-4">Transformer Losses</h2>
+            <ResponsiveContainer width="100%" height={250}>
+              <AreaChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="time" />
+                <YAxis domain={[2.5, 5.5]} />
+                <Tooltip />
+                <Legend />
+                <Area 
+                  type="monotone" 
+                  dataKey="losses" 
+                  stroke="#f97316" 
+                  fill="#f97316" 
+                  fillOpacity={0.3} 
+                  name="Losses (%)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+        
         {/* Oil Level and Efficiency */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <div className="bg-white p-4 rounded-lg shadow">
-            <h2 className="text-lg font-semibold mb-4">Oil Level Trend</h2>
+            <h2 className="text-lg font-semibold text-black mb-4">Oil Level Trend</h2>
             <ResponsiveContainer width="100%" height={250}>
               <AreaChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -246,7 +366,7 @@ const TransformerMonitoringDashboard = () => {
           </div>
           
           <div className="bg-white p-4 rounded-lg shadow">
-            <h2 className="text-lg font-semibold mb-4">Efficiency</h2>
+            <h2 className="text-lg font-semibold text-black mb-4">Efficiency</h2>
             <ResponsiveContainer width="100%" height={250}>
               <AreaChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -271,7 +391,7 @@ const TransformerMonitoringDashboard = () => {
         <div className="bg-white p-4 rounded-lg shadow mb-6">
           <div className="flex items-center mb-4">
             <AlertTriangle className="text-red-500 mr-2" size={24} />
-            <h2 className="text-lg font-semibold">Alarms & Events</h2>
+            <h2 className="text-lg font-semibold text-black">Alarms & Events</h2>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">

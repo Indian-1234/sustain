@@ -230,41 +230,46 @@ const Sidebar: React.FC = () => {
       {/* Dropdown Options */}
       {open && (
   <div
-    className="absolute top-full left-10 mt-4 ml-2  w-48 bg-white shadow-lg rounded-xl z-10
+    className="absolute top-full left-10 mt-4 ml-2 w-56 bg-white shadow-lg rounded-xl z-10
                animate-fade-in-up transform transition-all duration-300 ease-out border border-gray-200"
   >
-    <div
-      className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer rounded-t-lg"
-      onClick={() => handleNavigate("/stp")}
-    >
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/stp")}>
       🧪 STP Monitoring
     </div>
-    <div
-      className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer"
-      onClick={() => handleNavigate("/wtp")}
-    >
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/wtp")}>
       💧 WTP Monitoring
     </div>
-    <div
-      className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer"
-      onClick={() => handleNavigate("/lift")}
-    >
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/fire")}>
+      🔥 Fire Pump Monitoring
+    </div>
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/ahu")}>
+      🌬️ AHU Monitoring
+    </div>
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/ups")}>
+      ⚡ UPS Monitoring
+    </div>
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/dg")}>
+      ⚙️ DG Monitoring
+    </div>
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/transformer")}>
+      🔌 Transformer Monitoring
+    </div>
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/lift")}>
       🛗 Lift Monitoring
     </div>
-    <div
-      className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer"
-      onClick={() => handleNavigate("/dgups")}
-    >
-      ⚡ DG/UPS Monitoring
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/terraceventilation")}>
+      🌫️ Terrace Ventilation
     </div>
-    <div
-      className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer rounded-b-lg"
-      onClick={() => handleNavigate("/transformer")}
-    >
-      🔌 Transformer Monitoring
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/baseventilation")}>
+      🌫️ Basement Ventilation
+    </div>
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer rounded-b-lg" onClick={() => handleNavigate("/chiller")}>
+      ❄️ Chiller Monitoring
     </div>
   </div>
 )}
+
+
 
     </div>
           <div
