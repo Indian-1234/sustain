@@ -1,0 +1,52 @@
+body {
+  /* font-family: 'Merriweather', serif; */
+  font-family: "Lato", serif;
+  /* font-weight: 100; */
+  /* font-style: normal; */
+}
+/* Override default NProgress styles */
+/* Customize the NProgress bar height and color */
+#nprogress .bar {
+  background: #4caf50 !important; /* Green color */
+  height: 3px !important; /* Adjust height (e.g., 6px) */
+}
+
+
+/* src/index.css or src/App.css */
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 12px; /* Adjust to your desired width */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* Dark gray */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2d3748; /* Darker background */
+}
+h2,h3,h1{
+  color: white;
+}
+/* Smooth Scrolling */
+.scrollable {
+  overflow: auto;
+  scroll-behavior: smooth; /* Enable smooth scrolling */
+}
+
+body {
+  background-color: #111827; /* Set the background color of the body */
+}
+/* App.css */
+html {
+  scroll-behavior: smooth;
+}
+
+span.rdrStaticRangeLabel {
+  color: black;
+}
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto+Slab:wght@100..900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto+Slab:wght@100..900&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto+Slab:wght@100..900&display=swap'); */
+ 
