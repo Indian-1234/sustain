@@ -31,6 +31,15 @@ import AHUMonitoringDashboard from './stp/ahu.jsx';
 import UpsMonitoringDashboard from './stp/ups.jsx';
 import DgMonitoringDashboard from './stp/dg.jsx';
 import GridComponent from './stp/chiller.jsx';
+import Monitoring from './stp/monitoring.jsx';
+import DataTablemonitoring from './stp/cload.jsx';
+import DataTablem from './stp/Chilledconsum.jsx';
+import Cwater from './stp/Cwater.jsx';
+import Simswater from './stp/simswater.jsx';
+import Gcwater from './stp/Gcwater.jsx';
+import Gpower from './stp/Gpower.jsx';
+import Siwater from './stp/simswater.jsx';
+import Cop from './stp/overallcop.jsx';
 
 // PrivateRoute component to protect routes
 const PrivateRoute = ({ children }) => {
@@ -186,6 +195,86 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <GridComponent />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+          <Route
+          path="/monitoring"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <Monitoring />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+            <Route
+          path="/cooling-load"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <DataTablemonitoring/>
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+                <Route
+          path="/cooling-loa"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <DataTablem/>
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+               <Route
+          path="/cwater"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <Cwater/>
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+                <Route
+          path="/Sims"
+          element={
+            <PrivateRoute>
+              <Layout>
+              <Siwater/>
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+                <Route
+          path="/Gcwater"
+          element={
+            <PrivateRoute>
+              <Layout>
+              <Gcwater/>
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+                <Route
+          path="/Gcpower"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <Gpower/>
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+                  <Route
+          path="/IKW"
+          element={
+            <PrivateRoute>
+              <Layout>
+               <Cop/>
               </Layout>
             </PrivateRoute>
           }

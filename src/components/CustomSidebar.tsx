@@ -264,6 +264,9 @@ const Sidebar: React.FC = () => {
       🌫️ Basement Ventilation
     </div>
     <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer rounded-b-lg" onClick={() => handleNavigate("/chiller")}>
+      ❄️ Chiller Managing
+    </div>
+    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer rounded-b-lg" onClick={() => handleNavigate("/monitoring")}>
       ❄️ Chiller Monitoring
     </div>
   </div>
