@@ -14,7 +14,7 @@ export default function Login() {
 
     // Hardcoded username and password validation
     const validEmail = 'optibyte@gmail.com';
-    const validPassword = 'demo';
+    const validPassword = '7788';
 
     if (email === validEmail && password === validPassword) {
       // Simulate a successful response (you can replace this with your API call)
