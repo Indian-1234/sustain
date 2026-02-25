@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { 
-  BarChart, Bar, LineChart, Line, PieChart, Pie, 
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, 
+import {
+  BarChart, Bar, LineChart, Line, PieChart, Pie,
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer, Cell
 } from 'recharts';
-import { 
-  ArrowUp, ArrowDown, AlertCircle, Clock, 
-  Users, Activity, Battery, CheckCircle, 
-  AlertTriangle, XCircle, Gauge, ArrowUpDown
+import {
+  ArrowUp, ArrowDown, AlertCircle, Clock,
+  Users, Activity, Battery, CheckCircle,
+  XCircle, ArrowUpDown
 } from 'lucide-react';
 import { FaTools } from 'react-icons/fa';
 // Mock data for our lift monitoring system
@@ -103,20 +103,17 @@ const weeklyMaintenanceData = [
 ];
 
 const LiftStatusCard = ({ lift }) => {
-  let statusColor = "bg-green-500";
   let statusText = "Operational";
   let statusIcon = <CheckCircle size={16} />;
-  
+
   if (lift.status === "maintenance") {
-    statusColor = "bg-yellow-500";
     statusText = "Maintenance";
     statusIcon = <FaTools size={16} />;
   } else if (lift.status === "error") {
-    statusColor = "bg-red-500";
     statusText = "Error";
     statusIcon = <XCircle size={16} />;
   }
-  
+
   let directionIcon = null;
   if (lift.direction === "up") {
     directionIcon = <ArrowUp size={20} className="text-green-600" />;
@@ -125,7 +122,7 @@ const LiftStatusCard = ({ lift }) => {
   } else {
     directionIcon = <ArrowUpDown size={20} className="text-gray-600" />;
   }
-  
+
   return (
     <div className="bg-white rounded-lg shadow p-4">
       <div className="flex justify-between items-center mb-3">
@@ -135,7 +132,7 @@ const LiftStatusCard = ({ lift }) => {
           <span className="ml-1 text-xs font-semibold ">{statusText}</span>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-2 gap-2 mb-3">
         <div className="flex items-center">
           <div className="bg-blue-100 p-2 rounded-full text-blue-600">
@@ -146,7 +143,7 @@ const LiftStatusCard = ({ lift }) => {
             <div className="font-bold">{lift.currentFloor}</div>
           </div>
         </div>
-        
+
         <div className="flex items-center">
           <div className="bg-purple-100 p-2 rounded-full text-purple-600">
             <Users size={20} />
@@ -157,7 +154,7 @@ const LiftStatusCard = ({ lift }) => {
           </div>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-2 gap-2">
         <div className="flex items-center">
           <div className="bg-amber-100 p-2 rounded-full text-amber-600">
@@ -168,7 +165,7 @@ const LiftStatusCard = ({ lift }) => {
             <div className="font-bold">{lift.doorCycles}</div>
           </div>
         </div>
-        
+
         <div className="flex items-center">
           <div className="bg-teal-100 p-2 rounded-full text-teal-600">
             <Clock size={20} />
@@ -206,7 +203,7 @@ export default function LiftMonitoringSystem() {
     initialData.systemStats.errorLifts = initialData.lifts.filter(lift => lift.status === 'error').length;
     return initialData;
   });
-  const [historicalData, setHistoricalData] = useState(generateHistoricalData());
+  const [historicalData] = useState(generateHistoricalData());
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [activeTab, setActiveTab] = useState('overview');
 
@@ -221,11 +218,11 @@ export default function LiftMonitoringSystem() {
       newData.systemStats.operationalLifts = newData.lifts.filter(lift => lift.status === 'operational').length;
       newData.systemStats.maintenanceLifts = newData.lifts.filter(lift => lift.status === 'maintenance').length;
       newData.systemStats.errorLifts = newData.lifts.filter(lift => lift.status === 'error').length;
-      
+
       setData(newData);
       setLastUpdated(new Date());
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -250,29 +247,29 @@ export default function LiftMonitoringSystem() {
           </div>
         </div>
       </header>
-      
+
       {/* Navigation Tabs */}
       <div className="bg-white border-b shadow-sm">
         <div className="flex">
-          <button 
+          <button
             className={`px-4 py-3 font-medium ${activeTab === 'overview' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
             onClick={() => setActiveTab('overview')}
           >
             Overview
           </button>
-          <button 
+          <button
             className={`px-4 py-3 font-medium ${activeTab === 'analytics' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
             onClick={() => setActiveTab('analytics')}
           >
             Analytics
           </button>
-          <button 
+          <button
             className={`px-4 py-3 font-medium ${activeTab === 'maintenance' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
             onClick={() => setActiveTab('maintenance')}
           >
             Maintenance
           </button>
-          <button 
+          <button
             className={`px-4 py-3 font-medium ${activeTab === 'alarms' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
             onClick={() => setActiveTab('alarms')}
           >
@@ -280,7 +277,7 @@ export default function LiftMonitoringSystem() {
           </button>
         </div>
       </div>
-      
+
       {/* Main Content */}
       <main className="p-4">
         {activeTab === 'overview' && (
@@ -289,33 +286,33 @@ export default function LiftMonitoringSystem() {
             <div className="bg-white rounded-lg shadow p-4 mb-4">
               <h2 className="text-lg font-medium text-black mb-4">System Overview</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                <StatusWidget 
-                  title="Total Lifts" 
-                  count={data.systemStats.totalLifts} 
-                  icon={<ArrowUpDown size={20} className="text-blue-500" />} 
-                  color="bg-blue-100 text-blue-500" 
+                <StatusWidget
+                  title="Total Lifts"
+                  count={data.systemStats.totalLifts}
+                  icon={<ArrowUpDown size={20} className="text-blue-500" />}
+                  color="bg-blue-100 text-blue-500"
                 />
-                <StatusWidget 
-                  title="Operational" 
-                  count={data.systemStats.operationalLifts} 
-                  icon={<CheckCircle size={20} className="text-green-500" />} 
-                  color="bg-green-100 text-green-500" 
+                <StatusWidget
+                  title="Operational"
+                  count={data.systemStats.operationalLifts}
+                  icon={<CheckCircle size={20} className="text-green-500" />}
+                  color="bg-green-100 text-green-500"
                 />
-                <StatusWidget 
-                  title="Maintenance" 
-                  count={data.systemStats.maintenanceLifts} 
-                  icon={<FaTools size={20} className="text-yellow-500" />} 
-                  color="bg-yellow-100 text-yellow-500" 
+                <StatusWidget
+                  title="Maintenance"
+                  count={data.systemStats.maintenanceLifts}
+                  icon={<FaTools size={20} className="text-yellow-500" />}
+                  color="bg-yellow-100 text-yellow-500"
                 />
-                <StatusWidget 
-                  title="Error" 
-                  count={data.systemStats.errorLifts} 
-                  icon={<AlertCircle size={20} className="text-red-500" />} 
-                  color="bg-red-100 text-red-500" 
+                <StatusWidget
+                  title="Error"
+                  count={data.systemStats.errorLifts}
+                  icon={<AlertCircle size={20} className="text-red-500" />}
+                  color="bg-red-100 text-red-500"
                 />
               </div>
             </div>
-            
+
             {/* Lift Status Cards */}
             <h2 className="text-lg font-medium text-black mb-2">Lift Status</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
@@ -323,7 +320,7 @@ export default function LiftMonitoringSystem() {
                 <LiftStatusCard key={lift.id} lift={lift} />
               ))}
             </div>
-            
+
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-white rounded-lg shadow p-4">
@@ -338,7 +335,7 @@ export default function LiftMonitoringSystem() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-lg shadow p-4">
                 <h3 className="text-md font-medium text-black mb-3">Peak Usage</h3>
                 <div className="flex items-center">
@@ -351,7 +348,7 @@ export default function LiftMonitoringSystem() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-lg shadow p-4">
                 <h3 className="text-md font-medium text-black mb-3">Power Consumption</h3>
                 <div className="flex items-center">
@@ -367,7 +364,7 @@ export default function LiftMonitoringSystem() {
             </div>
           </div>
         )}
-        
+
         {activeTab === 'analytics' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Hourly Trips Chart */}
@@ -386,7 +383,7 @@ export default function LiftMonitoringSystem() {
                 </ResponsiveContainer>
               </div>
             </div>
-            
+
             {/* Wait Time Chart */}
             <div className="bg-white rounded-lg shadow p-4">
               <h2 className="text-lg font-medium text-black mb-4">Average Wait Time (seconds)</h2>
@@ -398,18 +395,18 @@ export default function LiftMonitoringSystem() {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line 
-                      type="monotone" 
-                      dataKey="waitTime" 
-                      stroke="#f59e0b" 
-                      name="Wait Time" 
-                      activeDot={{ r: 8 }} 
+                    <Line
+                      type="monotone"
+                      dataKey="waitTime"
+                      stroke="#f59e0b"
+                      name="Wait Time"
+                      activeDot={{ r: 8 }}
                     />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
             </div>
-            
+
             {/* Power Usage Chart */}
             <div className="bg-white rounded-lg shadow p-4">
               <h2 className="text-lg font-medium text-black mb-4">Hourly Power Usage (kWh)</h2>
@@ -421,18 +418,18 @@ export default function LiftMonitoringSystem() {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line 
-                      type="monotone" 
-                      dataKey="powerUsage" 
-                      stroke="#10b981" 
-                      name="Power Usage" 
-                      activeDot={{ r: 8 }} 
+                    <Line
+                      type="monotone"
+                      dataKey="powerUsage"
+                      stroke="#10b981"
+                      name="Power Usage"
+                      activeDot={{ r: 8 }}
                     />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
             </div>
-            
+
             {/* System Status Distribution */}
             <div className="bg-white rounded-lg shadow p-4">
               <h2 className="text-lg font-medium text-black mb-4">Lift Status Distribution</h2>
@@ -447,7 +444,7 @@ export default function LiftMonitoringSystem() {
                       outerRadius={80}
                       fill="#8884d8"
                       dataKey="value"
-                      label={({name, percent}) => `${name} ${(percent * 100).toFixed(0)}%`}
+                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                     >
                       {statusData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -461,7 +458,7 @@ export default function LiftMonitoringSystem() {
             </div>
           </div>
         )}
-        
+
         {activeTab === 'maintenance' && (
           <div className="grid grid-cols-1 gap-4">
             {/* Maintenance Schedule */}
@@ -490,11 +487,10 @@ export default function LiftMonitoringSystem() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{lift.nextMaintenance}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{lift.doorCycles}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            lift.status === "operational" ? "bg-green-100 text-green-800" : 
-                            lift.status === "maintenance" ? "bg-yellow-100 text-yellow-800" : 
-                            "bg-red-100 text-red-800"
-                          }`}>
+                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${lift.status === "operational" ? "bg-green-100 text-green-800" :
+                            lift.status === "maintenance" ? "bg-yellow-100 text-yellow-800" :
+                              "bg-red-100 text-red-800"
+                            }`}>
                             {lift.status.charAt(0).toUpperCase() + lift.status.slice(1)}
                           </span>
                         </td>
@@ -504,7 +500,7 @@ export default function LiftMonitoringSystem() {
                 </table>
               </div>
             </div>
-            
+
             {/* Weekly Maintenance Chart */}
             <div className="bg-white rounded-lg shadow p-4">
               <h2 className="text-lg font-medium text-black mb-4">Monthly Maintenance Activity</h2>
@@ -522,7 +518,7 @@ export default function LiftMonitoringSystem() {
                 </ResponsiveContainer>
               </div>
             </div>
-            
+
             {/* Maintenance Tips */}
             <div className="bg-white rounded-lg shadow p-4">
               <h2 className="text-lg font-medium text-black mb-4">Maintenance Tips</h2>
@@ -558,7 +554,7 @@ export default function LiftMonitoringSystem() {
             </div>
           </div>
         )}
-        
+
         {activeTab === 'alarms' && (
           <div className="grid grid-cols-1 gap-4">
             {/* Current Alarms */}
@@ -588,19 +584,18 @@ export default function LiftMonitoringSystem() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{alarm.type}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{alarm.time}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            alarm.resolved ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                          }`}>
+                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${alarm.resolved ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                            }`}>
                             {alarm.resolved ? "Resolved" : "Active"}
                           </span>
                         </td>
-                        </tr>
+                      </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             </div>
-            
+
             {/* Alarm Statistics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-white rounded-lg shadow p-4">
@@ -615,7 +610,7 @@ export default function LiftMonitoringSystem() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-lg shadow p-4">
                 <h3 className="text-md font-medium text-black mb-3">Resolution Time</h3>
                 <div className="flex items-center">
@@ -628,7 +623,7 @@ export default function LiftMonitoringSystem() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-lg shadow p-4">
                 <h3 className="text-md font-medium text-black mb-3">Resolved Issues</h3>
                 <div className="flex items-center">
@@ -642,13 +637,13 @@ export default function LiftMonitoringSystem() {
                 </div>
               </div>
             </div>
-            
+
             {/* Common Alarm Types */}
             <div className="bg-white rounded-lg shadow p-4">
               <h2 className="text-lg font-medium text-black mb-4">Common Alarm Types</h2>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart 
+                  <BarChart
                     data={[
                       { name: 'Door Sensor', count: 12 },
                       { name: 'Overload', count: 8 },
@@ -669,7 +664,7 @@ export default function LiftMonitoringSystem() {
                 </ResponsiveContainer>
               </div>
             </div>
-            
+
             {/* Response Procedures */}
             <div className="bg-white rounded-lg shadow p-4">
               <h2 className="text-lg font-medium text-black mb-4">Emergency Response Procedures</h2>
@@ -678,12 +673,12 @@ export default function LiftMonitoringSystem() {
                   <h3 className="font-medium text-red-700">Passenger Entrapment</h3>
                   <p className="text-sm text-gray-600">1. Maintain communication with trapped passengers. 2. Dispatch emergency response team. 3. Notify building management. 4. Document incident.</p>
                 </div>
-                
+
                 <div className="border-l-4 border-yellow-500 pl-3">
                   <h3 className="font-medium text-yellow-700">Door Malfunction</h3>
                   <p className="text-sm text-gray-600">1. Ensure no passengers are at risk. 2. Isolate lift if necessary. 3. Reset door system or dispatch technician. 4. Test operation before returning to service.</p>
                 </div>
-                
+
                 <div className="border-l-4 border-blue-500 pl-3">
                   <h3 className="font-medium text-blue-700">Power Failure</h3>
                   <p className="text-sm text-gray-600">1. Confirm backup generators are functioning. 2. Check if lifts returned to designated floors. 3. Verify emergency lighting is operational. 4. Initialize recovery procedures.</p>
@@ -693,7 +688,7 @@ export default function LiftMonitoringSystem() {
           </div>
         )}
       </main>
-      
+
       {/* Footer */}
       <footer className="bg-gray-800 text-white p-4 mt-auto">
         <div className="flex justify-between items-center">

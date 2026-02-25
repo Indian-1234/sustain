@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { FaEdit, FaTrashAlt, FaDownload } from 'react-icons/fa';
 import { MaterialReactTable } from 'material-react-table';
 
@@ -29,17 +29,17 @@ const initialData = [
 const DataTableList = () => {
   const [data, setData] = useState(initialData);
 
-  const handleEdit = (row) => {
+  const handleEdit = useCallback((row) => {
     console.log('Edit:', row);
-  };
+  }, []);
 
-  const handleDelete = (row) => {
-    setData(data.filter((item) => item.id !== row.id));
-  };
+  const handleDelete = useCallback((row) => {
+    setData((prevData) => prevData.filter((item) => item.id !== row.id));
+  }, []);
 
-  const handleDownload = (row) => {
+  const handleDownload = useCallback((row) => {
     console.log('Download:', row);
-  };
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -90,7 +90,7 @@ const DataTableList = () => {
         size: 150,
       },
     ],
-    [data]
+    [handleEdit, handleDelete, handleDownload]
   );
 
   return (

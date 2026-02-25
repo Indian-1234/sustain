@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Battery, Droplet, Thermometer, Gauge, Bell, Clock, Activity, AlertTriangle } from 'lucide-react';
 
 // Mock data for demonstration
@@ -29,21 +29,21 @@ const initialAlerts = [
 const FirePumpMonitoring = () => {
   const [pumpData, setPumpData] = useState(generateMockData());
   const [pumpStatus, setPumpStatus] = useState('Standby');
-  const [systemHealth, setSystemHealth] = useState('Good');
-  const [lastMaintenance, setLastMaintenance] = useState('2025-03-15');
-  const [nextMaintenanceDue, setNextMaintenanceDue] = useState('2025-05-15');
+  const [systemHealth] = useState(98);
+  const [lastMaintenance] = useState('2025-01-15');
+  const [nextMaintenanceDue] = useState('2025-04-15');
   const [alerts, setAlerts] = useState(initialAlerts);
   const [isSimulating, setIsSimulating] = useState(false);
 
   // Simulate real-time data updates
   useEffect(() => {
     let interval;
-    
+
     if (isSimulating) {
       interval = setInterval(() => {
         const newData = [...pumpData];
         newData.shift();
-        
+
         const now = new Date();
         const newPoint = {
           time: now.toLocaleTimeString(),
@@ -52,14 +52,14 @@ const FirePumpMonitoring = () => {
           temperature: Math.floor(Math.random() * 10) + 75,
           batteryLevel: Math.max(newData[newData.length - 1].batteryLevel - 0.1, 80),
         };
-        
+
         newData.push(newPoint);
         setPumpData(newData);
-        
+
         // Randomly change pump status for demo
         if (Math.random() > 0.95) {
           setPumpStatus(pumpStatus === 'Standby' ? 'Running' : 'Standby');
-          
+
           // Add alert when status changes
           const newAlert = {
             id: Date.now(),
@@ -69,7 +69,7 @@ const FirePumpMonitoring = () => {
           };
           setAlerts([newAlert, ...alerts.slice(0, 9)]);
         }
-        
+
         // Random alert
         if (Math.random() > 0.98) {
           const newAlert = {
@@ -82,7 +82,7 @@ const FirePumpMonitoring = () => {
         }
       }, 2000);
     }
-    
+
     return () => clearInterval(interval);
   }, [pumpData, pumpStatus, alerts, isSimulating]);
 
@@ -107,7 +107,7 @@ const FirePumpMonitoring = () => {
         <header className="bg-blue-700 text-white p-4 rounded-t-lg flex justify-between items-center">
           <h1 className="text-2xl font-bold">Fire Pump System Remote Monitoring</h1>
           <div className="flex items-center gap-4">
-            <button 
+            <button
               className={`px-4 py-2 rounded-md text-sm ${isSimulating ? 'bg-red-500' : 'bg-green-500'}`}
               onClick={handleSimulateToggle}
             >
@@ -188,7 +188,7 @@ const FirePumpMonitoring = () => {
             <div className="bg-white p-4 rounded-lg shadow">
               <h2 className="text-lg font-semibold text-black mb-4">Controls</h2>
               <div className="space-y-2">
-                <button 
+                <button
                   className="w-full bg-yellow-500 text-white py-2 rounded-md font-medium flex items-center justify-center"
                   onClick={handleTestAlarm}
                 >
@@ -268,12 +268,11 @@ const FirePumpMonitoring = () => {
               </div>
               <div className="space-y-2 max-h-96 overflow-y-auto">
                 {alerts.map(alert => (
-                  <div 
-                    key={alert.id} 
-                    className={`p-3 rounded-md flex items-start ${
-                      alert.severity === 'critical' ? 'bg-red-100' : 
-                      alert.severity === 'warning' ? 'bg-yellow-100' : 'bg-blue-100'
-                    }`}
+                  <div
+                    key={alert.id}
+                    className={`p-3 rounded-md flex items-start ${alert.severity === 'critical' ? 'bg-red-100' :
+                        alert.severity === 'warning' ? 'bg-yellow-100' : 'bg-blue-100'
+                      }`}
                   >
                     <div className="mr-2 mt-0.5">
                       {alert.severity === 'critical' ? (

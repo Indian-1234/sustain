@@ -20,9 +20,7 @@ import Dashboardassets from './plant/assetsInsights.js';
 import AssetDashboard from './assetsdetails.js';
 import AddUserForm from './user/adduser.js';
 import STPMonitoringDashboard from './stp/stp.jsx';
-import WTPFirePumpMonitoringDashboard from './stp/wtp1.jsx';
 import LiftMonitoringSystem from './stp/lift.jsx';
-import DgUpsMonitoringDashboard from './stp/dgups.jsx';
 import TransformerMonitoringDashboard from './stp/transforer.jsx';
 import BasementVentilationDashboard from './stp/air.tsx';
 import WTPMonitoringDashboard from './stp/wtp.jsx';
@@ -35,7 +33,6 @@ import Monitoring from './stp/monitoring.jsx';
 import DataTablemonitoring from './stp/cload.jsx';
 import DataTablem from './stp/Chilledconsum.jsx';
 import Cwater from './stp/Cwater.jsx';
-import Simswater from './stp/simswater.jsx';
 import Gcwater from './stp/Gcwater.jsx';
 import Gpower from './stp/Gpower.jsx';
 import Siwater from './stp/simswater.jsx';
@@ -99,7 +96,7 @@ function App() {
             </PrivateRoute>
           }
         />
-         <Route
+        <Route
           path="/stp"
           element={
             <PrivateRoute>
@@ -109,7 +106,7 @@ function App() {
             </PrivateRoute>
           }
         />
-          <Route
+        <Route
           path="/wtp"
           element={
             <PrivateRoute>
@@ -119,7 +116,7 @@ function App() {
             </PrivateRoute>
           }
         />
-         <Route
+        <Route
           path="/fire"
           element={
             <PrivateRoute>
@@ -129,7 +126,7 @@ function App() {
             </PrivateRoute>
           }
         />
-         <Route
+        <Route
           path="/ahu"
           element={
             <PrivateRoute>
@@ -139,7 +136,7 @@ function App() {
             </PrivateRoute>
           }
         />
-         <Route
+        <Route
           path="/ups"
           element={
             <PrivateRoute>
@@ -179,7 +176,7 @@ function App() {
             </PrivateRoute>
           }
         />
-         <Route
+        <Route
           path="/terraceventilation"
           element={
             <PrivateRoute>
@@ -199,7 +196,7 @@ function App() {
             </PrivateRoute>
           }
         />
-          <Route
+        <Route
           path="/monitoring"
           element={
             <PrivateRoute>
@@ -209,72 +206,72 @@ function App() {
             </PrivateRoute>
           }
         />
-            <Route
+        <Route
           path="/cooling-load"
           element={
             <PrivateRoute>
               <Layout>
-                <DataTablemonitoring/>
+                <DataTablemonitoring />
               </Layout>
             </PrivateRoute>
           }
         />
-                <Route
+        <Route
           path="/cooling-loa"
           element={
             <PrivateRoute>
               <Layout>
-                <DataTablem/>
+                <DataTablem />
               </Layout>
             </PrivateRoute>
           }
         />
-               <Route
+        <Route
           path="/cwater"
           element={
             <PrivateRoute>
               <Layout>
-                <Cwater/>
+                <Cwater />
               </Layout>
             </PrivateRoute>
           }
         />
-                <Route
+        <Route
           path="/Sims"
           element={
             <PrivateRoute>
               <Layout>
-              <Siwater/>
+                <Siwater />
               </Layout>
             </PrivateRoute>
           }
         />
-                <Route
+        <Route
           path="/Gcwater"
           element={
             <PrivateRoute>
               <Layout>
-              <Gcwater/>
+                <Gcwater />
               </Layout>
             </PrivateRoute>
           }
         />
-                <Route
+        <Route
           path="/Gcpower"
           element={
             <PrivateRoute>
               <Layout>
-                <Gpower/>
+                <Gpower />
               </Layout>
             </PrivateRoute>
           }
         />
-                  <Route
+        <Route
           path="/IKW"
           element={
             <PrivateRoute>
               <Layout>
-               <Cop/>
+                <Cop />
               </Layout>
             </PrivateRoute>
           }
@@ -299,7 +296,7 @@ function App() {
             </PrivateRoute>
           }
         />
-        
+
         <Route
           path="/report-logs"
           element={

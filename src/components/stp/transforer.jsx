@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { Activity, Thermometer, Battery, AlertTriangle, Power, Zap, Droplet, Clock, RefreshCw } from 'lucide-react';
+import { Activity, Thermometer, AlertTriangle, Power, Zap, Droplet, RefreshCw } from 'lucide-react';
 
 // Sample data - would be replaced with real-time data from your API
 const generateData = () => {
@@ -11,7 +11,7 @@ const generateData = () => {
     // Calculate power values
     const powerInput = Math.floor(4800 + Math.random() * 400);
     const losses = (Math.random() * 2 + 3).toFixed(1); // Losses between 3-5%
-    const powerOutput = Math.floor(powerInput * (1 - losses/100));
+    const powerOutput = Math.floor(powerInput * (1 - losses / 100));
 
     data.push({
       time: time.toLocaleTimeString(),
@@ -40,40 +40,40 @@ const generateAlarms = () => {
 
 const TransformerMonitoringDashboard = () => {
   const [data, setData] = useState(generateData());
-  const [alarms, setAlarms] = useState(generateAlarms());
+  const [alarms] = useState(generateAlarms());
   const [lastUpdated, setLastUpdated] = useState(new Date());
-  
+
   // Function to refresh data
   const refreshData = () => {
     setData(generateData());
     setLastUpdated(new Date());
   };
-  
+
   // Auto refresh every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       refreshData();
     }, 30000);
-    
+
     return () => clearInterval(interval);
   }, []);
-  
+
   // Get latest values
   const latest = data[data.length - 1] || {};
-  
+
   // Calculate health status
   const calculateHealth = () => {
     if (latest.temperature > 85 || latest.oilLevel < 80 || latest.losses > 4.8) return 'Critical';
     if (latest.temperature > 75 || latest.oilLevel < 85 || latest.losses > 4) return 'Warning';
     return 'Normal';
   };
-  
+
   const health = calculateHealth();
   const healthColor = health === 'Critical' ? 'text-red-600' : health === 'Warning' ? 'text-amber-500' : 'text-green-500';
-  
+
   // Calculate active alarms
   const activeAlarms = alarms.filter(alarm => !alarm.resolved).length;
-  
+
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       <div className="max-w-7xl mx-auto">
@@ -85,14 +85,14 @@ const TransformerMonitoringDashboard = () => {
               Last updated: {lastUpdated.toLocaleTimeString()}
             </p>
           </div>
-          <button 
+          <button
             onClick={refreshData}
             className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
           >
             <RefreshCw size={18} className="mr-2" /> Refresh Data
           </button>
         </div>
-        
+
         {/* Status Cards - Top Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {/* Temperature Card */}
@@ -106,13 +106,13 @@ const TransformerMonitoringDashboard = () => {
               <p className="text-gray-500 ml-2 mb-1">/ 100°C</p>
             </div>
             <div className="mt-2 bg-gray-200 rounded-full h-2">
-              <div 
-                className="bg-red-500 h-2 rounded-full" 
+              <div
+                className="bg-red-500 h-2 rounded-full"
                 style={{ width: `${latest.temperature}%` }}
               />
             </div>
           </div>
-          
+
           {/* Voltage Card */}
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex items-center mb-2">
@@ -126,15 +126,15 @@ const TransformerMonitoringDashboard = () => {
             <div className="mt-2 flex items-center">
               <span className="text-gray-500 text-sm">390V</span>
               <div className="flex-grow mx-2 bg-gray-200 rounded-full h-2">
-                <div 
-                  className="bg-yellow-500 h-2 rounded-full" 
+                <div
+                  className="bg-yellow-500 h-2 rounded-full"
                   style={{ width: `${((latest.voltage - 415) / 9) * 100}%` }}
-                  />
+                />
               </div>
               <span className="text-gray-500 text-sm">430V</span>
             </div>
           </div>
-          
+
           {/* Oil Level Card */}
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex items-center mb-2">
@@ -145,13 +145,13 @@ const TransformerMonitoringDashboard = () => {
               <p className="text-3xl font-bold">{latest.oilLevel}%</p>
             </div>
             <div className="mt-2 bg-gray-200 rounded-full h-2">
-              <div 
-                className="bg-blue-500 h-2 rounded-full" 
+              <div
+                className="bg-blue-500 h-2 rounded-full"
                 style={{ width: `${latest.oilLevel}%` }}
               />
             </div>
           </div>
-          
+
           {/* Health Status Card */}
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex items-center mb-2">
@@ -191,13 +191,13 @@ const TransformerMonitoringDashboard = () => {
               <p className="text-gray-500 ml-2 mb-1">kVA</p>
             </div>
             <div className="mt-2 bg-gray-200 rounded-full h-2">
-              <div 
-                className="bg-purple-500 h-2 rounded-full" 
+              <div
+                className="bg-purple-500 h-2 rounded-full"
                 style={{ width: `${(latest.powerInput / 5500) * 100}%` }}
               />
             </div>
           </div>
-          
+
           {/* Power Output Card */}
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex items-center mb-2">
@@ -209,13 +209,13 @@ const TransformerMonitoringDashboard = () => {
               <p className="text-gray-500 ml-2 mb-1">kVA</p>
             </div>
             <div className="mt-2 bg-gray-200 rounded-full h-2">
-              <div 
-                className="bg-green-500 h-2 rounded-full" 
+              <div
+                className="bg-green-500 h-2 rounded-full"
                 style={{ width: `${(latest.powerOutput / 5300) * 100}%` }}
               />
             </div>
           </div>
-          
+
           {/* Losses Card */}
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex items-center mb-2">
@@ -228,7 +228,7 @@ const TransformerMonitoringDashboard = () => {
             <div className="mt-2 flex items-center">
               <span className="text-green-500 text-sm">3%</span>
               <div className="flex-grow mx-2 bg-gray-200 rounded-full h-2">
-                <div 
+                <div
                   className={`h-2 rounded-full ${latest.losses > 4.5 ? 'bg-red-500' : latest.losses > 4 ? 'bg-orange-500' : 'bg-green-500'}`}
                   style={{ width: `${((latest.losses - 3) / 2) * 100}%` }}
                 />
@@ -237,7 +237,7 @@ const TransformerMonitoringDashboard = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Temperature Chart */}
@@ -250,17 +250,17 @@ const TransformerMonitoringDashboard = () => {
                 <YAxis domain={[60, 100]} />
                 <Tooltip />
                 <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="temperature" 
-                  stroke="#ef4444" 
-                  activeDot={{ r: 8 }} 
+                <Line
+                  type="monotone"
+                  dataKey="temperature"
+                  stroke="#ef4444"
+                  activeDot={{ r: 8 }}
                   name="Temperature (°C)"
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
-          
+
           {/* Voltage and Current Chart */}
           <div className="bg-white p-4 rounded-lg shadow">
             <h2 className="text-lg font-semibold text-black mb-4">Electrical Parameters</h2>
@@ -272,25 +272,25 @@ const TransformerMonitoringDashboard = () => {
                 <YAxis yAxisId="right" orientation="right" domain={[80, 120]} />
                 <Tooltip />
                 <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="voltage" 
-                  stroke="#eab308" 
-                  yAxisId="left" 
+                <Line
+                  type="monotone"
+                  dataKey="voltage"
+                  stroke="#eab308"
+                  yAxisId="left"
                   name="Voltage (V)"
                 />
-                <Line 
-                  type="monotone" 
-                  dataKey="current" 
-                  stroke="#3b82f6" 
-                  yAxisId="right" 
+                <Line
+                  type="monotone"
+                  dataKey="current"
+                  stroke="#3b82f6"
+                  yAxisId="right"
                   name="Current (A)"
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
-        
+
         {/* Power Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Power Input/Output Chart */}
@@ -303,22 +303,22 @@ const TransformerMonitoringDashboard = () => {
                 <YAxis domain={[4500, 5500]} />
                 <Tooltip />
                 <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="powerInput" 
-                  stroke="#8b5cf6" 
+                <Line
+                  type="monotone"
+                  dataKey="powerInput"
+                  stroke="#8b5cf6"
                   name="Power Input (kVA)"
                 />
-                <Line 
-                  type="monotone" 
-                  dataKey="powerOutput" 
-                  stroke="#10b981" 
+                <Line
+                  type="monotone"
+                  dataKey="powerOutput"
+                  stroke="#10b981"
                   name="Power Output (kVA)"
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
-          
+
           {/* Losses Chart */}
           <div className="bg-white p-4 rounded-lg shadow">
             <h2 className="text-lg font-semibold text-black mb-4">Transformer Losses</h2>
@@ -329,19 +329,19 @@ const TransformerMonitoringDashboard = () => {
                 <YAxis domain={[2.5, 5.5]} />
                 <Tooltip />
                 <Legend />
-                <Area 
-                  type="monotone" 
-                  dataKey="losses" 
-                  stroke="#f97316" 
-                  fill="#f97316" 
-                  fillOpacity={0.3} 
+                <Area
+                  type="monotone"
+                  dataKey="losses"
+                  stroke="#f97316"
+                  fill="#f97316"
+                  fillOpacity={0.3}
                   name="Losses (%)"
                 />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
-        
+
         {/* Oil Level and Efficiency */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <div className="bg-white p-4 rounded-lg shadow">
@@ -353,18 +353,18 @@ const TransformerMonitoringDashboard = () => {
                 <YAxis domain={[70, 100]} />
                 <Tooltip />
                 <Legend />
-                <Area 
-                  type="monotone" 
-                  dataKey="oilLevel" 
-                  stroke="#0ea5e9" 
-                  fill="#0ea5e9" 
-                  fillOpacity={0.3} 
+                <Area
+                  type="monotone"
+                  dataKey="oilLevel"
+                  stroke="#0ea5e9"
+                  fill="#0ea5e9"
+                  fillOpacity={0.3}
                   name="Oil Level (%)"
                 />
               </AreaChart>
             </ResponsiveContainer>
           </div>
-          
+
           <div className="bg-white p-4 rounded-lg shadow">
             <h2 className="text-lg font-semibold text-black mb-4">Efficiency</h2>
             <ResponsiveContainer width="100%" height={250}>
@@ -374,19 +374,19 @@ const TransformerMonitoringDashboard = () => {
                 <YAxis domain={[80, 100]} />
                 <Tooltip />
                 <Legend />
-                <Area 
-                  type="monotone" 
-                  dataKey="efficiency" 
-                  stroke="#10b981" 
-                  fill="#10b981" 
-                  fillOpacity={0.3} 
+                <Area
+                  type="monotone"
+                  dataKey="efficiency"
+                  stroke="#10b981"
+                  fill="#10b981"
+                  fillOpacity={0.3}
                   name="Efficiency (%)"
                 />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
-        
+
         {/* Alarms and Events Table */}
         <div className="bg-white p-4 rounded-lg shadow mb-6">
           <div className="flex items-center mb-4">
@@ -408,19 +408,17 @@ const TransformerMonitoringDashboard = () => {
                   <tr key={alarm.id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{alarm.timestamp}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        alarm.severity === 'High' ? 'bg-red-100 text-red-800' : 
-                        alarm.severity === 'Medium' ? 'bg-yellow-100 text-yellow-800' : 
-                        'bg-green-100 text-green-800'
-                      }`}>
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${alarm.severity === 'High' ? 'bg-red-100 text-red-800' :
+                          alarm.severity === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-green-100 text-green-800'
+                        }`}>
                         {alarm.severity}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{alarm.message}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        alarm.resolved ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                      }`}>
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${alarm.resolved ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }`}>
                         {alarm.resolved ? 'Resolved' : 'Active'}
                       </span>
                     </td>
@@ -430,7 +428,7 @@ const TransformerMonitoringDashboard = () => {
             </table>
           </div>
         </div>
-        
+
         {/* Footer */}
         <div className="bg-white p-4 rounded-lg shadow text-center text-gray-500">
           <p>Transformer Monitoring System | Plant Operations</p>

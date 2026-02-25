@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, AreaChart, BarChart, PieChart, Line, Area, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Pie } from 'recharts';
-import { Battery, AlertTriangle, Check, Clock, Thermometer, Activity, Zap, Settings, RefreshCw, Droplet, Gauge, Wind, Cpu, BarChart3, Calendar, FileText, Download, ShieldCheck, BatteryCharging, Layers, ArrowRightLeft, Server, Power, Plug } from 'lucide-react';
+import { Battery, AlertTriangle, Check, Clock, Thermometer, Activity, Zap, Settings, RefreshCw, Gauge, Cpu, Calendar, FileText, Download, ShieldCheck, BatteryCharging, Layers, ArrowRightLeft, Server, Power, Plug } from 'lucide-react';
 
 const UpsMonitoringDashboard = () => {
   // State for multiple UPS selection
   const [selectedUps, setSelectedUps] = useState('all');
-  
+
   // Mock data - in a real application, this would come from an API
   const [upsData, setUpsData] = useState({});
   const [alerts, setAlerts] = useState([]);
@@ -116,7 +116,7 @@ const UpsMonitoringDashboard = () => {
       { id: 4, type: 'Power Surge', duration: '2 minutes', date: '2025-03-25T11:10:00', description: 'Voltage spike detected, UPS provided protection' },
       { id: 5, type: 'Planned Maintenance', duration: '45 minutes', date: '2025-03-15T08:00:00', description: 'Scheduled switchover to bypass mode for maintenance' },
     ];
-    
+
     // Energy consumption data for last 7 days
     const energyConsumptionData = Array.from({ length: 7 }, (_, i) => {
       const date = new Date();
@@ -126,7 +126,7 @@ const UpsMonitoringDashboard = () => {
         consumption: 120 + Math.random() * 50,
       };
     });
-    
+
     // Battery replacement schedule
     const batteryReplacementData = [
       { id: 'batt1', upsName: 'UPS Unit 1', installDate: '2023-06-15', replacementDate: '2025-06-15', status: 'Good', healthPercentage: 85 },
@@ -169,7 +169,7 @@ const UpsMonitoringDashboard = () => {
 
   const getStatusIndicator = (status) => {
     const colorClass = getStatusColor(status);
-    
+
     if (status === 'online') {
       return <div className={`flex items-center ${colorClass}`}><Check size={16} className="mr-1" /> {status}</div>;
     } else if (status === 'offline') {
@@ -212,8 +212,8 @@ const UpsMonitoringDashboard = () => {
           </div>
           <div className="flex items-center">
             <div className="mr-4">
-              <select 
-                value={selectedUps} 
+              <select
+                value={selectedUps}
                 onChange={(e) => setSelectedUps(e.target.value)}
                 className="bg-blue-700 text-white p-2 rounded border border-blue-600"
               >
@@ -224,8 +224,8 @@ const UpsMonitoringDashboard = () => {
                 <option value="UPS4">UPS Unit 4</option>
               </select>
             </div>
-            <button 
-              onClick={handleRefresh} 
+            <button
+              onClick={handleRefresh}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center"
               disabled={refreshing}
             >
@@ -281,11 +281,11 @@ const UpsMonitoringDashboard = () => {
               </div>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-              <div 
-                className="h-2.5 rounded-full" 
-                style={{ 
-                  width: `${upsData.batteryLevel}%`, 
-                  backgroundColor: getBatteryColor(upsData.batteryLevel) 
+              <div
+                className="h-2.5 rounded-full"
+                style={{
+                  width: `${upsData.batteryLevel}%`,
+                  backgroundColor: getBatteryColor(upsData.batteryLevel)
                 }}
               ></div>
             </div>
@@ -298,10 +298,10 @@ const UpsMonitoringDashboard = () => {
               <Thermometer size={20} className="text-red-500" />
             </div>
             <div className="flex items-end">
-              <div className="text-3xl font-bold" 
-                style={{ 
-                  color: upsData.temperature > 38 ? '#f44336' : 
-                         upsData.temperature > 35 ? '#ff9800' : '#4caf50' 
+              <div className="text-3xl font-bold"
+                style={{
+                  color: upsData.temperature > 38 ? '#f44336' :
+                    upsData.temperature > 35 ? '#ff9800' : '#4caf50'
                 }}>
                 {upsData.temperature}°C
               </div>
@@ -416,37 +416,37 @@ const UpsMonitoringDashboard = () => {
               <div className="border rounded p-3">
                 <h4 className="text-sm text-gray-500">Battery Health</h4>
                 <div className="flex items-center mt-1">
-                  <div className="text-xl font-bold" style={{ 
-                    color: upsData.batteryHealthPercentage > 85 ? '#4caf50' : 
-                           upsData.batteryHealthPercentage > 70 ? '#ff9800' : '#f44336' 
+                  <div className="text-xl font-bold" style={{
+                    color: upsData.batteryHealthPercentage > 85 ? '#4caf50' :
+                      upsData.batteryHealthPercentage > 70 ? '#ff9800' : '#f44336'
                   }}>
                     {upsData.batteryHealthPercentage}%
                   </div>
-                  <div className="ml-2 px-2 py-1 text-xs rounded-full" style={{ 
-                    backgroundColor: upsData.batteryHealthPercentage > 85 ? '#e6f4ea' : 
-                                    upsData.batteryHealthPercentage > 70 ? '#fff8e1' : '#ffebee',
-                    color: upsData.batteryHealthPercentage > 85 ? '#1e8e3e' : 
-                           upsData.batteryHealthPercentage > 70 ? '#f57c00' : '#d32f2f' 
+                  <div className="ml-2 px-2 py-1 text-xs rounded-full" style={{
+                    backgroundColor: upsData.batteryHealthPercentage > 85 ? '#e6f4ea' :
+                      upsData.batteryHealthPercentage > 70 ? '#fff8e1' : '#ffebee',
+                    color: upsData.batteryHealthPercentage > 85 ? '#1e8e3e' :
+                      upsData.batteryHealthPercentage > 70 ? '#f57c00' : '#d32f2f'
                   }}>
                     {getBatteryHealthStatus(upsData.batteryHealthPercentage).text}
                   </div>
                 </div>
               </div>
-              
+
               <div className="border rounded p-3">
                 <h4 className="text-sm text-gray-500">Battery Voltage</h4>
                 <div className="text-xl font-bold mt-1">
                   {upsData.batteryVoltage?.toFixed(1)} V
                 </div>
               </div>
-              
+
               <div className="border rounded p-3">
                 <h4 className="text-sm text-gray-500">Charging Mode</h4>
                 <div className="text-xl font-bold mt-1">
                   {upsData.batteryChargeMode}
                 </div>
               </div>
-              
+
               <div className="border rounded p-3">
                 <h4 className="text-sm text-gray-500">Last Battery Test</h4>
                 <div className="text-xl font-bold mt-1">
@@ -473,21 +473,21 @@ const UpsMonitoringDashboard = () => {
                   {upsData.model}
                 </div>
               </div>
-              
+
               <div className="border rounded p-3">
                 <h4 className="text-sm text-gray-500">Serial Number</h4>
                 <div className="font-medium mt-1">
                   {upsData.serialNumber}
                 </div>
               </div>
-              
+
               <div className="border rounded p-3">
                 <h4 className="text-sm text-gray-500">Firmware Version</h4>
                 <div className="font-medium mt-1">
                   {upsData.firmwareVersion}
                 </div>
               </div>
-              
+
               <div className="border rounded p-3">
                 <h4 className="text-sm text-gray-500">Installation Date</h4>
                 <div className="font-medium mt-1">
@@ -517,12 +517,12 @@ const UpsMonitoringDashboard = () => {
                   <YAxis domain={[0, 100]} />
                   <Tooltip />
                   <Legend />
-                  <Area 
-                    type="monotone" 
-                    dataKey="battery" 
-                    name="Battery Level (%)" 
-                    stroke="#3b82f6" 
-                    fill="#93c5fd" 
+                  <Area
+                    type="monotone"
+                    dataKey="battery"
+                    name="Battery Level (%)"
+                    stroke="#3b82f6"
+                    fill="#93c5fd"
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -581,11 +581,11 @@ const UpsMonitoringDashboard = () => {
                   <YAxis domain={[50, 100]} />
                   <Tooltip />
                   <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey="health" 
-                    name="Health (%)" 
-                    stroke="#10b981" 
+                  <Line
+                    type="monotone"
+                    dataKey="health"
+                    name="Health (%)"
+                    stroke="#10b981"
                     strokeWidth={2}
                   />
                 </LineChart>
@@ -594,559 +594,559 @@ const UpsMonitoringDashboard = () => {
           </div>
 
           {/* Energy Consumption Chart */}
-<div className="bg-white rounded-lg shadow p-4">
-  <h3 className="text-gray-700 font-medium mb-4 flex items-center">
-    <Power size={18} className="mr-2 text-orange-500" />
-    Energy Consumption (Last 7 Days)
-  </h3>
-  <div className="h-64">
-    <ResponsiveContainer width="100%" height="100%">
-      <BarChart
-        data={energyConsumption}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="day" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar 
-          dataKey="consumption" 
-          name="Energy (kWh)" 
-          fill="#f59e0b" 
-        />
-      </BarChart>
-    </ResponsiveContainer>
-  </div>
-</div>
-</div>
-
-{/* Alert Section */}
-<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-  {/* Active Alerts */}
-  <div className="bg-white rounded-lg shadow lg:col-span-2">
-    <div className="p-4 border-b flex justify-between items-center">
-      <h3 className="text-gray-800 font-medium flex items-center">
-        <AlertTriangle size={18} className="mr-2 text-red-500" />
-        Active Alerts
-      </h3>
-      <span className="text-sm bg-red-100 text-red-800 py-1 px-3 rounded-full">{filterAlerts().length} Active</span>
-    </div>
-    <div className="p-4">
-      <div className="overflow-auto max-h-72">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severity</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Equipment</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alert</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {filterAlerts().map((alert) => (
-              <tr key={alert.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getAlertSeverityColor(alert.severity)}`}>
-                    {alert.severity}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{alert.equipment}</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="text-sm text-gray-900">{alert.message}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">
-                    {new Date(alert.timestamp).toLocaleString()}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  {/* Maintenance Schedule */}
-  <div className="bg-white rounded-lg shadow">
-    <div className="p-4 border-b">
-      <h3 className="text-gray-800 font-medium flex items-center">
-        <Calendar size={18} className="mr-2 text-blue-500" />
-        Maintenance Schedule
-      </h3>
-    </div>
-    <div className="p-4">
-      <div className="overflow-auto max-h-72">
-        <div className="space-y-4">
-          <div className="border-l-4 border-green-500 pl-3 py-2">
-            <p className="text-sm text-gray-600">Last Maintenance</p>
-            <p className="font-medium">{upsData.lastMaintenance}</p>
-            <p className="text-xs text-gray-500 mt-1">Regular checkup and battery test</p>
-          </div>
-          <div className="border-l-4 border-blue-500 pl-3 py-2">
-            <p className="text-sm text-gray-600">Next Scheduled Maintenance</p>
-            <p className="font-medium">{upsData.nextMaintenance}</p>
-            <p className="text-xs text-gray-500 mt-1">Comprehensive maintenance with load test</p>
-          </div>
-          <div className="border-l-4 border-yellow-500 pl-3 py-2">
-            <p className="text-sm text-gray-600">Firmware Update</p>
-            <p className="font-medium">2025-05-10</p>
-            <p className="text-xs text-gray-500 mt-1">Critical security patch and performance improvement</p>
+          <div className="bg-white rounded-lg shadow p-4">
+            <h3 className="text-gray-700 font-medium mb-4 flex items-center">
+              <Power size={18} className="mr-2 text-orange-500" />
+              Energy Consumption (Last 7 Days)
+            </h3>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={energyConsumption}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="day" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar
+                    dataKey="consumption"
+                    name="Energy (kWh)"
+                    fill="#f59e0b"
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-{/* Power Events History */}
-<div className="bg-white rounded-lg shadow mb-6">
-  <div className="p-4 border-b flex justify-between items-center">
-    <h3 className="text-gray-800 font-medium flex items-center">
-      <Zap size={18} className="mr-2 text-yellow-500" />
-      Power Events History
-    </h3>
-    <a href="#" className="text-blue-500 text-sm hover:text-blue-700">View All</a>
-  </div>
-  <div className="p-4">
-    <div className="overflow-auto max-h-96">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {powerEvents.map((event) => (
-            <tr key={event.id}>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center">
-                  {event.type === 'Power Outage' ? <Power size={16} className="mr-2 text-red-500" /> :
-                   event.type === 'Voltage Sag' ? <Zap size={16} className="mr-2 text-yellow-500" /> :
-                   event.type === 'Power Surge' ? <Zap size={16} className="mr-2 text-orange-500" /> :
-                   event.type === 'Frequency Variation' ? <Activity size={16} className="mr-2 text-blue-500" /> :
-                   <Settings size={16} className="mr-2 text-gray-500" />}
-                  <div className="text-sm font-medium text-gray-900">{event.type}</div>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{event.duration}</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-500">
-                  {new Date(event.date).toLocaleString()}
-                </div>
-              </td>
-              <td className="px-6 py-4">
-                <div className="text-sm text-gray-900">{event.description}</div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-{/* Battery Replacement Schedule */}
-<div className="bg-white rounded-lg shadow mb-6">
-  <div className="p-4 border-b flex justify-between items-center">
-    <h3 className="text-gray-800 font-medium flex items-center">
-      <BatteryCharging size={18} className="mr-2 text-green-500" />
-      Battery Replacement Schedule
-    </h3>
-    <a href="#" className="text-blue-500 text-sm hover:text-blue-700">
-      <FileText size={16} className="inline mr-1" />
-      Export Report
-    </a>
-  </div>
-  <div className="p-4">
-    <table className="min-w-full divide-y divide-gray-200">
-      <thead className="bg-gray-50">
-        <tr>
-          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UPS Name</th>
-          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Installation Date</th>
-          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Replacement Date</th>
-          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Health</th>
-        </tr>
-      </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
-        {batteryReplacementSchedule.map((battery) => {
-          const today = new Date();
-          const replacementDate = new Date(battery.replacementDate);
-          const daysDifference = Math.floor((replacementDate - today) / (1000 * 60 * 60 * 24));
-          
-          let statusColor = 'text-green-500';
-          if (daysDifference < 30) statusColor = 'text-red-500';
-          else if (daysDifference < 90) statusColor = 'text-yellow-500';
-          
-          return (
-            <tr key={battery.id}>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm font-medium text-gray-900">{battery.upsName}</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{battery.installDate}</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className={`text-sm font-medium ${statusColor}`}>{battery.replacementDate}</div>
-                {daysDifference < 30 && 
-                  <div className="text-xs text-red-500">Due soon ({daysDifference} days)</div>
-                }
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{battery.status}</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <div 
-                    className="h-2.5 rounded-full" 
-                    style={{ 
-                      width: `${battery.healthPercentage}%`, 
-                      backgroundColor: battery.healthPercentage > 80 ? '#4caf50' : 
-                                    battery.healthPercentage > 60 ? '#ff9800' : '#f44336' 
-                    }}
-                  ></div>
-                </div>
-                <div className="text-xs text-gray-500 mt-1">{battery.healthPercentage}%</div>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  </div>
-</div>
-
-{/* UPS Unit List */}
-<div className="bg-white rounded-lg shadow mb-6">
-  <div className="p-4 border-b">
-    <h3 className="text-gray-800 font-medium flex items-center">
-      <Server size={18} className="mr-2 text-blue-500" />
-      UPS Units
-    </h3>
-  </div>
-  <div className="p-4">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {upsUnits.map((unit) => (
-        <div key={unit.id} className="border rounded p-4 hover:shadow-md transition-shadow">
-          <div className="flex justify-between">
-            <h4 className="font-medium text-gray-900">{unit.name}</h4>
-            <span className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span>
-          </div>
-          <div className="mt-3 space-y-2">
-            <div className="flex items-start">
-              <div className="text-gray-500 w-24 text-sm">Location:</div>
-              <div className="text-sm">{unit.location}</div>
+        {/* Alert Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          {/* Active Alerts */}
+          <div className="bg-white rounded-lg shadow lg:col-span-2">
+            <div className="p-4 border-b flex justify-between items-center">
+              <h3 className="text-gray-800 font-medium flex items-center">
+                <AlertTriangle size={18} className="mr-2 text-red-500" />
+                Active Alerts
+              </h3>
+              <span className="text-sm bg-red-100 text-red-800 py-1 px-3 rounded-full">{filterAlerts().length} Active</span>
             </div>
-            <div className="flex items-start">
-              <div className="text-gray-500 w-24 text-sm">Capacity:</div>
-              <div className="text-sm">{unit.capacity}</div>
-            </div>
-            <div className="flex items-start">
-              <div className="text-gray-500 w-24 text-sm">Status:</div>
-              <div className="text-sm flex items-center text-green-500">
-                <Check size={14} className="mr-1" /> Online
+            <div className="p-4">
+              <div className="overflow-auto max-h-72">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severity</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Equipment</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alert</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {filterAlerts().map((alert) => (
+                      <tr key={alert.id}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getAlertSeverityColor(alert.severity)}`}>
+                            {alert.severity}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">{alert.equipment}</div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="text-sm text-gray-900">{alert.message}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-500">
+                            {new Date(alert.timestamp).toLocaleString()}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-          <div className="mt-3 flex justify-end">
-            <button className="text-blue-500 hover:text-blue-700 text-sm font-medium mr-2">View Details</button>
-            <button className="text-gray-500 hover:text-gray-700 text-sm font-medium">Configure</button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</div>
 
-{/* Additional Features Section */}
-<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-  {/* System Settings */}
-  <div className="bg-white rounded-lg shadow">
-    <div className="p-4 border-b">
-      <h3 className="text-gray-800 font-medium flex items-center">
-        <Settings size={18} className="mr-2 text-gray-600" />
-        System Settings
-      </h3>
-    </div>
-    <div className="p-4">
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h4 className="font-medium text-gray-900">Automatic Tests</h4>
-            <p className="text-sm text-gray-500">Schedule battery tests weekly</p>
-          </div>
-          <div className="relative inline-block w-10 mr-2 align-middle select-none">
-            <input type="checkbox" id="toggle-1" className="sr-only" defaultChecked />
-            <div className="w-10 h-5 bg-gray-200 rounded-full shadow-inner"></div>
-            <div className="absolute w-5 h-5 bg-blue-600 rounded-full shadow -left-1 -top-0 transition"></div>
-          </div>
-        </div>
-        
-        <div className="flex items-center justify-between">
-          <div>
-            <h4 className="font-medium text-gray-900">Email Notifications</h4>
-            <p className="text-sm text-gray-500">Send alerts to administrators</p>
-          </div>
-          <div className="relative inline-block w-10 mr-2 align-middle select-none">
-            <input type="checkbox" id="toggle-2" className="sr-only" defaultChecked />
-            <div className="w-10 h-5 bg-gray-200 rounded-full shadow-inner"></div>
-            <div className="absolute w-5 h-5 bg-blue-600 rounded-full shadow -left-1 -top-0 transition"></div>
+          {/* Maintenance Schedule */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="p-4 border-b">
+              <h3 className="text-gray-800 font-medium flex items-center">
+                <Calendar size={18} className="mr-2 text-blue-500" />
+                Maintenance Schedule
+              </h3>
+            </div>
+            <div className="p-4">
+              <div className="overflow-auto max-h-72">
+                <div className="space-y-4">
+                  <div className="border-l-4 border-green-500 pl-3 py-2">
+                    <p className="text-sm text-gray-600">Last Maintenance</p>
+                    <p className="font-medium">{upsData.lastMaintenance}</p>
+                    <p className="text-xs text-gray-500 mt-1">Regular checkup and battery test</p>
+                  </div>
+                  <div className="border-l-4 border-blue-500 pl-3 py-2">
+                    <p className="text-sm text-gray-600">Next Scheduled Maintenance</p>
+                    <p className="font-medium">{upsData.nextMaintenance}</p>
+                    <p className="text-xs text-gray-500 mt-1">Comprehensive maintenance with load test</p>
+                  </div>
+                  <div className="border-l-4 border-yellow-500 pl-3 py-2">
+                    <p className="text-sm text-gray-600">Firmware Update</p>
+                    <p className="font-medium">2025-05-10</p>
+                    <p className="text-xs text-gray-500 mt-1">Critical security patch and performance improvement</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        
-        <div className="flex items-center justify-between">
-          <div>
-            <h4 className="font-medium text-gray-900">SMS Alerts</h4>
-            <p className="text-sm text-gray-500">Critical alerts via SMS</p>
-          </div>
-          <div className="relative inline-block w-10 mr-2 align-middle select-none">
-            <input type="checkbox" id="toggle-3" className="sr-only" />
-            <div className="w-10 h-5 bg-gray-200 rounded-full shadow-inner"></div>
-            <div className="absolute w-5 h-5 bg-gray-500 rounded-full shadow -left-1 -top-0 transition"></div>
-          </div>
-        </div>
-      </div>
-      
-      <div className="mt-4 border-t pt-4">
-        <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded text-sm">
-          Advanced Settings
-        </button>
-      </div>
-    </div>
-  </div>
 
-  {/* Report Generation */}
-  <div className="bg-white rounded-lg shadow">
-    <div className="p-4 border-b">
-      <h3 className="text-gray-800 font-medium flex items-center">
-        <FileText size={18} className="mr-2 text-indigo-500" />
-        Report Generation
-      </h3>
-    </div>
-    <div className="p-4">
-      <div className="space-y-3">
-        <button className="w-full flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded border">
-          <div className="flex items-center">
-            <Download size={16} className="text-indigo-500 mr-2" />
-            <span>Monthly Performance Report</span>
+        {/* Power Events History */}
+        <div className="bg-white rounded-lg shadow mb-6">
+          <div className="p-4 border-b flex justify-between items-center">
+            <h3 className="text-gray-800 font-medium flex items-center">
+              <Zap size={18} className="mr-2 text-yellow-500" />
+              Power Events History
+            </h3>
+            <a href="#!" className="text-blue-500 text-sm hover:text-blue-700">View All</a>
           </div>
-          <span className="text-gray-500 text-sm">PDF</span>
-        </button>
-        <button className="w-full flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded border">
-          <div className="flex items-center">
-            <Download size={16} className="text-indigo-500 mr-2" />
-            <span>Battery Health History</span>
+          <div className="p-4">
+            <div className="overflow-auto max-h-96">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {powerEvents.map((event) => (
+                    <tr key={event.id}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          {event.type === 'Power Outage' ? <Power size={16} className="mr-2 text-red-500" /> :
+                            event.type === 'Voltage Sag' ? <Zap size={16} className="mr-2 text-yellow-500" /> :
+                              event.type === 'Power Surge' ? <Zap size={16} className="mr-2 text-orange-500" /> :
+                                event.type === 'Frequency Variation' ? <Activity size={16} className="mr-2 text-blue-500" /> :
+                                  <Settings size={16} className="mr-2 text-gray-500" />}
+                          <div className="text-sm font-medium text-gray-900">{event.type}</div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{event.duration}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-500">
+                          {new Date(event.date).toLocaleString()}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-900">{event.description}</div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-          <span className="text-gray-500 text-sm">CSV</span>
-        </button>
-        <button className="w-full flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded border">
-          <div className="flex items-center">
-            <Download size={16} className="text-indigo-500 mr-2" />
-            <span>Power Event Timeline</span>
-          </div>
-          <span className="text-gray-500 text-sm">Excel</span>
-        </button>
-      </div>
-      
-      <div className="mt-4 border-t pt-4">
-        <button className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded text-sm">
-          Custom Report
-        </button>
-      </div>
-    </div>
-  </div>
+        </div>
 
-  {/* System Health Summary */}
-  <div className="bg-white rounded-lg shadow">
-    <div className="p-4 border-b">
-      <h3 className="text-gray-800 font-medium flex items-center">
-        <ShieldCheck size={18} className="mr-2 text-green-500" />
-        System Health Summary
-      </h3>
-    </div>
-    <div className="p-4">
-      <div className="flex items-center justify-center mb-4">
-        <div className="relative w-32 h-32">
-          <svg className="w-32 h-32" viewBox="0 0 36 36">
-            <path
-              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none"
-              stroke="#e6e6e6"
-              strokeWidth="3"
-              strokeDasharray="100, 100"
-            />
-            <path
-              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none"
-              stroke="#4caf50"
-              strokeWidth="3"
-              strokeDasharray="85, 100"
-            />
-            {/* <text x="18" y="20.5" textAnchor="middle" fontSize="8" fill="#333">85%</text> */}
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center flex-col">
-            <div className="text-3xl font-bold text-green-600">85%</div>
-            <div className="text-sm text-gray-500">System Health</div>
+        {/* Battery Replacement Schedule */}
+        <div className="bg-white rounded-lg shadow mb-6">
+          <div className="p-4 border-b flex justify-between items-center">
+            <h3 className="text-gray-800 font-medium flex items-center">
+              <BatteryCharging size={18} className="mr-2 text-green-500" />
+              Battery Replacement Schedule
+            </h3>
+            <a href="#!" className="text-blue-500 text-sm hover:text-blue-700">
+              <FileText size={16} className="inline mr-1" />
+              Export Report
+            </a>
           </div>
-        </div>
-      </div>
-      <div className="space-y-2">
-        <div className="flex justify-between items-center">
-          <div className="text-sm">Battery Systems</div>
-          <div className="text-sm font-medium flex items-center text-green-500">
-            <Check size={14} className="mr-1" /> Good
-          </div>
-        </div>
-        <div className="flex justify-between items-center">
-          <div className="text-sm">Power Distribution</div>
-          <div className="text-sm font-medium flex items-center text-green-500">
-            <Check size={14} className="mr-1" /> Optimal
-          </div>
-        </div>
-        <div className="flex justify-between items-center">
-          <div className="text-sm">Temperature Conditions</div>
-          <div className="text-sm font-medium flex items-center text-yellow-500">
-            <AlertTriangle size={14} className="mr-1" /> Attention
-          </div>
-        </div>
-        <div className="flex justify-between items-center">
-          <div className="text-sm">Firmware Status</div>
-          <div className="text-sm font-medium flex items-center text-green-500">
-            <Check size={14} className="mr-1" /> Up to date
-          </div>
-        </div>
-      </div>
-      
-      <div className="mt-4 border-t pt-4">
-        <button className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded text-sm">
-          System Diagnostics
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+          <div className="p-4">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UPS Name</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Installation Date</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Replacement Date</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Health</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {batteryReplacementSchedule.map((battery) => {
+                  const today = new Date();
+                  const replacementDate = new Date(battery.replacementDate);
+                  const daysDifference = Math.floor((replacementDate - today) / (1000 * 60 * 60 * 24));
 
-{/* Detailed Metrics & Configuration */}
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-  {/* Advanced Electrical Parameters */}
-  <div className="bg-white rounded-lg shadow mb-6">
-    <div className="p-4 border-b">
-      <h3 className="text-gray-800 font-medium flex items-center">
-        <Cpu size={18} className="mr-2 text-purple-500" />
-        Advanced Electrical Parameters
-      </h3>
-    </div>
-    <div className="p-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="bg-gray-50 p-3 rounded border">
-          <div className="text-sm text-gray-500">Input Current</div>
-          <div className="text-xl font-medium">{(upsData.inputVoltage / 240 * 10).toFixed(1)} A</div>
+                  let statusColor = 'text-green-500';
+                  if (daysDifference < 30) statusColor = 'text-red-500';
+                  else if (daysDifference < 90) statusColor = 'text-yellow-500';
+
+                  return (
+                    <tr key={battery.id}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900">{battery.upsName}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{battery.installDate}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className={`text-sm font-medium ${statusColor}`}>{battery.replacementDate}</div>
+                        {daysDifference < 30 &&
+                          <div className="text-xs text-red-500">Due soon ({daysDifference} days)</div>
+                        }
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{battery.status}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="w-full bg-gray-200 rounded-full h-2.5">
+                          <div
+                            className="h-2.5 rounded-full"
+                            style={{
+                              width: `${battery.healthPercentage}%`,
+                              backgroundColor: battery.healthPercentage > 80 ? '#4caf50' :
+                                battery.healthPercentage > 60 ? '#ff9800' : '#f44336'
+                            }}
+                          ></div>
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">{battery.healthPercentage}%</div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div className="bg-gray-50 p-3 rounded border">
-          <div className="text-sm text-gray-500">Output Current</div>
-          <div className="text-xl font-medium">{(upsData.outputVoltage / 240 * (upsData.loadPercentage/100) * 20).toFixed(1)} A</div>
+
+        {/* UPS Unit List */}
+        <div className="bg-white rounded-lg shadow mb-6">
+          <div className="p-4 border-b">
+            <h3 className="text-gray-800 font-medium flex items-center">
+              <Server size={18} className="mr-2 text-blue-500" />
+              UPS Units
+            </h3>
+          </div>
+          <div className="p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {upsUnits.map((unit) => (
+                <div key={unit.id} className="border rounded p-4 hover:shadow-md transition-shadow">
+                  <div className="flex justify-between">
+                    <h4 className="font-medium text-gray-900">{unit.name}</h4>
+                    <span className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span>
+                  </div>
+                  <div className="mt-3 space-y-2">
+                    <div className="flex items-start">
+                      <div className="text-gray-500 w-24 text-sm">Location:</div>
+                      <div className="text-sm">{unit.location}</div>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="text-gray-500 w-24 text-sm">Capacity:</div>
+                      <div className="text-sm">{unit.capacity}</div>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="text-gray-500 w-24 text-sm">Status:</div>
+                      <div className="text-sm flex items-center text-green-500">
+                        <Check size={14} className="mr-1" /> Online
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex justify-end">
+                    <button className="text-blue-500 hover:text-blue-700 text-sm font-medium mr-2">View Details</button>
+                    <a href="#!" className="text-gray-500 hover:text-gray-700 text-sm font-medium">Settings</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="bg-gray-50 p-3 rounded border">
-          <div className="text-sm text-gray-500">Inverter Temperature</div>
-          <div className="text-xl font-medium">{Math.floor(upsData.temperature * 1.1)}°C</div>
+
+        {/* Additional Features Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          {/* System Settings */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="p-4 border-b">
+              <h3 className="text-gray-800 font-medium flex items-center">
+                <Settings size={18} className="mr-2 text-gray-600" />
+                System Settings
+              </h3>
+            </div>
+            <div className="p-4">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-medium text-gray-900">Automatic Tests</h4>
+                    <p className="text-sm text-gray-500">Schedule battery tests weekly</p>
+                  </div>
+                  <div className="relative inline-block w-10 mr-2 align-middle select-none">
+                    <input type="checkbox" id="toggle-1" className="sr-only" defaultChecked />
+                    <div className="w-10 h-5 bg-gray-200 rounded-full shadow-inner"></div>
+                    <div className="absolute w-5 h-5 bg-blue-600 rounded-full shadow -left-1 -top-0 transition"></div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-medium text-gray-900">Email Notifications</h4>
+                    <p className="text-sm text-gray-500">Send alerts to administrators</p>
+                  </div>
+                  <div className="relative inline-block w-10 mr-2 align-middle select-none">
+                    <input type="checkbox" id="toggle-2" className="sr-only" defaultChecked />
+                    <div className="w-10 h-5 bg-gray-200 rounded-full shadow-inner"></div>
+                    <div className="absolute w-5 h-5 bg-blue-600 rounded-full shadow -left-1 -top-0 transition"></div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-medium text-gray-900">SMS Alerts</h4>
+                    <p className="text-sm text-gray-500">Critical alerts via SMS</p>
+                  </div>
+                  <div className="relative inline-block w-10 mr-2 align-middle select-none">
+                    <input type="checkbox" id="toggle-3" className="sr-only" />
+                    <div className="w-10 h-5 bg-gray-200 rounded-full shadow-inner"></div>
+                    <div className="absolute w-5 h-5 bg-gray-500 rounded-full shadow -left-1 -top-0 transition"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 border-t pt-4">
+                <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded text-sm">
+                  Advanced Settings
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Report Generation */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="p-4 border-b">
+              <h3 className="text-gray-800 font-medium flex items-center">
+                <FileText size={18} className="mr-2 text-indigo-500" />
+                Report Generation
+              </h3>
+            </div>
+            <div className="p-4">
+              <div className="space-y-3">
+                <button className="w-full flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded border">
+                  <div className="flex items-center">
+                    <Download size={16} className="text-indigo-500 mr-2" />
+                    <span>Monthly Performance Report</span>
+                  </div>
+                  <span className="text-gray-500 text-sm">PDF</span>
+                </button>
+                <button className="w-full flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded border">
+                  <div className="flex items-center">
+                    <Download size={16} className="text-indigo-500 mr-2" />
+                    <span>Battery Health History</span>
+                  </div>
+                  <span className="text-gray-500 text-sm">CSV</span>
+                </button>
+                <button className="w-full flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded border">
+                  <div className="flex items-center">
+                    <Download size={16} className="text-indigo-500 mr-2" />
+                    <span>Power Event Timeline</span>
+                  </div>
+                  <span className="text-gray-500 text-sm">Excel</span>
+                </button>
+              </div>
+
+              <div className="mt-4 border-t pt-4">
+                <button className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded text-sm">
+                  Custom Report
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* System Health Summary */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="p-4 border-b">
+              <h3 className="text-gray-800 font-medium flex items-center">
+                <ShieldCheck size={18} className="mr-2 text-green-500" />
+                System Health Summary
+              </h3>
+            </div>
+            <div className="p-4">
+              <div className="flex items-center justify-center mb-4">
+                <div className="relative w-32 h-32">
+                  <svg className="w-32 h-32" viewBox="0 0 36 36">
+                    <path
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none"
+                      stroke="#e6e6e6"
+                      strokeWidth="3"
+                      strokeDasharray="100, 100"
+                    />
+                    <path
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none"
+                      stroke="#4caf50"
+                      strokeWidth="3"
+                      strokeDasharray="85, 100"
+                    />
+                    {/* <text x="18" y="20.5" textAnchor="middle" fontSize="8" fill="#333">85%</text> */}
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center flex-col">
+                    <div className="text-3xl font-bold text-green-600">85%</div>
+                    <div className="text-sm text-gray-500">System Health</div>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <div className="text-sm">Battery Systems</div>
+                  <div className="text-sm font-medium flex items-center text-green-500">
+                    <Check size={14} className="mr-1" /> Good
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="text-sm">Power Distribution</div>
+                  <div className="text-sm font-medium flex items-center text-green-500">
+                    <Check size={14} className="mr-1" /> Optimal
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="text-sm">Temperature Conditions</div>
+                  <div className="text-sm font-medium flex items-center text-yellow-500">
+                    <AlertTriangle size={14} className="mr-1" /> Attention
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="text-sm">Firmware Status</div>
+                  <div className="text-sm font-medium flex items-center text-green-500">
+                    <Check size={14} className="mr-1" /> Up to date
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 border-t pt-4">
+                <button className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded text-sm">
+                  System Diagnostics
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="bg-gray-50 p-3 rounded border">
-          <div className="text-sm text-gray-500">AC Input Power</div>
-          <div className="text-xl font-medium">{Math.floor(upsData.inputVoltage * (upsData.inputVoltage / 240 * 10) * upsData.powerFactor / 1000)} kW</div>
+
+        {/* Detailed Metrics & Configuration */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Advanced Electrical Parameters */}
+          <div className="bg-white rounded-lg shadow mb-6">
+            <div className="p-4 border-b">
+              <h3 className="text-gray-800 font-medium flex items-center">
+                <Cpu size={18} className="mr-2 text-purple-500" />
+                Advanced Electrical Parameters
+              </h3>
+            </div>
+            <div className="p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="bg-gray-50 p-3 rounded border">
+                  <div className="text-sm text-gray-500">Input Current</div>
+                  <div className="text-xl font-medium">{(upsData.inputVoltage / 240 * 10).toFixed(1)} A</div>
+                </div>
+                <div className="bg-gray-50 p-3 rounded border">
+                  <div className="text-sm text-gray-500">Output Current</div>
+                  <div className="text-xl font-medium">{(upsData.outputVoltage / 240 * (upsData.loadPercentage / 100) * 20).toFixed(1)} A</div>
+                </div>
+                <div className="bg-gray-50 p-3 rounded border">
+                  <div className="text-sm text-gray-500">Inverter Temperature</div>
+                  <div className="text-xl font-medium">{Math.floor(upsData.temperature * 1.1)}°C</div>
+                </div>
+                <div className="bg-gray-50 p-3 rounded border">
+                  <div className="text-sm text-gray-500">AC Input Power</div>
+                  <div className="text-xl font-medium">{Math.floor(upsData.inputVoltage * (upsData.inputVoltage / 240 * 10) * upsData.powerFactor / 1000)} kW</div>
+                </div>
+                <div className="bg-gray-50 p-3 rounded border">
+                  <div className="text-sm text-gray-500">AC Output Power</div>
+                  <div className="text-xl font-medium">{Math.floor(upsData.outputVoltage * (upsData.outputVoltage / 240 * (upsData.loadPercentage / 100) * 20) * upsData.powerFactor / 1000)} kW</div>
+                </div>
+                <div className="bg-gray-50 p-3 rounded border">
+                  <div className="text-sm text-gray-500">System Losses</div>
+                  <div className="text-xl font-medium">{Math.floor((1 - upsData.efficiency / 100) * 100) / 10} kW</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Network Configuration */}
+          <div className="bg-white rounded-lg shadow mb-6">
+            <div className="p-4 border-b">
+              <h3 className="text-gray-800 font-medium flex items-center">
+                <Plug size={18} className="mr-2 text-blue-500" />
+                Network Configuration
+              </h3>
+            </div>
+            <div className="p-4">
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="text-sm text-gray-500">IP Address</h4>
+                    <div className="font-medium">192.168.1.100</div>
+                  </div>
+                  <div>
+                    <h4 className="text-sm text-gray-500">Protocol</h4>
+                    <div className="font-medium">SNMP v3, Modbus TCP</div>
+                  </div>
+                  <div>
+                    <h4 className="text-sm text-gray-500">MAC Address</h4>
+                    <div className="font-medium">00:1A:2B:3C:4D:5E</div>
+                  </div>
+                  <div>
+                    <h4 className="text-sm text-gray-500">Monitoring Port</h4>
+                    <div className="font-medium">Port 161, 502</div>
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <h4 className="text-sm text-gray-500 mb-2">Communication Status</h4>
+                  <div className="flex space-x-2">
+                    <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">SNMP: Connected</span>
+                    <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">HTTP: Available</span>
+                    <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">SSH: Secured</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-end space-x-2 mt-4">
+                  <button className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm">
+                    Network Test
+                  </button>
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                    Configure
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="bg-gray-50 p-3 rounded border">
-          <div className="text-sm text-gray-500">AC Output Power</div>
-          <div className="text-xl font-medium">{Math.floor(upsData.outputVoltage * (upsData.outputVoltage / 240 * (upsData.loadPercentage/100) * 20) * upsData.powerFactor / 1000)} kW</div>
-        </div>
-        <div className="bg-gray-50 p-3 rounded border">
-          <div className="text-sm text-gray-500">System Losses</div>
-          <div className="text-xl font-medium">{Math.floor((1 - upsData.efficiency/100) * 100) / 10} kW</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  {/* Network Configuration */}
-  <div className="bg-white rounded-lg shadow mb-6">
-    <div className="p-4 border-b">
-      <h3 className="text-gray-800 font-medium flex items-center">
-        <Plug size={18} className="mr-2 text-blue-500" />
-        Network Configuration
-      </h3>
-    </div>
-    <div className="p-4">
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white p-4 mt-6">
+        <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
           <div>
-            <h4 className="text-sm text-gray-500">IP Address</h4>
-            <div className="font-medium">192.168.1.100</div>
+            <p className="text-sm">UPS Monitoring System v2.5.1</p>
+            <p className="text-xs text-gray-400">Last updated: April 12, 2025</p>
           </div>
-          <div>
-            <h4 className="text-sm text-gray-500">Protocol</h4>
-            <div className="font-medium">SNMP v3, Modbus TCP</div>
-          </div>
-          <div>
-            <h4 className="text-sm text-gray-500">MAC Address</h4>
-            <div className="font-medium">00:1A:2B:3C:4D:5E</div>
-          </div>
-          <div>
-            <h4 className="text-sm text-gray-500">Monitoring Port</h4>
-            <div className="font-medium">Port 161, 502</div>
+          <div className="mt-4 md:mt-0">
+            <div className="flex space-x-4">
+              <a href="#!" className="text-gray-400 hover:text-gray-200"><Settings size={20} /></a>
+              <a href="#!" className="text-gray-400 hover:text-gray-200"><Calendar size={20} /></a>
+              <a href="#!" className="text-gray-400 hover:text-gray-200"><Download size={20} /></a>
+            </div>
           </div>
         </div>
-        
-        <div className="mt-4">
-          <h4 className="text-sm text-gray-500 mb-2">Communication Status</h4>
-          <div className="flex space-x-2">
-            <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">SNMP: Connected</span>
-            <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">HTTP: Available</span>
-            <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">SSH: Secured</span>
-          </div>
-        </div>
-        
-        <div className="flex justify-end space-x-2 mt-4">
-          <button className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm">
-            Network Test
-          </button>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
-            Configure
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+      </footer>
 
-</main>
-
-{/* Footer */}
-<footer className="bg-gray-800 text-white p-4 mt-6">
-  <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-    <div>
-      <p className="text-sm">UPS Monitoring System v2.5.1</p>
-      <p className="text-xs text-gray-400">Last updated: April 12, 2025</p>
     </div>
-    <div className="mt-4 md:mt-0">
-      <div className="flex space-x-4">
-        <a href="#" className="text-gray-300 hover:text-white text-sm">Documentation</a>
-        <a href="#" className="text-gray-300 hover:text-white text-sm">Support</a>
-        <a href="#" className="text-gray-300 hover:text-white text-sm">System Status</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-</div>
-);
+  );
 };
 
 export default UpsMonitoringDashboard;

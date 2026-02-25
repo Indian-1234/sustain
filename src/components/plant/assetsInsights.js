@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FaExclamationTriangle } from 'react-icons/fa';
 import { MaterialReactTable } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
@@ -68,8 +68,6 @@ const Dashboardassets = () => {
 
   const [data, setData] = useState(generateRandomData());
   const [selectedAsset, setSelectedAsset] = useState(null);
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
   const [logs, setLogs] = useState(generateLogs(data));
 
   const handleAssetClick = (asset) => {
@@ -81,15 +79,8 @@ const Dashboardassets = () => {
     setData(newData);
     setLogs(generateLogs(newData));
     setSelectedAsset(asset);
-    setPageIndex(0);
   };
 
-  const handleRefreshData = () => {
-    const newData = generateRandomData();
-    setData(newData);
-    setLogs(generateLogs(newData));
-    setSelectedAsset(null);
-  };
 
   const columns = useMemo(
     () => [
@@ -120,13 +111,12 @@ const Dashboardassets = () => {
         size: 100,
         Cell: ({ cell }) => (
           <span
-            className={`font-semibold ${
-              cell.getValue() === 'Healthy'
+            className={`font-semibold ${cell.getValue() === 'Healthy'
                 ? 'text-green-500'
                 : cell.getValue() === 'Warning'
                   ? 'text-yellow-500'
                   : 'text-red-500'
-            }`}
+              }`}
           >
             {cell.getValue()}
           </span>
@@ -279,13 +269,12 @@ const Dashboardassets = () => {
             {logs.map((log) => (
               <div
                 key={log.id}
-                className={`mb-3 p-2 rounded ${
-                  log.severity === 'high'
+                className={`mb-3 p-2 rounded ${log.severity === 'high'
                     ? 'bg-red-800/50'
                     : log.severity === 'medium'
                       ? 'bg-yellow-800/50'
                       : 'bg-slate-700'
-                }`}
+                  }`}
               >
                 <p className="text-gray-200">{log.event}</p>
                 <div className="flex justify-between items-center">

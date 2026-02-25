@@ -15,7 +15,6 @@ import {
 import { FaPlus, FaSort } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import {  FaTint } from "react-icons/fa";
 import { GiWaterRecycling } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 
@@ -104,7 +103,7 @@ const Sidebar: React.FC = () => {
   };
   const [open, setOpen] = useState(false);
 
-  const handleNavigate = (path) => {
+  const handleNavigate = (path: string) => {
     navigate(path);
     setOpen(false);
   };
@@ -137,8 +136,6 @@ const Sidebar: React.FC = () => {
   const handleSidebarToggle = () => {
     setSidebarVisible((prev) => !prev);
   };
-  const isNonNavigable =
-    location.pathname === "/" || location.pathname.startsWith("/plant/");
   return (
     <div
       ref={sidebarRef}
@@ -185,8 +182,8 @@ const Sidebar: React.FC = () => {
                   <Link
                     to={
                       item === "Portfolio Summary"
-                        ? "/": item === "Asset Insights"?"/plant/assets" // Redirect to specific path for Portfolio Summary
-                        : `/plant/${item}` // Default path for other items
+                        ? "/" : item === "Asset Insights" ? "/plant/assets" // Redirect to specific path for Portfolio Summary
+                          : `/plant/${item}` // Default path for other items
                     }
                     state={{ name: item }} // Pass the state separately
                     key={index}
@@ -215,66 +212,66 @@ const Sidebar: React.FC = () => {
             </div>
           )}
 
-<div className="relative flex flex-col items-center">
-      {/* Main Button */}
-      <div
-        className="flex flex-col items-center cursor-pointer text-gray-500"
-        onClick={() => setOpen(!open)}
-      >
-        <GiWaterRecycling className="text-xl" />
-        <p className="text-xs mt-1 flex items-center">
-          Monitoring <FaAngleDown className="ml-1" />
-        </p>
-      </div>
+          <div className="relative flex flex-col items-center">
+            {/* Main Button */}
+            <div
+              className="flex flex-col items-center cursor-pointer text-gray-500"
+              onClick={() => setOpen(!open)}
+            >
+              <GiWaterRecycling className="text-xl" />
+              <p className="text-xs mt-1 flex items-center">
+                Monitoring <FaAngleDown className="ml-1" />
+              </p>
+            </div>
 
-      {/* Dropdown Options */}
-      {open && (
-  <div
-    className="absolute top-full left-10 mt-4 ml-2 w-56 bg-white shadow-lg rounded-xl z-10
+            {/* Dropdown Options */}
+            {open && (
+              <div
+                className="absolute top-full left-10 mt-4 ml-2 w-56 bg-white shadow-lg rounded-xl z-10
                animate-fade-in-up transform transition-all duration-300 ease-out border border-gray-200"
-  >
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/stp")}>
-      🧪 STP Monitoring
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/wtp")}>
-      💧 WTP Monitoring
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/fire")}>
-      🔥 Fire Pump Monitoring
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/ahu")}>
-      🌬️ AHU Monitoring
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/ups")}>
-      ⚡ UPS Monitoring
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/dg")}>
-      ⚙️ DG Monitoring
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/transformer")}>
-      🔌 Transformer Monitoring
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/lift")}>
-      🛗 Lift Monitoring
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/terraceventilation")}>
-      🌫️ Terrace Ventilation
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/baseventilation")}>
-      🌫️ Basement Ventilation
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer rounded-b-lg" onClick={() => handleNavigate("/chiller")}>
-      ❄️ Chiller Managing
-    </div>
-    <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer rounded-b-lg" onClick={() => handleNavigate("/monitoring")}>
-      ❄️ Chiller Monitoring
-    </div>
-  </div>
-)}
+              >
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/stp")}>
+                  🧪 STP Monitoring
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/wtp")}>
+                  💧 WTP Monitoring
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/fire")}>
+                  🔥 Fire Pump Monitoring
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/ahu")}>
+                  🌬️ AHU Monitoring
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/ups")}>
+                  ⚡ UPS Monitoring
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/dg")}>
+                  ⚙️ DG Monitoring
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/transformer")}>
+                  🔌 Transformer Monitoring
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/lift")}>
+                  🛗 Lift Monitoring
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/terraceventilation")}>
+                  🌫️ Terrace Ventilation
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer" onClick={() => handleNavigate("/baseventilation")}>
+                  🌫️ Basement Ventilation
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer rounded-b-lg" onClick={() => handleNavigate("/chiller")}>
+                  ❄️ Chiller Managing
+                </div>
+                <div className="px-4 py-2 hover:bg-indigo-100 text-gray-800 cursor-pointer rounded-b-lg" onClick={() => handleNavigate("/monitoring")}>
+                  ❄️ Chiller Monitoring
+                </div>
+              </div>
+            )}
 
 
 
-    </div>
+          </div>
           <div
             className={`flex flex-col items-center mt-2 mb-4 ${activeIcon === "leaf" ? "text-green-500" : "text-gray-500"
               } cursor-pointer`}
@@ -472,9 +469,9 @@ const Sidebar: React.FC = () => {
                 </Link>
               </ul>
               <Link to={'/adduser'}>
-              <button className="mt-4 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
-                + Add New User
-              </button>
+                <button className="mt-4 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
+                  + Add New User
+                </button>
               </Link>
             </div>
           )}

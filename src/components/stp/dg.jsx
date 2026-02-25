@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, AreaChart, BarChart, PieChart, Line, Area, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Pie } from 'recharts';
-import { AlertTriangle, Check, Clock, Thermometer, Activity, Zap, Settings, RefreshCw, Droplet, Gauge, Wind, Cpu, FileText, Calendar, ChevronRight, Shield, BarChart2, FilePieChart } from 'lucide-react';
+import { LineChart, BarChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { AlertTriangle, Check, Clock, Thermometer, Activity, Zap, Settings, RefreshCw, Droplet, Gauge, Wind, FileText, ChevronRight, BarChart2, FilePieChart } from 'lucide-react';
 
 const DgMonitoringDashboard = () => {
   // State for filters and settings
   const [timeRange, setTimeRange] = useState('24h');
   const [refreshInterval, setRefreshInterval] = useState(60);
-  const [showDataGrid, setShowDataGrid] = useState(false);
   const [selectedReport, setSelectedReport] = useState(null);
-  
+
   // Mock data - in a real application, this would come from an API
   const [dgData, setDgData] = useState({});
   const [alerts, setAlerts] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [fuelConsumption, setFuelConsumption] = useState([]);
-  const [loadDistribution, setLoadDistribution] = useState([]);
   const [maintenanceHistory, setMaintenanceHistory] = useState([]);
   const [efficiencyData, setEfficiencyData] = useState([]);
 
@@ -93,14 +91,6 @@ const DgMonitoringDashboard = () => {
       };
     });
 
-    // Load distribution data
-    const loadDistributionData = [
-      { name: 'Critical Systems', value: 35 },
-      { name: 'HVAC', value: 25 },
-      { name: 'Lighting', value: 15 },
-      { name: 'Processing', value: 25 }
-    ];
-
     // Maintenance history
     const maintenanceHistoryData = [
       { id: 1, date: '2025-03-15', type: 'Routine', description: 'Oil change, filter replacement', technician: 'John Smith', status: 'Completed' },
@@ -124,7 +114,6 @@ const DgMonitoringDashboard = () => {
     setDgData(dgMockData);
     setAlerts(mockAlerts);
     setFuelConsumption(fuelConsumptionData);
-    setLoadDistribution(loadDistributionData);
     setMaintenanceHistory(maintenanceHistoryData);
     setEfficiencyData(efficiencyHistoryData);
   };
@@ -147,7 +136,7 @@ const DgMonitoringDashboard = () => {
 
   const getStatusIndicator = (status) => {
     const colorClass = getStatusColor(status);
-    
+
     if (status === 'running') {
       return <div className={`flex items-center ${colorClass}`}><Check size={16} className="mr-1" /> {status}</div>;
     } else if (status === 'fault') {
@@ -181,8 +170,8 @@ const DgMonitoringDashboard = () => {
           </div>
           <div className="flex items-center space-x-4">
             <div>
-              <select 
-                value={timeRange} 
+              <select
+                value={timeRange}
                 onChange={(e) => setTimeRange(e.target.value)}
                 className="bg-blue-700 text-white p-2 rounded border border-blue-600"
               >
@@ -193,8 +182,8 @@ const DgMonitoringDashboard = () => {
               </select>
             </div>
             <div>
-              <select 
-                value={refreshInterval} 
+              <select
+                value={refreshInterval}
                 onChange={(e) => setRefreshInterval(parseInt(e.target.value))}
                 className="bg-blue-700 text-white p-2 rounded border border-blue-600"
               >
@@ -204,8 +193,8 @@ const DgMonitoringDashboard = () => {
                 <option value="600">Refresh: 10m</option>
               </select>
             </div>
-            <button 
-              onClick={handleRefresh} 
+            <button
+              onClick={handleRefresh}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center"
               disabled={refreshing}
             >
@@ -311,9 +300,9 @@ const DgMonitoringDashboard = () => {
               <Droplet size={20} className="text-blue-500" />
             </div>
             <div className="flex items-end">
-              <div className="text-3xl font-bold" style={{ 
-                color: dgData.fuelLevel > 70 ? '#4caf50' : 
-                       dgData.fuelLevel > 30 ? '#ff9800' : '#f44336' 
+              <div className="text-3xl font-bold" style={{
+                color: dgData.fuelLevel > 70 ? '#4caf50' :
+                  dgData.fuelLevel > 30 ? '#ff9800' : '#f44336'
               }}>
                 {dgData.fuelLevel}%
               </div>
@@ -322,12 +311,12 @@ const DgMonitoringDashboard = () => {
               </div>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-              <div 
-                className="h-2.5 rounded-full" 
-                style={{ 
-                  width: `${dgData.fuelLevel}%`, 
-                  backgroundColor: dgData.fuelLevel > 70 ? '#4caf50' : 
-                                  dgData.fuelLevel > 30 ? '#ff9800' : '#f44336'
+              <div
+                className="h-2.5 rounded-full"
+                style={{
+                  width: `${dgData.fuelLevel}%`,
+                  backgroundColor: dgData.fuelLevel > 70 ? '#4caf50' :
+                    dgData.fuelLevel > 30 ? '#ff9800' : '#f44336'
                 }}
               ></div>
             </div>
@@ -343,10 +332,10 @@ const DgMonitoringDashboard = () => {
               <Thermometer size={20} className="text-red-500" />
             </div>
             <div className="flex items-end">
-              <div className="text-3xl font-bold" 
-                style={{ 
-                  color: dgData.temperature > 85 ? '#f44336' : 
-                         dgData.temperature > 80 ? '#ff9800' : '#4caf50' 
+              <div className="text-3xl font-bold"
+                style={{
+                  color: dgData.temperature > 85 ? '#f44336' :
+                    dgData.temperature > 80 ? '#ff9800' : '#4caf50'
                 }}>
                 {dgData.temperature}°C
               </div>
@@ -362,106 +351,106 @@ const DgMonitoringDashboard = () => {
               </div>
             </div>
           </div>
-{/* KW Produced */}
-<div className="bg-white rounded-lg shadow p-4">
-  <div className="flex justify-between items-center mb-2">
-    <h3 className="text-gray-700 font-medium">KW Produced</h3>
-    <Zap size={20} className="text-yellow-500" />
-  </div>
-  <div className="flex items-end">
-    <div className="text-3xl font-bold text-blue-600">
-      {(dgData.loadPercentage * 5).toFixed(1)} kW
-    </div>
-  </div>
-  <div className="text-sm text-gray-500 mt-2">
-    {dgData.loadPercentage}% of capacity
-  </div>
-  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-    <div 
-      className="h-2.5 rounded-full bg-blue-500" 
-      style={{ width: `${dgData.loadPercentage}%` }}
-    ></div>
-  </div>
-</div>
+          {/* KW Produced */}
+          <div className="bg-white rounded-lg shadow p-4">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-gray-700 font-medium">KW Produced</h3>
+              <Zap size={20} className="text-yellow-500" />
+            </div>
+            <div className="flex items-end">
+              <div className="text-3xl font-bold text-blue-600">
+                {(dgData.loadPercentage * 5).toFixed(1)} kW
+              </div>
+            </div>
+            <div className="text-sm text-gray-500 mt-2">
+              {dgData.loadPercentage}% of capacity
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+              <div
+                className="h-2.5 rounded-full bg-blue-500"
+                style={{ width: `${dgData.loadPercentage}%` }}
+              ></div>
+            </div>
+          </div>
 
-{/* KW Produced */}
-<div className="bg-white rounded-lg shadow p-4">
-  <div className="flex justify-between items-center mb-2">
-    <h3 className="text-gray-700 font-medium">KW Produced</h3>
-    <Zap size={20} className="text-yellow-500" />
-  </div>
-  <div className="flex items-end">
-    <div className="text-3xl font-bold text-blue-600">
-      {(dgData.loadPercentage * 5).toFixed(1)} kW
-    </div>
-  </div>
-  <div className="text-sm text-gray-500 mt-2">
-    {dgData.loadPercentage}% of capacity
-  </div>
-  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-    <div 
-      className="h-2.5 rounded-full bg-blue-500" 
-      style={{ width: `${dgData.loadPercentage}%` }}
-    ></div>
-  </div>
-</div>
+          {/* KW Produced */}
+          <div className="bg-white rounded-lg shadow p-4">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-gray-700 font-medium">KW Produced</h3>
+              <Zap size={20} className="text-yellow-500" />
+            </div>
+            <div className="flex items-end">
+              <div className="text-3xl font-bold text-blue-600">
+                {(dgData.loadPercentage * 5).toFixed(1)} kW
+              </div>
+            </div>
+            <div className="text-sm text-gray-500 mt-2">
+              {dgData.loadPercentage}% of capacity
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+              <div
+                className="h-2.5 rounded-full bg-blue-500"
+                style={{ width: `${dgData.loadPercentage}%` }}
+              ></div>
+            </div>
+          </div>
 
-{/* Specific Energy Consumption */}
-<div className="bg-white rounded-lg shadow p-4">
-  <div className="flex justify-between items-center mb-2">
-    <h3 className="text-gray-700 font-medium">SEC</h3>
-    <Gauge size={20} className="text-green-500" />
-  </div>
-  <div className="flex items-end">
-    <div className="text-3xl font-bold" style={{ 
-      color: dgData.sec > 4 ? '#f44336' : 
-             dgData.sec > 3.5 ? '#ff9800' : '#4caf50' 
-    }}>
-      {dgData.sec || 3} kW/L
-    </div>
-  </div>
-  <div className="text-sm text-gray-500 mt-2">
-    Target: 3.5 kW/L
-  </div>
-  <div className="flex justify-between text-xs text-gray-500 mt-1">
-    <span>Poor</span>
-    <span>Good</span>
-  </div>
-  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-    <div 
-      className="h-2.5 rounded-full" 
-      style={{ 
-        width: `${(5 - (dgData.sec || 3)) / 2 * 100}%`, 
-        backgroundColor: dgData.sec > 4 ? '#f44336' : 
-                         dgData.sec > 3.5 ? '#ff9800' : '#4caf50'
-      }}
-    ></div>
-  </div>
-</div>
+          {/* Specific Energy Consumption */}
+          <div className="bg-white rounded-lg shadow p-4">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-gray-700 font-medium">SEC</h3>
+              <Gauge size={20} className="text-green-500" />
+            </div>
+            <div className="flex items-end">
+              <div className="text-3xl font-bold" style={{
+                color: dgData.sec > 4 ? '#f44336' :
+                  dgData.sec > 3.5 ? '#ff9800' : '#4caf50'
+              }}>
+                {dgData.sec || 3} kW/L
+              </div>
+            </div>
+            <div className="text-sm text-gray-500 mt-2">
+              Target: 3.5 kW/L
+            </div>
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>Poor</span>
+              <span>Good</span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+              <div
+                className="h-2.5 rounded-full"
+                style={{
+                  width: `${(5 - (dgData.sec || 3)) / 2 * 100}%`,
+                  backgroundColor: dgData.sec > 4 ? '#f44336' :
+                    dgData.sec > 3.5 ? '#ff9800' : '#4caf50'
+                }}
+              ></div>
+            </div>
+          </div>
 
-{/* Flow Rate */}
-<div className="bg-white rounded-lg shadow p-4">
-  <div className="flex justify-between items-center mb-2">
-    <h3 className="text-gray-700 font-medium">Flow Rate</h3>
-    <Wind size={20} className="text-blue-500" />
-  </div>
-  <div className="flex items-end">
-    <div className="text-3xl font-bold text-blue-600">
-      {dgData.flowRate || 25} L/min
-    </div>
-  </div>
-  <div className="text-sm text-gray-500 mt-2">
-    Normal range: 20-30 L/min
-  </div>
-  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-    <div 
-      className="h-2.5 rounded-full bg-blue-500" 
-      style={{ 
-        width: `${((dgData.flowRate || 25) / 40) * 100}%`
-      }}
-    ></div>
-  </div>
-</div>
+          {/* Flow Rate */}
+          <div className="bg-white rounded-lg shadow p-4">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-gray-700 font-medium">Flow Rate</h3>
+              <Wind size={20} className="text-blue-500" />
+            </div>
+            <div className="flex items-end">
+              <div className="text-3xl font-bold text-blue-600">
+                {dgData.flowRate || 25} L/min
+              </div>
+            </div>
+            <div className="text-sm text-gray-500 mt-2">
+              Normal range: 20-30 L/min
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+              <div
+                className="h-2.5 rounded-full bg-blue-500"
+                style={{
+                  width: `${((dgData.flowRate || 25) / 40) * 100}%`
+                }}
+              ></div>
+            </div>
+          </div>
           {/* Oil Pressure */}
           <div className="bg-white rounded-lg shadow p-4">
             <div className="flex justify-between items-center mb-2">
@@ -469,10 +458,10 @@ const DgMonitoringDashboard = () => {
               <Gauge size={20} className="text-blue-500" />
             </div>
             <div className="flex items-end">
-              <div className="text-3xl font-bold" 
-                style={{ 
-                  color: dgData.oilPressure < 30 ? '#f44336' : 
-                         dgData.oilPressure < 35 ? '#ff9800' : '#4caf50' 
+              <div className="text-3xl font-bold"
+                style={{
+                  color: dgData.oilPressure < 30 ? '#f44336' :
+                    dgData.oilPressure < 35 ? '#ff9800' : '#4caf50'
                 }}>
                 {dgData.oilPressure} Kg/cm2
               </div>
@@ -481,12 +470,12 @@ const DgMonitoringDashboard = () => {
               Recommended range: 35-55 Kg/cm2
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-              <div 
-                className="h-2.5 rounded-full" 
-                style={{ 
-                  width: `${(dgData.oilPressure / 60) * 100}%`, 
-                  backgroundColor: dgData.oilPressure < 30 ? '#f44336' : 
-                                   dgData.oilPressure < 35 ? '#ff9800' : '#4caf50'
+              <div
+                className="h-2.5 rounded-full"
+                style={{
+                  width: `${(dgData.oilPressure / 60) * 100}%`,
+                  backgroundColor: dgData.oilPressure < 30 ? '#f44336' :
+                    dgData.oilPressure < 35 ? '#ff9800' : '#4caf50'
                 }}
               ></div>
             </div>
@@ -502,10 +491,10 @@ const DgMonitoringDashboard = () => {
               <Activity size={20} className="text-purple-500" />
             </div>
             <div className="flex items-end">
-              <div className="text-3xl font-bold" 
-                style={{ 
-                  color: dgData.frequency < 49.5 || dgData.frequency > 50.5 ? '#f44336' : 
-                         dgData.frequency < 49.7 || dgData.frequency > 50.3 ? '#ff9800' : '#4caf50' 
+              <div className="text-3xl font-bold"
+                style={{
+                  color: dgData.frequency < 49.5 || dgData.frequency > 50.5 ? '#f44336' :
+                    dgData.frequency < 49.7 || dgData.frequency > 50.3 ? '#ff9800' : '#4caf50'
                 }}>
                 {dgData.frequency?.toFixed(1)} Hz
               </div>
@@ -523,9 +512,9 @@ const DgMonitoringDashboard = () => {
             </div>
             <div className="flex items-end">
               <div className="text-3xl font-bold"
-                style={{ 
-                  color: dgData.voltage < 210 || dgData.voltage > 230 ? '#f44336' : 
-                         dgData.voltage < 215 || dgData.voltage > 225 ? '#ff9800' : '#4caf50' 
+                style={{
+                  color: dgData.voltage < 210 || dgData.voltage > 230 ? '#f44336' :
+                    dgData.voltage < 215 || dgData.voltage > 225 ? '#ff9800' : '#4caf50'
                 }}>
                 {dgData.voltage?.toFixed(1)} V
               </div>
@@ -561,9 +550,9 @@ const DgMonitoringDashboard = () => {
               Service interval: 500 hrs ({calculateRemainingHours()} hrs remaining)
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-              <div 
-                className="h-2.5 rounded-full bg-green-500" 
-                style={{ 
+              <div
+                className="h-2.5 rounded-full bg-green-500"
+                style={{
                   width: `${(dgData.runtime % 500) / 500 * 100}%`
                 }}
               ></div>
@@ -588,21 +577,21 @@ const DgMonitoringDashboard = () => {
                   <YAxis yAxisId="right" orientation="right" domain={[40, 100]} />
                   <Tooltip />
                   <Legend />
-                  <Line 
+                  <Line
                     yAxisId="left"
-                    type="monotone" 
-                    dataKey="load" 
-                    name="Load (%)" 
-                    stroke="#10b981" 
-                    strokeWidth={2} 
+                    type="monotone"
+                    dataKey="load"
+                    name="Load (%)"
+                    stroke="#10b981"
+                    strokeWidth={2}
                   />
-                  <Line 
+                  <Line
                     yAxisId="right"
-                    type="monotone" 
-                    dataKey="temp" 
-                    name="Temperature (°C)" 
-                    stroke="#ef4444" 
-                    strokeWidth={2} 
+                    type="monotone"
+                    dataKey="temp"
+                    name="Temperature (°C)"
+                    stroke="#ef4444"
+                    strokeWidth={2}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -648,18 +637,18 @@ const DgMonitoringDashboard = () => {
                   <YAxis domain={[70, 100]} />
                   <Tooltip />
                   <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey="efficiency" 
-                    name="Actual Efficiency (%)" 
-                    stroke="#10b981" 
-                    strokeWidth={2} 
+                  <Line
+                    type="monotone"
+                    dataKey="efficiency"
+                    name="Actual Efficiency (%)"
+                    stroke="#10b981"
+                    strokeWidth={2}
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="target" 
-                    name="Target Efficiency (%)" 
-                    stroke="#94a3b8" 
+                  <Line
+                    type="monotone"
+                    dataKey="target"
+                    name="Target Efficiency (%)"
+                    stroke="#94a3b8"
                     strokeDasharray="5 5"
                   />
                 </LineChart>
@@ -722,23 +711,21 @@ const DgMonitoringDashboard = () => {
                     <tr key={item.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.date}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                          item.type === 'Emergency' ? 'bg-red-100 text-red-800' :
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${item.type === 'Emergency' ? 'bg-red-100 text-red-800' :
                           item.type === 'Major' ? 'bg-purple-100 text-purple-800' :
-                          item.type === 'Routine' ? 'bg-blue-100 text-blue-800' :
-                          'bg-green-100 text-green-800'
-                        }`}>
+                            item.type === 'Routine' ? 'bg-blue-100 text-blue-800' :
+                              'bg-green-100 text-green-800'
+                          }`}>
                           {item.type}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.description}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.technician}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                          item.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${item.status === 'Completed' ? 'bg-green-100 text-green-800' :
                           item.status === 'Scheduled' ? 'bg-blue-100 text-blue-800' :
-                          'bg-yellow-100 text-yellow-800'
-                        }`}>
+                            'bg-yellow-100 text-yellow-800'
+                          }`}>
                           {item.status}
                         </span>
                       </td>
@@ -789,7 +776,7 @@ const DgMonitoringDashboard = () => {
             <h3 className="text-gray-800 font-medium">DG Reports</h3>
           </div>
           <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div 
+            <div
               className="border rounded-lg p-4 hover:bg-blue-50 cursor-pointer transition flex items-center"
               onClick={() => setSelectedReport('efficiency')}
             >
@@ -799,7 +786,7 @@ const DgMonitoringDashboard = () => {
                 <p className="text-sm text-gray-500">Analyze DG efficiency metrics</p>
               </div>
             </div>
-            <div 
+            <div
               className="border rounded-lg p-4 hover:bg-blue-50 cursor-pointer transition flex items-center"
               onClick={() => setSelectedReport('fuel')}
             >
@@ -809,7 +796,7 @@ const DgMonitoringDashboard = () => {
                 <p className="text-sm text-gray-500">Track and analyze fuel usage</p>
               </div>
             </div>
-            <div 
+            <div
               className="border rounded-lg p-4 hover:bg-blue-50 cursor-pointer transition flex items-center"
               onClick={() => setSelectedReport('maintenance')}
             >
@@ -819,7 +806,7 @@ const DgMonitoringDashboard = () => {
                 <p className="text-sm text-gray-500">View upcoming maintenance</p>
               </div>
             </div>
-            <div 
+            <div
               className="border rounded-lg p-4 hover:bg-blue-50 cursor-pointer transition flex items-center"
               onClick={() => setSelectedReport('alarm')}
             >
@@ -829,7 +816,7 @@ const DgMonitoringDashboard = () => {
                 <p className="text-sm text-gray-500">Review historical alarms and alerts</p>
               </div>
             </div>
-            <div 
+            <div
               className="border rounded-lg p-4 hover:bg-blue-50 cursor-pointer transition flex items-center"
               onClick={() => setSelectedReport('performance')}
             >
@@ -839,7 +826,7 @@ const DgMonitoringDashboard = () => {
                 <p className="text-sm text-gray-500">Comprehensive performance report</p>
               </div>
             </div>
-            <div 
+            <div
               className="border rounded-lg p-4 hover:bg-blue-50 cursor-pointer transition flex items-center"
               onClick={() => setSelectedReport('export')}
             >
@@ -865,7 +852,7 @@ const DgMonitoringDashboard = () => {
                   {selectedReport === 'performance' && 'Performance Analysis Report'}
                   {selectedReport === 'export' && 'Export Data'}
                 </h3>
-                <button 
+                <button
                   onClick={() => setSelectedReport(null)}
                   className="text-gray-500 hover:text-gray-700"
                 >
@@ -878,7 +865,7 @@ const DgMonitoringDashboard = () => {
                   In a real implementation, this would show detailed report information.
                 </p>
                 <div className="flex justify-end mt-4">
-                  <button 
+                  <button
                     onClick={() => setSelectedReport(null)}
                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
                   >

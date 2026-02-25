@@ -136,7 +136,7 @@ export default function Login() {
                   </div>
                   <div className="flex justify-end mb-6">
                     <a
-                      href="#"
+                      href="#!"
                       className="text-placeholder text-sm font-semibold"
                     >
                       Forgot Password?

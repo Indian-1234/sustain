@@ -6,13 +6,12 @@ import fullimage from '../../assets/industrialPic.jpg';
 import { useLocation, useParams } from 'react-router-dom';
 import UtilityConsumptionChart from '../chartanalysys';
 import EnergyConsumptionHeatmap from '../heatmap';
-import { AgCharts } from 'ag-charts-react';
 import AnomalyDetectionChart from '../anomallychart';
 import ScopeWiseCOE from '../ScopeWiseCOE';
 import ProductionTrendChart from './production';
- 
+
 const PlantDashboard = () => {
-  const { item } = useParams();
+  useParams();
   const location = useLocation(); // Access location object
 
   const plantName = location.state?.name;

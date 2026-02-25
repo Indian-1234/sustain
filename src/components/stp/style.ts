@@ -1,47 +1,47 @@
 import {
-    Chart as ChartJS,
-    ArcElement,
-    Tooltip,
-    Legend,
-    ChartData,
-    LineElement,
-    CategoryScale,
-    LinearScale,
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  ChartData,
+  LineElement,
+  CategoryScale,
+  LinearScale,
   PointElement,
   Title,
   BarElement,
-  } from 'chart.js';
-  import { ChartOptions,} from 'chart.js';
-  
-  ChartJS.register(ArcElement, Tooltip, Legend,   LineElement,
-    CategoryScale,
-    LinearScale,
+} from 'chart.js';
+import { ChartOptions } from 'chart.js';
+
+ChartJS.register(ArcElement, Tooltip, Legend, LineElement,
+  CategoryScale,
+  LinearScale,
   PointElement,
   Title, BarElement,);
-  
-  export const data: ChartData<'doughnut', number[], string> = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [30, 30, 30, 30, 30],
-        backgroundColor: ['transparent', '#0FFF50', '#0FFF50', '#0FFF50', '#0FFF50'],
-        borderColor: '#36454F',
-        borderWidth: 4,
-      },
-    ],
-  };
-  
-  export const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    cutout: '60%',
-    plugins: {
-      legend: {
-        display: false,
-      },
+
+export const data: ChartData<'doughnut', number[], string> = {
+  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+  datasets: [
+    {
+      label: '# of Votes',
+      data: [30, 30, 30, 30, 30],
+      backgroundColor: ['transparent', '#0FFF50', '#0FFF50', '#0FFF50', '#0FFF50'],
+      borderColor: '#36454F',
+      borderWidth: 4,
     },
-  };
+  ],
+};
+
+export const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  cutout: '60%',
+  plugins: {
+    legend: {
+      display: false,
+    },
+  },
+};
 // Global variable to track icon hitboxes
 const iconHitboxes: { x: number; y: number; size: number }[] = [];
 
@@ -143,328 +143,327 @@ export const centerBackgroundPlugin = {
 
 //   HORIZONTAL BAR CHART
 export const horizontalBarData = {
-    labels: ["90-100","75-90","60-75","45-60","30-45","15-30","0-15", ],
-    datasets: [
-      {
-        label: 'Performance',
-        data: ["","","","",10, 20, 80],
-        backgroundColor: [
-            'transparent',
-            'transparent', // 1st bar color
-            'transparent', // 2nd bar color
-            'transparent', // 3rd bar color
-            '#afe1af', // 4th bar color
-            "#d4efd4",     // 5th bar color (light green)
-            "#c2e8c2"      // 6th bar color (lighter green)
-          ],
-      },
-    ],
-  };
-  
-  // Horizontal bar chart options
+  labels: ["90-100", "75-90", "60-75", "45-60", "30-45", "15-30", "0-15",],
+  datasets: [
+    {
+      label: 'Performance',
+      data: ["", "", "", "", 10, 20, 80],
+      backgroundColor: [
+        'transparent',
+        'transparent', // 1st bar color
+        'transparent', // 2nd bar color
+        'transparent', // 3rd bar color
+        '#afe1af', // 4th bar color
+        "#d4efd4",     // 5th bar color (light green)
+        "#c2e8c2"      // 6th bar color (lighter green)
+      ],
+    },
+  ],
+};
+
+// Horizontal bar chart options
 export const horizontalBarOptions = {
-    indexAxis: 'y' as const, // makes the bars horizontal
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-        display: false,
+  indexAxis: 'y' as const, // makes the bars horizontal
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top' as const,
+      display: false,
+    },
+    tooltip: {
+      enabled: true,
+    },
+  },
+  scales: {
+    x: {
+
+      beginAtZero: true,
+      max: 60,
+      ticks: {
+        stepSize: 20,
+        color: "white",
+        font: {
+          size: 7, // Set the font size of the ticks (make them small)
+        },
+
       },
-      tooltip: {
-        enabled: true,
+      grid: {
+        drawOnChartArea: false,
+        drawBorder: false,
+      },
+      border: {
+        display: true, // Keep the x-axis visible
+        color: "#AFE1AF",
+        width: 2, // Line thickness of the x-axis
+      },
+      title: {
+        display: true,
+        text: "Run Hours (%)",
+        color: "white",
+        font: {
+          size: 8, // Set the font size of the ticks (make them small)
+        },
       },
     },
-    scales: {
-      x: {
-       
-        beginAtZero: true,
-        max: 60,
-        ticks:{
-            stepSize:20,
-            color:"white",
-            font: {
-                size: 7, // Set the font size of the ticks (make them small)
-              },
-            
-        },
-        grid:{
-            drawOnChartArea: false,
-            drawBorder: false,  
-        },
-        border: {
-            display: true, // Keep the x-axis visible
-            color:"#AFE1AF",
-            width: 2, // Line thickness of the x-axis
-          },
-          title:{
-            display:true,
-            text:"Run Hours (%)",
-            color: "white",
-            font: {
-                size: 8, // Set the font size of the ticks (make them small)
-              },
-                      },
-      },
-      
-      y:{ 
-        beginAtZero: true,
-        max:100,
-        ticks:{
-            color:"white",
-            stepSize:0,
-            font: {
-                size: 3, // Set the font size of the ticks (make them small)
-              },
-        },
-        border: {
-            display: true, // Keep the x-axis visible
-            color:"#AFE1AF",
-            width: 2, // Line thickness of the x-axis
-          },
-          grid:{
-            drawOnChartArea: false,
-            drawBorder: false,  
-           
-        },
-                  // Avoid any offset or additional padding
-       
-        title:{
-            display:true,
-            text:"Dimand (%)",
-            color: 'white',
-            font: {
-                size: 8, // Set the font size of the ticks (make them small)
-              },
-                      },
-                      barThickness: 50,          // Set fixed thickness of bars
-                      categoryPercentage: 1.0,   // Use full width for each category (no space between bars)
-                      barPercentage: 1.0,       // Use full width for each bar
-                      offset: false,            // Avoid any offset or additional padding
-                      min: 0,                   // Start at 0 (no space below)
-                      stacked: true,  
-      },
 
+    y: {
+      beginAtZero: true,
+      max: 100,
+      ticks: {
+        color: "white",
+        stepSize: 0,
+        font: {
+          size: 3, // Set the font size of the ticks (make them small)
+        },
+      },
+      border: {
+        display: true, // Keep the x-axis visible
+        color: "#AFE1AF",
+        width: 2, // Line thickness of the x-axis
+      },
+      grid: {
+        drawOnChartArea: false,
+        drawBorder: false,
+
+      },
+      // Avoid any offset or additional padding
+
+      title: {
+        display: true,
+        text: "Dimand (%)",
+        color: 'white',
+        font: {
+          size: 8, // Set the font size of the ticks (make them small)
+        },
+      },
+      barThickness: 50,          // Set fixed thickness of bars
+      categoryPercentage: 1.0,   // Use full width for each category (no space between bars)
+      barPercentage: 1.0,       // Use full width for each bar
+      offset: false,            // Avoid any offset or additional padding
+      min: 0,                   // Start at 0 (no space below)
+      stacked: true,
     },
-  };
 
-    type User = {
-      eqtype: string;
-      name: string;
-    };
-  
+  },
+};
+
+type User = {
+  eqtype: string;
+  name: string;
+};
+
 export const users: User[] = [
-      { eqtype: 'Cooling Towers', name: 'No Cooling Tower Alarms' },
-      { eqtype: 'Chillers', name: 'No Chiller Alarms' },
-      { eqtype: 'Pumps', name: 'No Pump Alarms' },
-    ];
-    type Comm = {
-      network: string;
-      status: string;
-      faults: number;
-    };
-  
-export const comm: Comm[] = [
-      { network: 'NlagaraNetwork', status: 'Ok' ,faults:0},
-      { network: 'ModbusAsyncNtwork', status: 'Fault',faults:0} ,
-      { network: 'BacnetNetwork', status: 'Ok',faults:0} ,
-    ];
-  
-  export const Doughnutdata: ChartData<'doughnut', number[], string> = {
-    labels: ['Red', 'Blue', 'Yellow',],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [50, 30, 54,],
-        backgroundColor: ["black","#71797E","#F0F8FF"],
-        borderColor: '#36454F',
-        borderWidth: 2,
-      },
-    ],
-  };
-  
-  export const Doughnutoptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    cutout: '70%',
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
-  export const DoughnutPlugin = {
-    id: 'centerBackgroundWithIcons',
-    afterDatasetsDraw(chart: any) {
-      const { ctx } = chart;
-      const meta = chart.getDatasetMeta(0);
-      if (!meta?.data?.length) return;
-  
-      const centerX = chart.width / 2;
-      const centerY = chart.height / 2;
-      const innerRadius = meta.data[0].innerRadius;
-  
-      // === 1. Center Text ===
-      ctx.save();
-      ctx.fillStyle = 'white';
-      ctx.font = '13px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('9.4°C', centerX, centerY);
-      ctx.restore();
-  
-      // === 2. Label on gray segment (2nd slice) ===
-      const grayArc = meta.data[1]; // Index 1 = gray segment
-      const angle = (grayArc.startAngle + grayArc.endAngle) / 2;
-      const radius = (grayArc.innerRadius + grayArc.outerRadius) / 2;
-  
-      const labelX = grayArc.x + Math.cos(angle) * radius;
-      const labelY = grayArc.y + Math.sin(angle) * radius;
-  
-      ctx.save();
-      ctx.fillStyle = '#6CB4EE'; // Black text for contrast
-      ctx.font = 'bold 12px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('9.4°C', labelX, labelY);
-      ctx.restore();
-    }
-  };
+  { eqtype: 'Cooling Towers', name: 'No Cooling Tower Alarms' },
+  { eqtype: 'Chillers', name: 'No Chiller Alarms' },
+  { eqtype: 'Pumps', name: 'No Pump Alarms' },
+];
+type Comm = {
+  network: string;
+  status: string;
+  faults: number;
+};
 
-  export const linegraph: ChartData<'line'> = {
-    labels: ["16.00", "20.00", "1 Sep", "04.00", "08.00", "12.00", "16.00"],
-    datasets: [
-      {
-        label: 'Temperature',
-        data: [4, 5, 8, 7, 1, 3, 8],
-        fill: false,
-        borderColor: '#d98b19',
-        backgroundColor: '#00BFFF',
-        tension: 0.2,
-      },
-    ],
-  };
-  
-  export const lineoptions: ChartOptions<'line'> = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-        labels: {
-          color: '#fff',
-        },
-      },
+export const comm: Comm[] = [
+  { network: 'NlagaraNetwork', status: 'Ok', faults: 0 },
+  { network: 'ModbusAsyncNtwork', status: 'Fault', faults: 0 },
+  { network: 'BacnetNetwork', status: 'Ok', faults: 0 },
+];
+
+export const Doughnutdata: ChartData<'doughnut', number[], string> = {
+  labels: ['Red', 'Blue', 'Yellow',],
+  datasets: [
+    {
+      label: '# of Votes',
+      data: [50, 30, 54,],
+      backgroundColor: ["black", "#71797E", "#F0F8FF"],
+      borderColor: '#36454F',
+      borderWidth: 2,
     },
-    scales: {
-      x: {
-        ticks: {
-          color: '#fff',
-          minRotation: 0,
-          maxRotation: 0,
-        },
-        grid: {
-          drawOnChartArea: false,
-        },
-        border: {
-          display: true,
-          color: 'white',
-          width: 1,
-        },
-      },
-      
-      y: {
-        min: 1.0,
-        max: 9.0,
-        ticks: {
-          stepSize: 1,
-          color: '#fff',
-          callback: (value: number | string) => Number(value).toFixed(1),
-        },
-        grid: {
-          drawOnChartArea: false, // removes vertical grid lines
-        },
-        border: {
-          display: true,
-          color: 'white',
-          width: 1,
-        },
-        title: {
-          display: true,
-          text: 'COP',
-          color: 'white',
-          font: {
-            size: 10,
-          },
-        },
-      }
-      
+  ],
+};
+
+export const Doughnutoptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  cutout: '70%',
+  plugins: {
+    legend: {
+      display: false,
     },
+  },
+};
+export const DoughnutPlugin = {
+  id: 'centerBackgroundWithIcons',
+  afterDatasetsDraw(chart: any) {
+    const { ctx } = chart;
+    const meta = chart.getDatasetMeta(0);
+    if (!meta?.data?.length) return;
+
+    const centerX = chart.width / 2;
+    const centerY = chart.height / 2;
+
+    // === 1. Center Text ===
+    ctx.save();
+    ctx.fillStyle = 'white';
+    ctx.font = '13px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('9.4°C', centerX, centerY);
+    ctx.restore();
+
+    // === 2. Label on gray segment (2nd slice) ===
+    const grayArc = meta.data[1]; // Index 1 = gray segment
+    const angle = (grayArc.startAngle + grayArc.endAngle) / 2;
+    const radius = (grayArc.innerRadius + grayArc.outerRadius) / 2;
+
+    const labelX = grayArc.x + Math.cos(angle) * radius;
+    const labelY = grayArc.y + Math.sin(angle) * radius;
+
+    ctx.save();
+    ctx.fillStyle = '#6CB4EE'; // Black text for contrast
+    ctx.font = 'bold 12px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('9.4°C', labelX, labelY);
+    ctx.restore();
   }
-  export const linegraphs: ChartData<'line'> = {
-    labels: ["16.00", "20.00", "1 Sep", "04.00", "08.00", "12.00", "16.00"],
-    datasets: [
-      {
-        label: 'Temperature',
-        data: [361,3610, 361, 3610, 1053, 2166, 361],
-        fill: false,
-        borderColor: '#d98b19',
-        backgroundColor: '#00BFFF',
-        tension: 0.5,
-      },
-    ],
-  };
-  
-  export const lineoption: ChartOptions<'line'> = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-        labels: {
-          color: '#fff',
-        },
+};
+
+export const linegraph: ChartData<'line'> = {
+  labels: ["16.00", "20.00", "1 Sep", "04.00", "08.00", "12.00", "16.00"],
+  datasets: [
+    {
+      label: 'Temperature',
+      data: [4, 5, 8, 7, 1, 3, 8],
+      fill: false,
+      borderColor: '#d98b19',
+      backgroundColor: '#00BFFF',
+      tension: 0.2,
+    },
+  ],
+};
+
+export const lineoptions: ChartOptions<'line'> = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+      labels: {
+        color: '#fff',
       },
     },
-    scales: {
-      x: {
-        ticks: {
-          color: '#fff',
-          minRotation: 0,
-          maxRotation: 0,
-        },
-        grid: {
-          drawOnChartArea: false,
-        },
-        border: {
-          display: true,
-          color: 'white',
-          width: 1,
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#fff',
+        minRotation: 0,
+        maxRotation: 0,
+      },
+      grid: {
+        drawOnChartArea: false,
+      },
+      border: {
+        display: true,
+        color: 'white',
+        width: 1,
+      },
+    },
+
+    y: {
+      min: 1.0,
+      max: 9.0,
+      ticks: {
+        stepSize: 1,
+        color: '#fff',
+        callback: (value: number | string) => Number(value).toFixed(1),
+      },
+      grid: {
+        drawOnChartArea: false, // removes vertical grid lines
+      },
+      border: {
+        display: true,
+        color: 'white',
+        width: 1,
+      },
+      title: {
+        display: true,
+        text: 'COP',
+        color: 'white',
+        font: {
+          size: 10,
         },
       },
-      
-      y: {
-        min: 0.0,
-        max: 3971.0,
-        ticks: {
-          stepSize: 1,
-          color: '#fff',
-          callback: (value: number | string) => Number(value).toFixed(1),
-        },
-        grid: {
-          drawOnChartArea: false, // removes vertical grid lines
-        },
-        border: {
-          display: true,
-          color: 'white',
-          width: 1,
-        },
-        title: {
-          display: true,
-          text: 'COP',
-          color: 'white',
-          font: {
-            size: 10,
-          },
-        },
-      }
-      
+    }
+
+  },
+}
+export const linegraphs: ChartData<'line'> = {
+  labels: ["16.00", "20.00", "1 Sep", "04.00", "08.00", "12.00", "16.00"],
+  datasets: [
+    {
+      label: 'Temperature',
+      data: [361, 3610, 361, 3610, 1053, 2166, 361],
+      fill: false,
+      borderColor: '#d98b19',
+      backgroundColor: '#00BFFF',
+      tension: 0.5,
     },
-  }
+  ],
+};
+
+export const lineoption: ChartOptions<'line'> = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+      labels: {
+        color: '#fff',
+      },
+    },
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#fff',
+        minRotation: 0,
+        maxRotation: 0,
+      },
+      grid: {
+        drawOnChartArea: false,
+      },
+      border: {
+        display: true,
+        color: 'white',
+        width: 1,
+      },
+    },
+
+    y: {
+      min: 0.0,
+      max: 3971.0,
+      ticks: {
+        stepSize: 1,
+        color: '#fff',
+        callback: (value: number | string) => Number(value).toFixed(1),
+      },
+      grid: {
+        drawOnChartArea: false, // removes vertical grid lines
+      },
+      border: {
+        display: true,
+        color: 'white',
+        width: 1,
+      },
+      title: {
+        display: true,
+        text: 'COP',
+        color: 'white',
+        font: {
+          size: 10,
+        },
+      },
+    }
+
+  },
+}

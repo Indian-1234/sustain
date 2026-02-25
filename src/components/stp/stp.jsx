@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { Droplet, Thermometer, Activity, AlertCircle, Check, BarChart2, Clock, Settings, Filter, RefreshCw } from 'lucide-react';
+import { LineChart, Line, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Droplet, Activity, AlertCircle, Check, BarChart2, Clock, Settings, Filter, RefreshCw } from 'lucide-react';
 
 const STPMonitoringDashboard = () => {
   // Mock data - in a real app, you would fetch this from an API
@@ -26,13 +26,13 @@ const STPMonitoringDashboard = () => {
     inflow: 130.0, // m³/hr
     outflow: 125.0, // m³/hr
   });
-  
-  const [alerts, setAlerts] = useState([
+
+  const [alerts] = useState([
     { id: 1, level: 'warning', message: 'DO level below threshold in Aeration Tank 2', time: '10:15 AM', resolved: false },
     { id: 2, level: 'critical', message: 'Pump P-102 abnormal vibration detected', time: '09:45 AM', resolved: false },
     { id: 3, level: 'info', message: 'Daily maintenance completed', time: '08:30 AM', resolved: true },
   ]);
-  const [equipmentStatus, setEquipmentStatus] = useState([
+  const [equipmentStatus] = useState([
     { id: 'PUMP-101', name: 'Influent Pump 1', status: 'running', runtime: '342 hrs' },
     { id: 'PUMP-102', name: 'Influent Pump 2', status: 'fault', runtime: '298 hrs' },
     { id: 'BLW-101', name: 'Aeration Blower 1', status: 'running', runtime: '542 hrs' },
@@ -47,10 +47,10 @@ const STPMonitoringDashboard = () => {
     const generateData = () => {
       const newInfluentData = [];
       const newEffluentData = [];
-      
+
       for (let i = 0; i < 24; i++) {
         const hour = i < 10 ? `0${i}:00` : `${i}:00`;
-        
+
         // Influent values higher than effluent (treatment reduces values)
         newInfluentData.push({
           time: hour,
@@ -59,7 +59,7 @@ const STPMonitoringDashboard = () => {
           tss: 240 + Math.random() * 50,
           flow: 120 + Math.random() * 30,
         });
-        
+
         // Effluent values (treated water - lower values)
         newEffluentData.push({
           time: hour,
@@ -69,13 +69,13 @@ const STPMonitoringDashboard = () => {
           flow: 115 + Math.random() * 25,
         });
       }
-      
+
       setInfluentData(newInfluentData);
       setEffluentData(newEffluentData);
     };
-    
+
     generateData();
-    
+
     // Simulate real-time updates
     const interval = setInterval(() => {
       setRealTimeParams(prev => ({
@@ -85,7 +85,7 @@ const STPMonitoringDashboard = () => {
         temperature: +(prev.temperature + (Math.random() - 0.5) * 0.2).toFixed(1),
         flow: +(prev.flow + (Math.random() - 0.5) * 5).toFixed(1),
       }));
-      
+
       // Random tank level changes
       setTankLevels(prev => ({
         aerationTank: Math.min(100, Math.max(30, prev.aerationTank + (Math.random() - 0.5) * 5)),
@@ -95,13 +95,13 @@ const STPMonitoringDashboard = () => {
         chlorinationTank: Math.min(100, Math.max(30, prev.chlorinationTank + (Math.random() - 0.5) * 2)),
       }));
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
   // Helper to determine status color
   const getStatusColor = (status) => {
-    switch(status) {
+    switch (status) {
       case 'running': return 'text-green-500';
       case 'standby': return 'text-blue-500';
       case 'fault': return 'text-red-500';
@@ -110,7 +110,7 @@ const STPMonitoringDashboard = () => {
   };
 
   const getAlertColor = (level) => {
-    switch(level) {
+    switch (level) {
       case 'critical': return 'bg-red-100 text-red-800 border-red-200';
       case 'warning': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       default: return 'bg-blue-100 text-blue-800 border-blue-200';
@@ -120,10 +120,10 @@ const STPMonitoringDashboard = () => {
   // Calculate treatment efficiency
   const calculateEfficiency = () => {
     if (influentData.length === 0 || effluentData.length === 0) return { bod: 0, cod: 0, tss: 0 };
-    
+
     const latestInfluent = influentData[influentData.length - 1];
     const latestEffluent = effluentData[effluentData.length - 1];
-    
+
     return {
       bod: (((latestInfluent.bod - latestEffluent.bod) / latestInfluent.bod) * 100).toFixed(1),
       cod: (((latestInfluent.cod - latestEffluent.cod) / latestInfluent.cod) * 100).toFixed(1),
@@ -132,7 +132,7 @@ const STPMonitoringDashboard = () => {
   };
 
   const efficiency = calculateEfficiency();
-  
+
   // Colors for charts
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
@@ -161,37 +161,37 @@ const STPMonitoringDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           {/* Real-time Parameters */}
           <div className="bg-white p-4 rounded-lg shadow">
-  <h2 className="text-lg font-semibold mb-4 text-black flex items-center">
-    <Activity className="h-5 w-5 mr-2 text-blue-600" />
-    Real-time Parameters
-  </h2>
-  <div className="grid grid-cols-2 gap-4">
-    {/* Existing params */}
-    {[
-      { label: 'pH', value: realTimeParams.pH, condition: realTimeParams.pH >= 6.5 && realTimeParams.pH <= 8.5 },
-      { label: 'DO (mg/L)', value: realTimeParams.do, condition: realTimeParams.do >= 4 },
-      { label: 'BOD (mg/L)', value: realTimeParams.bod, condition: realTimeParams.bod <= 30 },
-      { label: 'COD (mg/L)', value: realTimeParams.cod, condition: realTimeParams.cod <= 100 },
-      { label: 'TSS (mg/L)', value: realTimeParams.tss, condition: realTimeParams.tss <= 50 },
-      { label: 'Flow (m³/hr)', value: realTimeParams.flow, condition: true },
-      // New parameters
-      { label: 'TDS (mg/L)', value: realTimeParams.tds, condition: realTimeParams.tds <= 500 },
-      { label: 'Turbidity (NTU)', value: realTimeParams.turbidity, condition: realTimeParams.turbidity <= 5 },
-      { label: 'Inflow (m³/hr)', value: realTimeParams.inflow, condition: true },
-      { label: 'Outflow (m³/hr)', value: realTimeParams.outflow, condition: true },
-    ].map((param, idx) => (
-      <div key={idx} className="bg-blue-50 p-3 rounded flex justify-between items-center">
-        <div>
-          <span className="text-sm text-gray-500">{param.label}</span>
-          <p className="text-xl font-bold">{param.value}</p>
-        </div>
-        <div className={`text-lg ${param.condition ? 'text-green-500' : 'text-red-500'}`}>
-          {param.condition ? <Check /> : <AlertCircle />}
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
+            <h2 className="text-lg font-semibold mb-4 text-black flex items-center">
+              <Activity className="h-5 w-5 mr-2 text-blue-600" />
+              Real-time Parameters
+            </h2>
+            <div className="grid grid-cols-2 gap-4">
+              {/* Existing params */}
+              {[
+                { label: 'pH', value: realTimeParams.pH, condition: realTimeParams.pH >= 6.5 && realTimeParams.pH <= 8.5 },
+                { label: 'DO (mg/L)', value: realTimeParams.do, condition: realTimeParams.do >= 4 },
+                { label: 'BOD (mg/L)', value: realTimeParams.bod, condition: realTimeParams.bod <= 30 },
+                { label: 'COD (mg/L)', value: realTimeParams.cod, condition: realTimeParams.cod <= 100 },
+                { label: 'TSS (mg/L)', value: realTimeParams.tss, condition: realTimeParams.tss <= 50 },
+                { label: 'Flow (m³/hr)', value: realTimeParams.flow, condition: true },
+                // New parameters
+                { label: 'TDS (mg/L)', value: realTimeParams.tds, condition: realTimeParams.tds <= 500 },
+                { label: 'Turbidity (NTU)', value: realTimeParams.turbidity, condition: realTimeParams.turbidity <= 5 },
+                { label: 'Inflow (m³/hr)', value: realTimeParams.inflow, condition: true },
+                { label: 'Outflow (m³/hr)', value: realTimeParams.outflow, condition: true },
+              ].map((param, idx) => (
+                <div key={idx} className="bg-blue-50 p-3 rounded flex justify-between items-center">
+                  <div>
+                    <span className="text-sm text-gray-500">{param.label}</span>
+                    <p className="text-xl font-bold">{param.value}</p>
+                  </div>
+                  <div className={`text-lg ${param.condition ? 'text-green-500' : 'text-red-500'}`}>
+                    {param.condition ? <Check /> : <AlertCircle />}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
 
           {/* Tank Levels */}
@@ -210,10 +210,9 @@ const STPMonitoringDashboard = () => {
                     <span className="text-sm font-medium">{Math.round(level)}%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-4">
-                    <div 
-                      className={`h-4 rounded-full ${
-                        level > 85 ? 'bg-red-500' : level > 70 ? 'bg-yellow-500' : 'bg-green-500'
-                      }`} 
+                    <div
+                      className={`h-4 rounded-full ${level > 85 ? 'bg-red-500' : level > 70 ? 'bg-yellow-500' : 'bg-green-500'
+                        }`}
                       style={{ width: `${level}%` }}
                     ></div>
                   </div>
@@ -293,18 +292,18 @@ const STPMonitoringDashboard = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey="bod" 
-                    stroke="#8884d8" 
+                  <Line
+                    type="monotone"
+                    dataKey="bod"
+                    stroke="#8884d8"
                     activeDot={{ r: 8 }}
                     name="BOD (Influent)"
                     connectNulls
                     strokeWidth={2}
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="cod" 
+                  <Line
+                    type="monotone"
+                    dataKey="cod"
                     stroke="#82ca9d"
                     name="COD (Influent)"
                     connectNulls
@@ -360,8 +359,8 @@ const STPMonitoringDashboard = () => {
             </h2>
             <div className="space-y-3">
               {alerts.map((alert) => (
-                <div 
-                  key={alert.id} 
+                <div
+                  key={alert.id}
                   className={`p-3 border rounded flex justify-between items-center ${getAlertColor(alert.level)}`}
                 >
                   <div className="flex items-center">

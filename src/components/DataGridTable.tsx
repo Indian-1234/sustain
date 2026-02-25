@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import {
   FaCheckCircle,
   FaTimesCircle,
@@ -107,21 +107,21 @@ const DataTable = () => {
   const [data, setData] = useState(initialData);
 
   // Event Handlers for Actions
-  const handleEnable = (row: Person) => {
+  const handleEnable = useCallback((row: Person) => {
     console.log('Enable:', row);
-  };
+  }, []);
 
-  const handleDisable = (row: Person) => {
+  const handleDisable = useCallback((row: Person) => {
     console.log('Disable:', row);
-  };
+  }, []);
 
-  const handlePause = (row: Person) => {
+  const handlePause = useCallback((row: Person) => {
     console.log('Pause:', row);
-  };
+  }, []);
 
-  const handleDelete = (row: Person) => {
-    setData(data.filter((item) => item.id !== row.id));
-  };
+  const handleDelete = useCallback((row: Person) => {
+    setData((prevData) => prevData.filter((item) => item.id !== row.id));
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -149,7 +149,7 @@ const DataTable = () => {
         accessorKey: 'userList',
         header: 'User List',
         size: 150,
-        Cell: ({ row }) => (
+        Cell: ({ row }: { row: any }) => (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <FaEnvelope style={{ marginRight: '8px', color: '#007BFF' }} />
             <span>{row.original.userList.mailCount}</span>
@@ -167,7 +167,7 @@ const DataTable = () => {
       {
         accessorKey: 'actions',
         header: 'Actions',
-        Cell: ({ row }) => (
+        Cell: ({ row }: { row: any }) => (
           <div className="flex gap-3 text-white">
             <FaCheckCircle
               onClick={() => handleEnable(row.original)}
@@ -190,7 +190,7 @@ const DataTable = () => {
         size: 200,
       },
     ],
-    [data]
+    [handleEnable, handleDisable, handlePause, handleDelete]
   );
 
   return (
@@ -213,7 +213,7 @@ const DataTable = () => {
             fontWeight: 'bold',
           },
         }}
-        pagination
+        enablePagination
         paginationDisplayMode="pages"
         positionToolbarAlertBanner="bottom"
         muiSearchTextFieldProps={{

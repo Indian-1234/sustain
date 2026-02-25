@@ -1,6 +1,5 @@
 // Navbar.js
 import React, { useState } from 'react';
-import { FaArrowRightToBracket } from 'react-icons/fa6';
 import icon from '../assets/submark.webp'; // Replace with the actual image path in your React setup
 
 const Navbar = () => {

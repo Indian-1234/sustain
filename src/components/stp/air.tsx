@@ -1,14 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { BarChart3, AlertTriangle, CheckCircle, Thermometer, Wind, Gauge, Settings, RefreshCw } from 'lucide-react';
+
+interface Fan {
+  id: number;
+  name: string;
+  type: string;
+  status: string;
+  mode: string;
+  temperature: number;
+  humidity: number;
+  airflow: number;
+  lastMaintenance: string;
+  alerts: string[];
+  consumption: number;
+}
 
 export default function BasementVentilationDashboard() {
   // State for all fans
-  const [fans, setFans] = useState([
-    { 
-      id: 1, 
-      name: "Fresh Air Unit 1", 
-      type: "Fresh Air", 
-      status: "On", 
+  const [fans, setFans] = useState<Fan[]>([
+    {
+      id: 1,
+      name: "Fresh Air Unit 1",
+      type: "Fresh Air",
+      status: "On",
       mode: "Remote",
       temperature: 23.5,
       humidity: 65,
@@ -17,11 +31,11 @@ export default function BasementVentilationDashboard() {
       alerts: [],
       consumption: 2.3
     },
-    { 
-      id: 2, 
-      name: "Exhaust Fan 1", 
-      type: "Exhaust", 
-      status: "On", 
+    {
+      id: 2,
+      name: "Exhaust Fan 1",
+      type: "Exhaust",
+      status: "On",
       mode: "Remote",
       temperature: 24.1,
       humidity: 68,
@@ -30,11 +44,11 @@ export default function BasementVentilationDashboard() {
       alerts: ["Vibration High"],
       consumption: 1.8
     },
-    { 
-      id: 3, 
-      name: "Jet Fan 1", 
-      type: "Jet", 
-      status: "Off", 
+    {
+      id: 3,
+      name: "Jet Fan 1",
+      type: "Jet",
+      status: "Off",
       mode: "Local",
       temperature: 22.0,
       humidity: 60,
@@ -43,11 +57,11 @@ export default function BasementVentilationDashboard() {
       alerts: [],
       consumption: 0
     },
-    { 
-      id: 4, 
-      name: "Fresh Air Unit 2", 
-      type: "Fresh Air", 
-      status: "Tripped", 
+    {
+      id: 4,
+      name: "Fresh Air Unit 2",
+      type: "Fresh Air",
+      status: "Tripped",
       mode: "Local",
       temperature: 25.5,
       humidity: 70,
@@ -56,11 +70,11 @@ export default function BasementVentilationDashboard() {
       alerts: ["Overheated", "Service Required"],
       consumption: 0
     },
-    { 
-      id: 5, 
-      name: "Exhaust Fan 2", 
-      type: "Exhaust", 
-      status: "On", 
+    {
+      id: 5,
+      name: "Exhaust Fan 2",
+      type: "Exhaust",
+      status: "On",
       mode: "Remote",
       temperature: 24.0,
       humidity: 66,
@@ -69,11 +83,11 @@ export default function BasementVentilationDashboard() {
       alerts: [],
       consumption: 2.1
     },
-    { 
-      id: 6, 
-      name: "Jet Fan 2", 
-      type: "Jet", 
-      status: "On", 
+    {
+      id: 6,
+      name: "Jet Fan 2",
+      type: "Jet",
+      status: "On",
       mode: "Remote",
       temperature: 23.8,
       humidity: 64,
@@ -85,12 +99,12 @@ export default function BasementVentilationDashboard() {
   ]);
 
   // Selected fan for detailed view
-  const [selectedFan, setSelectedFan] = useState(null);
-  
+  const [selectedFan, setSelectedFan] = useState<Fan | null>(null);
+
   // Filter states
   const [filterType, setFilterType] = useState("All");
   const [filterStatus, setFilterStatus] = useState("All");
-  
+
   // System status summary
   const [systemStatus, setSystemStatus] = useState({
     totalFans: 6,
@@ -103,12 +117,12 @@ export default function BasementVentilationDashboard() {
   });
 
   // Toggle fan status
-  const toggleFanStatus = (id) => {
+  const toggleFanStatus = (id: number) => {
     setFans(fans.map(fan => {
       if (fan.id === id) {
         const newStatus = fan.status === "On" ? "Off" : "On";
-        return { 
-          ...fan, 
+        return {
+          ...fan,
           status: newStatus,
           airflow: newStatus === "On" ? (fan.type === "Jet" ? 1500 : 1000) : 0,
           consumption: newStatus === "On" ? (fan.type === "Jet" ? 3.2 : 2.0) : 0
@@ -120,7 +134,7 @@ export default function BasementVentilationDashboard() {
   };
 
   // Change fan mode
-  const changeFanMode = (id, mode) => {
+  const changeFanMode = (id: number, mode: string) => {
     setFans(fans.map(fan => {
       if (fan.id === id) {
         return { ...fan, mode: mode };
@@ -130,7 +144,7 @@ export default function BasementVentilationDashboard() {
   };
 
   // Reset tripped status
-  const resetTrippedStatus = (id) => {
+  const resetTrippedStatus = (id: number) => {
     setFans(fans.map(fan => {
       if (fan.id === id && fan.status === "Tripped") {
         return { ...fan, status: "Off", alerts: [] };
@@ -141,14 +155,14 @@ export default function BasementVentilationDashboard() {
   };
 
   // Update system status summary
-  const updateSystemStatus = () => {
+  const updateSystemStatus = useCallback(() => {
     const operating = fans.filter(fan => fan.status === "On").length;
     const tripped = fans.filter(fan => fan.status === "Tripped").length;
     const offline = fans.filter(fan => fan.status === "Off").length;
     const alerts = fans.reduce((count, fan) => count + fan.alerts.length, 0);
     const totalAirflow = fans.reduce((sum, fan) => sum + fan.airflow, 0);
     const totalPower = fans.reduce((sum, fan) => sum + fan.consumption, 0);
-    
+
     setSystemStatus({
       totalFans: fans.length,
       operating,
@@ -158,7 +172,7 @@ export default function BasementVentilationDashboard() {
       totalAirflow,
       totalPower
     });
-  };
+  }, [fans]);
 
   // Filter fans
   const filteredFans = fans.filter(fan => {
@@ -170,7 +184,7 @@ export default function BasementVentilationDashboard() {
   // Effect to update system status when fans change
   useEffect(() => {
     updateSystemStatus();
-  }, [fans]);
+  }, [updateSystemStatus]);
 
   // Simulate random data changes
   useEffect(() => {
@@ -188,7 +202,7 @@ export default function BasementVentilationDashboard() {
         return fan;
       }));
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -199,14 +213,14 @@ export default function BasementVentilationDashboard() {
         <h1 className="text-2xl font-bold">Basement Ventilation Control System</h1>
         <div className="text-sm mt-1">Last updated: {new Date().toLocaleTimeString()}</div>
       </div>
-      
+
       {/* Dashboard Layout */}
       <div className="flex flex-col md:flex-row gap-4 h-full overflow-hidden">
         {/* Left Column - Controls and Filters */}
         <div className="w-full md:w-3/12 flex flex-col gap-4">
           {/* System Status Summary */}
           <div className="bg-white p-4 rounded-lg shadow">
-            <h2 className="text-lg font-bold text-black text-black mb-2 flex items-center">
+            <h2 className="text-lg font-bold text-black mb-2 flex items-center">
               <BarChart3 className="mr-2" size={20} />
               System Overview
             </h2>
@@ -241,14 +255,14 @@ export default function BasementVentilationDashboard() {
               <div className="text-xl font-bold text-blue-600">{systemStatus.totalAirflow.toLocaleString()}</div>
             </div>
           </div>
-          
+
           {/* Filters */}
           <div className="bg-white p-4 rounded-lg shadow">
-            <h2 className="text-lg font-bold text-black text-black mb-2">Filters</h2>
+            <h2 className="text-lg font-bold text-black mb-2">Filters</h2>
             <div className="space-y-2">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Fan Type</label>
-                <select 
+                <select
                   className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
@@ -262,7 +276,7 @@ export default function BasementVentilationDashboard() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700">Status</label>
-                <select 
+                <select
                   className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
@@ -278,13 +292,13 @@ export default function BasementVentilationDashboard() {
 
           {/* Quick Actions */}
           <div className="bg-white p-4 rounded-lg shadow">
-            <h2 className="text-lg font-bold text-black text-black mb-2">Quick Actions</h2>
+            <h2 className="text-lg font-bold text-black mb-2">Quick Actions</h2>
             <div className="space-y-2">
-              <button 
+              <button
                 className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
                 onClick={() => {
                   setFans(fans.map(fan => ({
-                    ...fan, 
+                    ...fan,
                     status: "On",
                     mode: "Remote",
                     airflow: fan.type === "Jet" ? 1500 : 1000,
@@ -294,11 +308,11 @@ export default function BasementVentilationDashboard() {
               >
                 Start All Fans
               </button>
-              <button 
+              <button
                 className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
                 onClick={() => {
                   setFans(fans.map(fan => ({
-                    ...fan, 
+                    ...fan,
                     status: "Off",
                     airflow: 0,
                     consumption: 0
@@ -307,7 +321,7 @@ export default function BasementVentilationDashboard() {
               >
                 Stop All Fans
               </button>
-              <button 
+              <button
                 className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
                 onClick={() => {
                   setFans(fans.map(fan => {
@@ -320,7 +334,7 @@ export default function BasementVentilationDashboard() {
               >
                 Reset All Trips
               </button>
-              <button 
+              <button
                 className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                 onClick={() => {
                   // Set all to remote mode
@@ -332,22 +346,20 @@ export default function BasementVentilationDashboard() {
             </div>
           </div>
         </div>
-        
+
         {/* Middle Column - Fan List */}
         <div className="w-full md:w-5/12 flex flex-col">
           <div className="bg-white p-4 rounded-lg shadow flex-grow overflow-auto">
-            <h2 className="text-lg font-bold text-black text-black mb-2">Fan Status ({filteredFans.length})</h2>
+            <h2 className="text-lg font-bold text-black mb-2">Fan Status ({filteredFans.length})</h2>
             <div className="space-y-2">
               {filteredFans.map(fan => (
-                <div 
-                  key={fan.id} 
-                  className={`p-3 rounded-lg cursor-pointer transform transition duration-150 hover:scale-105 ${
-                    selectedFan?.id === fan.id ? 'border-2 border-blue-500' : 'border border-gray-200'
-                  } ${
-                    fan.status === 'On' ? 'bg-green-50' : 
-                    fan.status === 'Off' ? 'bg-gray-50' : 
-                    'bg-red-50'
-                  }`}
+                <div
+                  key={fan.id}
+                  className={`p-3 rounded-lg cursor-pointer transform transition duration-150 hover:scale-105 ${selectedFan?.id === fan.id ? 'border-2 border-blue-500' : 'border border-gray-200'
+                    } ${fan.status === 'On' ? 'bg-green-50' :
+                      fan.status === 'Off' ? 'bg-gray-50' :
+                        'bg-red-50'
+                    }`}
                   onClick={() => setSelectedFan(fan)}
                 >
                   <div className="flex justify-between items-center">
@@ -357,25 +369,23 @@ export default function BasementVentilationDashboard() {
                       {fan.status === 'Tripped' && <AlertTriangle className="text-red-500 mr-2" size={18} />}
                       <span className="font-medium">{fan.name}</span>
                     </div>
-                    <span className={`px-2 py-1 rounded-full text-xs font-bold ${
-                      fan.status === 'On' ? 'bg-green-200 text-green-800' : 
-                      fan.status === 'Off' ? 'bg-gray-200 text-gray-800' : 
-                      'bg-red-200 text-red-800'
-                    }`}>
+                    <span className={`px-2 py-1 rounded-full text-xs font-bold ${fan.status === 'On' ? 'bg-green-200 text-green-800' :
+                      fan.status === 'Off' ? 'bg-gray-200 text-gray-800' :
+                        'bg-red-200 text-red-800'
+                      }`}>
                       {fan.status}
                     </span>
                   </div>
-                  
+
                   <div className="flex justify-between mt-2 text-sm">
                     <span className="text-gray-500">{fan.type}</span>
-                    <span className={`px-2 py-0.5 rounded text-xs ${
-                      fan.mode === 'Remote' ? 'bg-blue-100 text-blue-800' : 
+                    <span className={`px-2 py-0.5 rounded text-xs ${fan.mode === 'Remote' ? 'bg-blue-100 text-blue-800' :
                       'bg-purple-100 text-purple-800'
-                    }`}>
+                      }`}>
                       {fan.mode}
                     </span>
                   </div>
-                  
+
                   {fan.status === 'On' && (
                     <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
                       <div className="flex items-center">
@@ -388,7 +398,7 @@ export default function BasementVentilationDashboard() {
                       </div>
                     </div>
                   )}
-                  
+
                   {fan.alerts.length > 0 && (
                     <div className="mt-2 text-xs font-medium text-red-600 flex items-center">
                       <AlertTriangle size={14} className="mr-1" />
@@ -400,43 +410,41 @@ export default function BasementVentilationDashboard() {
             </div>
           </div>
         </div>
-        
+
         {/* Right Column - Details Panel */}
         <div className="w-full md:w-4/12 flex flex-col">
           {selectedFan ? (
             <div className="bg-white p-4 rounded-lg shadow h-full">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-bold text-black text-black">{selectedFan.name}</h2>
-                <div className={`px-3 py-1 rounded-full text-sm font-bold ${
-                  selectedFan.status === 'On' ? 'bg-green-200 text-green-800' : 
-                  selectedFan.status === 'Off' ? 'bg-gray-200 text-gray-800' : 
-                  'bg-red-200 text-red-800'
-                }`}>
+                <h2 className="text-lg font-bold text-black">{selectedFan.name}</h2>
+                <div className={`px-3 py-1 rounded-full text-sm font-bold ${selectedFan.status === 'On' ? 'bg-green-200 text-green-800' :
+                  selectedFan.status === 'Off' ? 'bg-gray-200 text-gray-800' :
+                    'bg-red-200 text-red-800'
+                  }`}>
                   {selectedFan.status}
                 </div>
               </div>
-              
+
               {/* Fan type and controls */}
               <div className="mb-4">
                 <div className="bg-gray-100 p-2 rounded mb-2">
                   <span className="text-sm font-medium">Type: </span>
                   <span>{selectedFan.type}</span>
                 </div>
-                
+
                 <div className="flex gap-2 mb-2">
                   {selectedFan.status !== "Tripped" ? (
-                    <button 
-                      className={`flex-1 py-2 px-4 rounded font-bold ${
-                        selectedFan.status === 'On' 
-                          ? 'bg-red-500 hover:bg-red-600 text-white' 
-                          : 'bg-green-500 hover:bg-green-600 text-white'
-                      }`}
+                    <button
+                      className={`flex-1 py-2 px-4 rounded font-bold ${selectedFan.status === 'On'
+                        ? 'bg-red-500 hover:bg-red-600 text-white'
+                        : 'bg-green-500 hover:bg-green-600 text-white'
+                        }`}
                       onClick={() => toggleFanStatus(selectedFan.id)}
                     >
                       {selectedFan.status === 'On' ? 'Turn Off' : 'Turn On'}
                     </button>
                   ) : (
-                    <button 
+                    <button
                       className="flex-1 py-2 px-4 rounded font-bold bg-yellow-500 hover:bg-yellow-600 text-white"
                       onClick={() => resetTrippedStatus(selectedFan.id)}
                     >
@@ -444,26 +452,24 @@ export default function BasementVentilationDashboard() {
                     </button>
                   )}
                 </div>
-                
+
                 <div className="mb-2">
                   <label className="block text-sm font-medium text-gray-700">Control Mode</label>
                   <div className="flex gap-2 mt-1">
-                    <button 
-                      className={`flex-1 py-1 px-3 rounded text-sm ${
-                        selectedFan.mode === 'Local' 
-                          ? 'bg-purple-600 text-white' 
-                          : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
-                      }`}
+                    <button
+                      className={`flex-1 py-1 px-3 rounded text-sm ${selectedFan.mode === 'Local'
+                        ? 'bg-purple-600 text-white'
+                        : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
+                        }`}
                       onClick={() => changeFanMode(selectedFan.id, 'Local')}
                     >
                       Local
                     </button>
-                    <button 
-                      className={`flex-1 py-1 px-3 rounded text-sm ${
-                        selectedFan.mode === 'Remote' 
-                          ? 'bg-blue-600 text-white' 
-                          : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
-                      }`}
+                    <button
+                      className={`flex-1 py-1 px-3 rounded text-sm ${selectedFan.mode === 'Remote'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
+                        }`}
                       onClick={() => changeFanMode(selectedFan.id, 'Remote')}
                     >
                       Remote
@@ -471,7 +477,7 @@ export default function BasementVentilationDashboard() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Metrics */}
               {selectedFan.status === 'On' && (
                 <div className="bg-blue-50 p-3 rounded-lg mb-4">
@@ -482,24 +488,24 @@ export default function BasementVentilationDashboard() {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="bg-white p-2 rounded shadow">
                       <div className="text-xs text-gray-500">Temperature</div>
-                      <div className="text-lg font-bold text-black text-black text-orange-600">{selectedFan.temperature}°C</div>
+                      <div className="text-lg font-bold text-black text-orange-600">{selectedFan.temperature}°C</div>
                     </div>
                     <div className="bg-white p-2 rounded shadow">
                       <div className="text-xs text-gray-500">Humidity</div>
-                      <div className="text-lg font-bold text-black text-black text-blue-600">{selectedFan.humidity}%</div>
+                      <div className="text-lg font-bold text-black text-blue-600">{selectedFan.humidity}%</div>
                     </div>
                     <div className="bg-white p-2 rounded shadow">
                       <div className="text-xs text-gray-500">Airflow</div>
-                      <div className="text-lg font-bold text-black text-black text-green-600">{selectedFan.airflow} CFM</div>
+                      <div className="text-lg font-bold text-black text-green-600">{selectedFan.airflow} CFM</div>
                     </div>
                     <div className="bg-white p-2 rounded shadow">
                       <div className="text-xs text-gray-500">Power</div>
-                      <div className="text-lg font-bold text-black text-black text-purple-600">{selectedFan.consumption} kW</div>
+                      <div className="text-lg font-bold text-black text-purple-600">{selectedFan.consumption} kW</div>
                     </div>
                   </div>
                 </div>
               )}
-              
+
               {/* Maintenance Info */}
               <div className="mb-4">
                 <h3 className="text-md font-bold mb-2 flex items-center">
@@ -521,7 +527,7 @@ export default function BasementVentilationDashboard() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Alerts */}
               <div>
                 <h3 className="text-md font-bold mb-2 flex items-center">
@@ -530,7 +536,7 @@ export default function BasementVentilationDashboard() {
                 </h3>
                 {selectedFan.alerts.length > 0 ? (
                   <div className="bg-red-50 p-3 rounded space-y-2">
-                    {selectedFan.alerts.map((alert, index) => (
+                    {selectedFan.alerts.map((alert: string, index: number) => (
                       <div key={index} className="flex items-center bg-white p-2 rounded shadow">
                         <AlertTriangle className="text-red-500 mr-2" size={16} />
                         <span className="text-sm text-red-700">{alert}</span>
@@ -549,11 +555,13 @@ export default function BasementVentilationDashboard() {
 
               {/* Refresh button */}
               <div className="mt-6 flex justify-center">
-                <button 
+                <button
                   className="flex items-center bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded"
                   onClick={() => {
                     // Refresh the current fan data
-                    setSelectedFan(fans.find(f => f.id === selectedFan.id));
+                    if (selectedFan) {
+                      setSelectedFan(fans.find(f => f.id === selectedFan.id) || null);
+                    }
                   }}
                 >
                   <RefreshCw size={16} className="mr-2" />

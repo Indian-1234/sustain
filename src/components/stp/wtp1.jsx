@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine } from 'recharts';
-import { Droplet, Thermometer, Activity, AlertCircle, Check, BarChart2, Clock, Settings, Filter, RefreshCw, Flame, Gauge, Wind, AlertTriangle, Zap, PieChart as PieChartIcon, Map, Layers, Radio } from 'lucide-react';
+import { Droplet, Activity, AlertCircle, Check, BarChart2, Clock, RefreshCw, Flame, Gauge, Wind, AlertTriangle, Zap, Map, Layers, Radio } from 'lucide-react';
 
 const WTPFirePumpMonitoringDashboard = () => {
   // Mock data states for WTP
@@ -29,7 +29,7 @@ const WTPFirePumpMonitoringDashboard = () => {
     temperature: 25.5,
     flow: 425.5, // m³/hr
   });
-  
+
   // Mock data states for Fire Pump System
   const [firePumpStatus, setFirePumpStatus] = useState([
     { id: 'FP-101', name: 'Main Electric Fire Pump', status: 'standby', pressure: 8.2, lastTest: '2025-03-25' },
@@ -50,7 +50,7 @@ const WTPFirePumpMonitoringDashboard = () => {
     { id: 'Z4', name: 'Chemical Storage', status: 'alarm', devices: 16, lastChecked: '2025-04-10' },
     { id: 'Z5', name: 'Laboratory', status: 'normal', devices: 12, lastChecked: '2025-04-09' },
   ]);
-  
+
   // Combined alerts for both systems
   const [alerts, setAlerts] = useState([
     { id: 1, system: 'wtp', level: 'warning', message: 'Turbidity spike detected in filtered water', time: '10:15 AM', resolved: false },
@@ -59,7 +59,7 @@ const WTPFirePumpMonitoringDashboard = () => {
     { id: 4, system: 'fire', level: 'warning', message: 'Battery voltage low on diesel pump controller', time: '07:15 AM', resolved: false },
     { id: 5, system: 'wtp', level: 'critical', message: 'Chlorine dosing pump fault', time: '06:50 AM', resolved: false },
   ]);
-  
+
   // Power monitoring data
   const [powerStatus, setPowerStatus] = useState({
     mainPower: true,
@@ -79,10 +79,10 @@ const WTPFirePumpMonitoringDashboard = () => {
     // Generate water quality data
     const generateWaterQualityData = () => {
       const newWaterQualityData = [];
-      
+
       for (let i = 0; i < 24; i++) {
         const hour = i < 10 ? `0${i}:00` : `${i}:00`;
-        
+
         newWaterQualityData.push({
           time: hour,
           rawTurbidity: 15 + Math.random() * 10,
@@ -92,17 +92,17 @@ const WTPFirePumpMonitoringDashboard = () => {
           residualChlorine: 0.8 + Math.random() * 0.8,
         });
       }
-      
+
       setWaterQualityData(newWaterQualityData);
     };
-    
+
     // Generate flow rate data
     const generateFlowRateData = () => {
       const newFlowRateData = [];
-      
+
       for (let i = 0; i < 24; i++) {
         const hour = i < 10 ? `0${i}:00` : `${i}:00`;
-        
+
         newFlowRateData.push({
           time: hour,
           rawWaterFlow: 400 + Math.random() * 100,
@@ -110,36 +110,36 @@ const WTPFirePumpMonitoringDashboard = () => {
           backwashFlow: i % 8 === 0 ? 120 + Math.random() * 20 : 0, // Backwash every 8 hours
         });
       }
-      
+
       setFlowRateData(newFlowRateData);
     };
-    
+
     // Generate pressure data for fire pump system
     const generatePressureData = () => {
       const newPressureData = [];
-      
+
       for (let i = 0; i < 24; i++) {
         const hour = i < 10 ? `0${i}:00` : `${i}:00`;
-        
+
         // Simulate pressure drop and recovery
         let pressureFactor = 1;
         if (i === 10) pressureFactor = 0.7; // Simulate pressure drop at 10:00
         if (i === 11) pressureFactor = 0.9; // Simulating recovery
-        
+
         newPressureData.push({
           time: hour,
           systemPressure: 8.2 * pressureFactor + Math.random() * 0.3,
           pumpOutletPressure: i === 10 || i === 11 ? 10.5 + Math.random() * 0.5 : 0, // Pump activates during pressure drop
         });
       }
-      
+
       setPressureData(newPressureData);
     };
-    
+
     generateWaterQualityData();
     generateFlowRateData();
     generatePressureData();
-    
+
     // Simulate real-time updates
     const interval = setInterval(() => {
       // Update WTP parameters
@@ -152,7 +152,7 @@ const WTPFirePumpMonitoringDashboard = () => {
         temperature: +(prev.temperature + (Math.random() - 0.5) * 0.2).toFixed(1),
         flow: +(prev.flow + (Math.random() - 0.5) * 15).toFixed(1),
       }));
-      
+
       // Update tank levels
       setTankLevels(prev => ({
         rawWaterTank: Math.min(100, Math.max(30, prev.rawWaterTank + (Math.random() - 0.5) * 5)),
@@ -162,7 +162,7 @@ const WTPFirePumpMonitoringDashboard = () => {
         chlorinationTank: Math.min(100, Math.max(30, prev.chlorinationTank + (Math.random() - 0.5) * 4)),
         treatedWaterTank: Math.min(100, Math.max(30, prev.treatedWaterTank + (Math.random() - 0.5) * 6)),
       }));
-      
+
       // Update chemical levels
       setChemicalLevels(prev => ({
         alum: Math.max(0, prev.alum - Math.random() * 0.3),
@@ -171,22 +171,22 @@ const WTPFirePumpMonitoringDashboard = () => {
         soda: Math.max(0, prev.soda - Math.random() * 0.2),
         pAC: Math.max(0, prev.pAC - Math.random() * 0.15),
       }));
-      
+
       // Randomly update fire pump status
       if (Math.random() > 0.97) {
         setFirePumpStatus(prev => {
           const newStatus = [...prev];
           const randomPump = Math.floor(Math.random() * newStatus.length);
-          
+
           // Toggle jockey pump status occasionally
           if (newStatus[randomPump].id.startsWith('JP')) {
             newStatus[randomPump].status = newStatus[randomPump].status === 'running' ? 'standby' : 'running';
           }
-          
+
           return newStatus;
         });
       }
-      
+
       // Update power status
       setPowerStatus(prev => ({
         ...prev,
@@ -199,46 +199,46 @@ const WTPFirePumpMonitoringDashboard = () => {
         frequency: prev.frequency + (Math.random() - 0.5) * 0.1,
         powerFactor: Math.min(1, Math.max(0.85, prev.powerFactor + (Math.random() - 0.5) * 0.02)),
       }));
-      
+
       // Randomly create a new alert
       if (Math.random() > 0.95) {
         const newAlert = {
           id: Date.now(),
           system: Math.random() > 0.5 ? 'wtp' : 'fire',
           level: Math.random() > 0.7 ? 'critical' : Math.random() > 0.4 ? 'warning' : 'info',
-          message: Math.random() > 0.5 ? 
-            'Pressure fluctuation in distribution system' : 
+          message: Math.random() > 0.5 ?
+            'Pressure fluctuation in distribution system' :
             'Filter differential pressure exceeding threshold',
-          time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           resolved: false
         };
-        
+
         setAlerts(prev => [newAlert, ...prev.slice(0, 9)]); // Keep only 10 most recent alerts
       }
-      
+
       // Occasionally mark alerts as resolved
       if (Math.random() > 0.9) {
         setAlerts(prev => {
           const newAlerts = [...prev];
           const unresolvedAlerts = newAlerts.filter(a => !a.resolved);
-          
+
           if (unresolvedAlerts.length > 0) {
             const randomAlert = Math.floor(Math.random() * unresolvedAlerts.length);
             const alertIndex = newAlerts.findIndex(a => a.id === unresolvedAlerts[randomAlert].id);
-            newAlerts[alertIndex] = {...newAlerts[alertIndex], resolved: true};
+            newAlerts[alertIndex] = { ...newAlerts[alertIndex], resolved: true };
           }
-          
+
           return newAlerts;
         });
       }
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
   // Helper functions for styling based on status
   const getStatusColor = (status) => {
-    switch(status) {
+    switch (status) {
       case 'running': return 'text-green-500';
       case 'standby': return 'text-blue-500';
       case 'fault': return 'text-red-500';
@@ -250,7 +250,7 @@ const WTPFirePumpMonitoringDashboard = () => {
   };
 
   const getAlertColor = (level) => {
-    switch(level) {
+    switch (level) {
       case 'critical': return 'bg-red-100 text-red-800 border-red-200';
       case 'warning': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       default: return 'bg-blue-100 text-blue-800 border-blue-200';
@@ -258,13 +258,13 @@ const WTPFirePumpMonitoringDashboard = () => {
   };
 
   const getSystemIcon = (system) => {
-    switch(system) {
+    switch (system) {
       case 'wtp': return <Droplet className="h-4 w-4 mr-1" />;
       case 'fire': return <Flame className="h-4 w-4 mr-1" />;
       default: return <AlertCircle className="h-4 w-4 mr-1" />;
     }
   };
-  
+
   // Colors for charts
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
@@ -302,7 +302,7 @@ const WTPFirePumpMonitoringDashboard = () => {
       </header>
 
       <div className="container mx-auto px-4 py-6">
-      <center className='mb-6 text-blue'><b className='mb-6'>Water Treatment Plant DashBoard</b></center>
+        <center className='mb-6 text-blue'><b className='mb-6'>Water Treatment Plant DashBoard</b></center>
 
         {/* System Status Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -467,7 +467,7 @@ const WTPFirePumpMonitoringDashboard = () => {
               <Layers className="h-5 w-5 mr-2 text-blue-600" />
               Storage Levels
             </h2>
-            
+
             <div className="mb-4">
               <h3 className="text-sm font-medium mb-2">Water Storage Tanks</h3>
               <div className="space-y-3">
@@ -480,10 +480,9 @@ const WTPFirePumpMonitoringDashboard = () => {
                       <span className="text-xs font-medium">{Math.round(level)}%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div 
-                        className={`h-2.5 rounded-full ${
-                          level > 85 ? 'bg-green-500' : level > 40 ? 'bg-blue-500' : 'bg-red-500'
-                        }`}
+                      <div
+                        className={`h-2.5 rounded-full ${level > 85 ? 'bg-green-500' : level > 40 ? 'bg-blue-500' : 'bg-red-500'
+                          }`}
                         style={{ width: `${level}%` }}
                       ></div>
                     </div>
@@ -491,7 +490,7 @@ const WTPFirePumpMonitoringDashboard = () => {
                 ))}
               </div>
             </div>
-            
+
             <div>
               <h3 className="text-sm font-medium mb-2">Chemical Storage</h3>
               <div className="space-y-3">
@@ -504,10 +503,9 @@ const WTPFirePumpMonitoringDashboard = () => {
                       <span className="text-xs font-medium">{Math.round(level)}%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div 
-                        className={`h-2.5 rounded-full ${
-                          level > 60 ? 'bg-green-500' : level > 30 ? 'bg-yellow-500' : 'bg-red-500'
-                        }`}
+                      <div
+                        className={`h-2.5 rounded-full ${level > 60 ? 'bg-green-500' : level > 30 ? 'bg-yellow-500' : 'bg-red-500'
+                          }`}
                         style={{ width: `${level}%` }}
                       ></div>
                     </div>
@@ -527,7 +525,7 @@ const WTPFirePumpMonitoringDashboard = () => {
               Water Quality Trends
             </h2>
             <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={waterQualityData.slice(-12)}
                   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -538,27 +536,27 @@ const WTPFirePumpMonitoringDashboard = () => {
                   <YAxis yAxisId="right" orientation="right" />
                   <Tooltip />
                   <Legend />
-                  <Line 
+                  <Line
                     yAxisId="left"
-                    type="monotone" 
-                    dataKey="rawTurbidity" 
-                    stroke="#8884d8" 
+                    type="monotone"
+                    dataKey="rawTurbidity"
+                    stroke="#8884d8"
                     name="Raw Water Turbidity"
                     dot={false}
                   />
-                  <Line 
+                  <Line
                     yAxisId="left"
-                    type="monotone" 
-                    dataKey="filteredTurbidity" 
-                    stroke="#82ca9d" 
+                    type="monotone"
+                    dataKey="filteredTurbidity"
+                    stroke="#82ca9d"
                     name="Filtered Water Turbidity"
                     dot={false}
                   />
-                  <Line 
+                  <Line
                     yAxisId="right"
-                    type="monotone" 
-                    dataKey="residualChlorine" 
-                    stroke="#ff7300" 
+                    type="monotone"
+                    dataKey="residualChlorine"
+                    stroke="#ff7300"
                     name="Residual Chlorine"
                     dot={false}
                   />
@@ -584,18 +582,18 @@ const WTPFirePumpMonitoringDashboard = () => {
                   <YAxis domain={[0, 12]} />
                   <Tooltip />
                   <Legend />
-                  <Area 
-                    type="monotone" 
-                    dataKey="systemPressure" 
-                    stroke="#ff7300" 
-                    fill="#ff7300" 
+                  <Area
+                    type="monotone"
+                    dataKey="systemPressure"
+                    stroke="#ff7300"
+                    fill="#ff7300"
                     fillOpacity={0.2}
                     name="System Pressure (bar)"
                   />
-                  <Area 
-                    type="monotone" 
-                    dataKey="pumpOutletPressure" 
-                    stroke="#8884d8" 
+                  <Area
+                    type="monotone"
+                    dataKey="pumpOutletPressure"
+                    stroke="#8884d8"
                     fill="#8884d8"
                     fillOpacity={0.2}
                     name="Pump Outlet Pressure (bar)"
@@ -627,26 +625,26 @@ const WTPFirePumpMonitoringDashboard = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Area 
-                    type="monotone" 
-                    dataKey="rawWaterFlow" 
-                    stroke="#8884d8" 
-                    fill="#8884d8" 
+                  <Area
+                    type="monotone"
+                    dataKey="rawWaterFlow"
+                    stroke="#8884d8"
+                    fill="#8884d8"
                     fillOpacity={0.2}
                     name="Raw Water Flow (m³/hr)"
                   />
-                  <Area 
-                    type="monotone" 
-                    dataKey="treatedWaterFlow" 
-                    stroke="#82ca9d" 
+                  <Area
+                    type="monotone"
+                    dataKey="treatedWaterFlow"
+                    stroke="#82ca9d"
                     fill="#82ca9d"
                     fillOpacity={0.2}
                     name="Treated Water Flow (m³/hr)"
                   />
-                  <Area 
-                    type="monotone" 
-                    dataKey="backwashFlow" 
-                    stroke="#ffc658" 
+                  <Area
+                    type="monotone"
+                    dataKey="backwashFlow"
+                    stroke="#ffc658"
                     fill="#ffc658"
                     fillOpacity={0.2}
                     name="Backwash Flow (m³/hr)"
@@ -765,19 +763,18 @@ const WTPFirePumpMonitoringDashboard = () => {
             </h2>
             <div className="space-y-3 max-h-80 overflow-y-auto">
               {alerts.map((alert) => (
-                <div 
-                  key={alert.id} 
+                <div
+                  key={alert.id}
                   className={`p-3 border rounded flex justify-between items-center ${getAlertColor(alert.level)}`}
                 >
                   <div className="flex items-center">
                     {getSystemIcon(alert.system)}
                     <div>
                       <div className="flex items-center">
-                        <span className={`px-1.5 py-0.5 text-xs rounded mr-2 ${
-                          alert.level === 'critical' ? 'bg-red-600 text-white' : 
-                          alert.level === 'warning' ? 'bg-yellow-600 text-white' : 
-                          'bg-blue-600 text-white'
-                        }`}>
+                        <span className={`px-1.5 py-0.5 text-xs rounded mr-2 ${alert.level === 'critical' ? 'bg-red-600 text-white' :
+                            alert.level === 'warning' ? 'bg-yellow-600 text-white' :
+                              'bg-blue-600 text-white'
+                          }`}>
                           {alert.level.toUpperCase()}
                         </span>
                         <p className="font-medium">{alert.message}</p>
@@ -825,7 +822,7 @@ const WTPFirePumpMonitoringDashboard = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="mb-4">
               <h3 className="text-sm font-medium mb-2">Fire Pump Test History</h3>
               <div className="overflow-x-auto">
@@ -845,11 +842,10 @@ const WTPFirePumpMonitoringDashboard = () => {
                         <td className="px-3 py-2 whitespace-nowrap text-xs">{event.pump}</td>
                         <td className="px-3 py-2 whitespace-nowrap text-xs capitalize">{event.type}</td>
                         <td className="px-3 py-2 whitespace-nowrap text-xs">
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                            event.result === 'passed' ? 'bg-green-100 text-green-800' : 
-                            event.result === 'failed' ? 'bg-red-100 text-red-800' : 
-                            'bg-blue-100 text-blue-800'
-                          }`}>
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${event.result === 'passed' ? 'bg-green-100 text-green-800' :
+                              event.result === 'failed' ? 'bg-red-100 text-red-800' :
+                                'bg-blue-100 text-blue-800'
+                            }`}>
                             {event.result.toUpperCase()}
                           </span>
                         </td>
@@ -859,7 +855,7 @@ const WTPFirePumpMonitoringDashboard = () => {
                 </table>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-3 gap-2">
               <div className="bg-gray-50 p-2 rounded text-center">
                 <div className="text-xs text-gray-500">Chemical Usage</div>
@@ -877,7 +873,7 @@ const WTPFirePumpMonitoringDashboard = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Footer */}
       <footer className="bg-gray-800 text-gray-300 p-4 mt-6">
         <div className="container mx-auto flex justify-between items-center">
